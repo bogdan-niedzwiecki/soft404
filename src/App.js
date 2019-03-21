@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import style from "./App.css";
-// import LogIn from "./LogIn/LogIn";
-import SignIn from "./LogIn/LoginForm";
+import SignIn from "./Components/LogIn/LoginForm";
 import {
   BrowserRouter,
   Route,
@@ -10,7 +9,7 @@ import {
   Switch,
   NavLink
 } from "react-router-dom";
-
+// import LoginButton from "./Components/LogIn/LogIn";
 
 class App extends Component {
   constructor(props) {
@@ -21,19 +20,11 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className={style.app}>
-          <nav>
-            <NavLink to="/pop"> Pop</NavLink>
-            <NavLink to="/"> Home</NavLink>
-          </nav>
           <Switch>
-     
-            {/* <Route path="/pop" component={LogIn} /> */}
-           
             <Route path="/" component={SignIn} />
           </Switch>
         </div>
       </BrowserRouter>
-   
     );
   }
 }
