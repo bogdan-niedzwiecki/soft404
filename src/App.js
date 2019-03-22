@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "typeface-roboto";
 import {
   BrowserRouter,
   Route,
@@ -7,8 +8,7 @@ import {
   Switch,
   NavLink
 } from "react-router-dom";
-import Layout from "./Components/Layout/layout";
-
+import ResponsiveDrawer from "./Components/Layout/ResponsiveDrawer/component";
 
 class App extends Component {
   constructor(props) {
@@ -18,10 +18,9 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-          <Switch>
-            <Route path="/" component={Layout} />
-            {/* <Route exact path="/posts" component={Posts} /> */}
-          </Switch>
+        <Switch>
+          <Route path="/" component={ResponsiveDrawer} />
+        </Switch>
       </BrowserRouter>
     );
   }
