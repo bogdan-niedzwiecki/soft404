@@ -12,7 +12,9 @@ import SaveIcon from '@material-ui/icons/Save';
 
 const styles = theme => ({
   root: {
-    width: 500
+    width: 500,
+    margin: "auto"
+
   },
   fab: {
     margin: theme.spacing.unit * 2

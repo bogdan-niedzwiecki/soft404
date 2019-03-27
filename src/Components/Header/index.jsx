@@ -185,11 +185,11 @@ class Header extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Posts" />
           </ListItem>
-          <ListItem button key="Mail" component={NavLink} to="/mail">
+          <ListItem button key="Create" component={NavLink} to="/create">
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
-            <ListItemText primary="Mail" />
+            <ListItemText primary="Create" />
           </ListItem>
         </List>
         <Divider />
