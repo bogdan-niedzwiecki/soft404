@@ -8,19 +8,17 @@ import {
   Switch,
   NavLink
 } from "react-router-dom";
-import ResponsiveDrawer from "./Components/Layout/ResponsiveDrawer/component";
-
+import Header from "./Components/Header/index";
+import PostsList from "./Components/PostsList/index";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { x: false };
   }
   render() {
     return (
       <BrowserRouter>
-        <Switch>
-          <Route path="/" component={ResponsiveDrawer} />
-        </Switch>
+        <Header/>
+        <Route exact path="/posts" component={PostsList} />
       </BrowserRouter>
     );
   }

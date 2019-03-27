@@ -23,17 +23,26 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import Switch from "@material-ui/core/Switch";
+import LogSwitch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import Avatar from '@material-ui/core/Avatar';
+import {
+  BrowserRouter,
+  Route,
+  Link,
+  Redirect,
+  Switch,
+  NavLink
+} from "react-router-dom";
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    display: "flex"
+    display: "flex",    
   },
   grow: {
     flexGrow: 1
@@ -50,8 +59,14 @@ const styles = theme => ({
       width: `calc(100% - ${drawerWidth}px)`
     }
   },
+  avatar: {
+    margin: -5,
+  },
+  logo: {
+      width: 60,
+      height: 60, 
+  },
   menuButton: {
-    marginRight: 20,
     [theme.breakpoints.up("sm")]: {
       display: "none"
     }
@@ -60,22 +75,27 @@ const styles = theme => ({
   drawerPaper: {
     width: drawerWidth
   },
+  greetings : {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "inline",
+    }
+  },
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3
   },
   search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
+    position: "relative",    
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25)
     },
     marginRight: theme.spacing.unit * 2,
-    marginLeft: 0,
-    width: "100%",
+    marginLeft: theme.spacing.unit * 2,
+    width: "50%",
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing.unit * 3,
+      marginLeft: theme.spacing.unit * 2,
       width: "auto"
     }
   },
@@ -89,7 +109,7 @@ const styles = theme => ({
     justifyContent: "center"
   },
   inputRoot: {
-    color: "inherit",
+    color: "primary",
     width: "100%"
   },
   inputInput: {
@@ -105,7 +125,9 @@ const styles = theme => ({
   }
 });
 
-class ResponsiveDrawer extends React.Component {
+
+
+class Header extends React.Component {
   state = {
     mobileOpen: false,
     auth: true,
@@ -135,30 +157,42 @@ class ResponsiveDrawer extends React.Component {
 
     const drawer = (
       <div>
-        <div className={classes.toolbar} />
-
+        <div className={classes.toolbar}>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <LogSwitch
+                  checked={auth}
+                  onChange={this.handleChange}
+                  aria-label="LoginSwitch"
+                />
+              }
+              label={auth ? "Logout" : "Login"}
+            />
+          </FormGroup>
+        </div>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+        <ListItem button key="Home" component={NavLink} to="/">
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItem>
+          <ListItem button key="Posts" component={NavLink} to="/posts">
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Posts" />
+          </ListItem>
+          <ListItem button key="Mail" component={NavLink} to="/mail">
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Mail" />
+          </ListItem>
         </List>
         <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </div>
     );
 
@@ -166,7 +200,7 @@ class ResponsiveDrawer extends React.Component {
       <div className={classes.root}>
         <CssBaseline />
 
-        <AppBar position="fixed" className={classes.appBar}>
+        <AppBar position="fixed" className={classes.appBar} color="default">
           <Toolbar>
             <IconButton
               color="inherit"
@@ -176,25 +210,14 @@ class ResponsiveDrawer extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={auth}
-                    onChange={this.handleChange}
-                    aria-label="LoginSwitch"
-                  />
-                }
-                label={auth ? "Logout" : "Login"}
-              />
-            </FormGroup>
+
             <Typography
               variant="h6"
               color="inherit"
               noWrap
               className={classes.grow}
             >
-              [LOGO PAGE HERE]
+              <Avatar alt="Soft 404" className={classes.logo} src="https://cdn3.iconfinder.com/data/icons/hosting-glyphs/60/error__attack__dos_404_-512.png" component={NavLink} to="/"/>
             </Typography>
 
             <div className={classes.search}>
@@ -217,14 +240,15 @@ class ResponsiveDrawer extends React.Component {
                   onClick={this.handleMenu}
                   color="inherit"
                 >
-                  <AccountCircle />
+                  <Avatar alt="Remy Sharp" className={classes.avatar} src="https://material-ui.com/static/images/avatar/1.jpg" />
                 </IconButton>
                 <Typography
                   inline
-                  variant="h7"
+                  variant="subtitle2"
                   color="inherit"
                   noWrap
                   className={classes.grow}
+                  className={classes.greetings}
                 >
                   Hello, &lt;user_name&gt;
                 </Typography>
@@ -267,7 +291,9 @@ class ResponsiveDrawer extends React.Component {
             )}
             {!auth && (
               <div>
-                <Button color="inherit">Login</Button>
+                <Button color="inherit" component={NavLink} to="/login">
+                  Login
+                </Button>
               </div>
             )}
           </Toolbar>
@@ -300,50 +326,9 @@ class ResponsiveDrawer extends React.Component {
             </Drawer>
           </Hidden>
         </nav>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Typography paragraph>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-            dolor purus non enim praesent elementum facilisis leo vel. Risus at
-            ultrices mi tempus imperdiet. Semper risus in hendrerit gravida
-            rutrum quisque non tellus. Convallis convallis tellus id interdum
-            velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean
-            sed adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-            integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-            eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-            quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-            vivamus at augue. At augue eget arcu dictum varius duis at
-            consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-            donec massa sapien faucibus et molestie ac.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare
-            suspendisse sed nisi lacus sed viverra tellus. Purus sit amet
-            volutpat consequat mauris. Elementum eu facilisis sed odio morbi.
-            Euismod lacinia at quis risus sed vulputate odio. Morbi tincidunt
-            ornare massa eget egestas purus viverra accumsan in. In hendrerit
-            gravida rutrum quisque non tellus orci ac. Pellentesque nec nam
-            aliquam sem et tortor. Habitant morbi tristique senectus et.
-            Adipiscing elit duis tristique sollicitudin nibh sit. Ornare aenean
-            euismod elementum nisi quis eleifend. Commodo viverra maecenas
-            accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
-            ultrices sagittis orci a.
-          </Typography>
-        </main>
       </div>
     );
   }
 }
 
-ResponsiveDrawer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  // Injected by the documentation to work in an iframe.
-  // You won't need it on your project.
-  container: PropTypes.object,
-  theme: PropTypes.object.isRequired
-};
-
-export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);
+export default withStyles(styles, { withTheme: true })(Header);
