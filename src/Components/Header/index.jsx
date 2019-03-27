@@ -199,7 +199,6 @@ class Header extends React.Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
-
         <AppBar position="fixed" className={classes.appBar} color="default">
           <Toolbar>
             <IconButton
@@ -244,7 +243,6 @@ class Header extends React.Component {
                 </IconButton>
                 <Typography
                   inline
-                  variant="subtitle2"
                   color="inherit"
                   noWrap
                   className={classes.grow}

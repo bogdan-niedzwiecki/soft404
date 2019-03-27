@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Header from "./Components/Header/index";
 import PostsList from "./Components/PostsList/index";
+import Footer from "./Components/Footer/index";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +20,7 @@ class App extends Component {
       <BrowserRouter>
         <Header/>
         <Route exact path="/posts" component={PostsList} />
+        <Footer />
       </BrowserRouter>
     );
   }
