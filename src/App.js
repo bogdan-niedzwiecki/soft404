@@ -11,8 +11,9 @@ import {
   Switch,
   NavLink
 } from "react-router-dom";
-
-
+import Header from "./Components/Header/index";
+import PostsList from "./Components/PostsList/index";
+import Footer from "./Components/Footer/index";
 class App extends Component {
 
   render() {
@@ -22,8 +23,7 @@ class App extends Component {
       <BrowserRouter>
         <Header/>
         <Route exact path="/posts" component={PostsList} />
-        
-        <Route exact path="/create" component={OutlinedTextFields } />
+        <Footer />
       </BrowserRouter>
     );
   }
