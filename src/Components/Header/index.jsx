@@ -179,6 +179,8 @@ class Header extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
+          {auth && (
+            <div>
           <ListItem button key="Posts" component={NavLink} to="/posts">
             <ListItemIcon>
               <InboxIcon />
@@ -191,6 +193,8 @@ class Header extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Create" />
           </ListItem>
+          </div>
+          )}
         </List>
         <Divider />
       </div>
