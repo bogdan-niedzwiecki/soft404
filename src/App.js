@@ -1,31 +1,20 @@
 import React, { Component } from "react";
-import style from "./App.css";
-import LoginButton from "./Components/LogIn/LoginForm";
-// import LoginButton from "./Components/test";
-import {
-  BrowserRouter,
-  Route,
-  Link,
-  Redirect,
-  Switch,
-  NavLink
-} from "react-router-dom";
-
+import "typeface-roboto";
+// import Header from "./Components/Header/index";
+// import PostsList from "./Components/PostsList/index";
+// import Footer from "./Components/Footer/index";
+import LogIn from "./Components/LogIn/LoginForm";  
+import { BrowserRouter, Route } from "react-router-dom";
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { x: false };
-  }
   render() {
     return (
       <BrowserRouter>
-        <div className={style.app}>
-          <Switch>
-            <Route path="/" component={LoginButton} />
-          </Switch>
-        </div>
+        {/* <Header /> */}
+        {/* <Route exact path="/posts" component={PostsList} /> */}
+        {/* <Route exact path="/create" component={OutlinedTextFields} /> */}
+        {/* <Footer /> */}
+        <LogIn />
       </BrowserRouter>
-   
     );
   }
 }
