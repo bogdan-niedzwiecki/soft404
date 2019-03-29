@@ -15,9 +15,9 @@ import {
 class LoginButton extends React.Component {
   render() {
     return (
-      <MDBContainer className="body" >
+      <MDBContainer className="d-flex align-content-center body" >
         <MDBRow >
-          <MDBCol mp="12">
+          <MDBCol>
             <MDBCard>
               <MDBCardBody className="mx-4">
                 <div className="text-center" >

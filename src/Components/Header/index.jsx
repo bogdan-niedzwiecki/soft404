@@ -293,7 +293,7 @@ class Header extends React.Component {
             )}
             {!auth && (
               <div>
-                <Button color="inherit" component={NavLink} to="/login">
+                <Button color="inherit" component={NavLink} to="/LogIn">
                   Login
                 </Button>
               </div>
