@@ -3,20 +3,15 @@ import "typeface-roboto";
 import Header from "./Components/Header/index";
 import PostsList from "./Components/PostsList/index";
 import Footer from "./Components/Footer/index";
-import OutlinedTextFields from "./Components/Posts/Post";
-import {
-  BrowserRouter,
-  Route,
-} from "react-router-dom";
+import NewPost from "./Components/NewPost/NewPost";
+import { BrowserRouter, Route } from "react-router-dom";
 class App extends Component {
-
   render() {
     return (
-        
       <BrowserRouter>
-        <Header/>
+        <Header />
         <Route exact path="/posts" component={PostsList} />
-        <Route exact path="/create" component={OutlinedTextFields} />
+        <Route exact path="/create" component={NewPost} />
         <Footer />
       </BrowserRouter>
         <LogIn />
