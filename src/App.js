@@ -19,10 +19,10 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Header/>
-        <Route exact path="/posts" component={PostsList} />
+        <Route exact path="/" component={PostsList} />
         <Footer />
       </BrowserRouter>
-    );
+    ); 
   }
 }
 

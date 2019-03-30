@@ -32,7 +32,7 @@ class Footer extends React.Component {
                     color="textSecondary"
                     component="p"
                 >
-                    Built with ❤️ by Soft404 team.
+                    Built with  ❤️  by Soft404 team.
                 </Typography>
             </footer>
            </div>

@@ -16,7 +16,7 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
     [theme.breakpoints.up("sm")]: {
-      marginLeft: 240
+      marginLeft: 180
     }
   },
 });
