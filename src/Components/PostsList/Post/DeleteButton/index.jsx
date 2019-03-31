@@ -43,11 +43,11 @@ class DeleteButton extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Disagree
+            <Button onClick={this.handleClose} color="secondary">
+              Delete
             </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              Agree
+            <Button onClick={this.handleClose} color="default" autoFocus>
+              Cancel
             </Button>
           </DialogActions>
         </Dialog>
