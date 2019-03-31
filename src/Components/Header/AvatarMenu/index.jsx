@@ -11,7 +11,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { NavLink } from "react-router-dom";
 import Tooltip from '@material-ui/core/Tooltip';
 
-const styles = theme => ({
+const styles = () => ({
   avatar: {
     margin: -10,
   }
@@ -83,4 +83,4 @@ class AvatarMenu extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(AvatarMenu);
+export default withStyles(styles)(AvatarMenu);

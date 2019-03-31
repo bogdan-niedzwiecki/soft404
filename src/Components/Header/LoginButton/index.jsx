@@ -7,7 +7,7 @@ class LoginButton extends React.Component {
     return (
       <div>
         <Button color="inherit" component={NavLink} to="/login">
-          Login
+          Sign In
         </Button>
       </div>
     );

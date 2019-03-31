@@ -9,7 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
 
-class PostModal extends React.Component {
+class DeletePostButton extends React.Component {
   state = {
     open: false,
   };
@@ -43,11 +43,11 @@ class PostModal extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Disagree
+            <Button onClick={this.handleClose} color="secondary">
+              Delete
             </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              Agree
+            <Button onClick={this.handleClose} color="default" autoFocus>
+              Cancel
             </Button>
           </DialogActions>
         </Dialog>
@@ -56,4 +56,4 @@ class PostModal extends React.Component {
   }
 }
 
-export default PostModal;
+export default DeletePostButton;

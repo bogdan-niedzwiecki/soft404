@@ -17,11 +17,11 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 2,
     [theme.breakpoints.down('sm')]: {
       marginLeft: theme.spacing.unit * 2,
-      display: "none",
+       display: "none",      
     },
     [theme.breakpoints.up('sm')]: {
       display: "inline-block",
-      width: "50%"
+      width: "40%"
     },
     
   },
@@ -46,14 +46,14 @@ const styles = theme => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: 200
+      width: "100%"
     }
   }
 });
 
 class Search extends React.Component {
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.search}>
         <div className={classes.searchIcon}>
@@ -71,4 +71,4 @@ class Search extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Search);
+export default withStyles(styles)(Search);

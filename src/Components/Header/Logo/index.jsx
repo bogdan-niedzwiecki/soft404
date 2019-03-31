@@ -3,17 +3,10 @@ import Avatar from "@material-ui/core/Avatar";
 import { NavLink } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 
-const styles = theme => ({
+const styles = () => ({
   logo: {
-    display: "none",
-    left: 0,
-    // marginRight: theme.spacing.unit * 2,
-    [theme.breakpoints.up("md")]: {
-      display: "inline-block",
-      width: 60,
-      height: 60,
-      left: 0,
-    }
+    width: 60,
+    height: 60
   }
 });
 
@@ -23,9 +16,9 @@ class Logo extends React.Component {
     return (
       <div>
         <Avatar
-          alt="Soft 404"
+          alt="Soft404 logo"
           className={classes.logo}
-          src="https://cdn3.iconfinder.com/data/icons/hosting-glyphs/60/error__attack__dos_404_-512.png"
+          src="https://pugofka.com/upload/iblock/bb0/404_error.png"
           component={NavLink}
           to="/"
         />
@@ -34,4 +27,4 @@ class Logo extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Logo);
+export default withStyles(styles)(Logo);
