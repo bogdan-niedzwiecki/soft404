@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
@@ -16,6 +15,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { NavLink } from "react-router-dom";
+import DeleteButton from "./DeleteButton/index";
+
 
 const styles = theme => ({
   card: {
@@ -82,10 +84,9 @@ class Post extends React.Component {
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Delete post">
-            <DeleteIcon />
-          </IconButton>
-          <IconButton aria-label="Edit post">
+          <DeleteButton />
+          
+          <IconButton aria-label="Edit post" component={NavLink} to="/editPost">
             <EditIcon />
           </IconButton>
           <IconButton
