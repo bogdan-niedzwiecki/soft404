@@ -173,12 +173,12 @@ class Header extends React.Component {
         </div>
         <Divider />
         <List>
-        <ListItem button key="Home" component={NavLink} to="/">
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItem>
+          <ListItem button key="Home" component={NavLink} to="/">
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItem>
           {auth && (
             <div>
           <ListItem button key="Posts" component={NavLink} to="/posts">

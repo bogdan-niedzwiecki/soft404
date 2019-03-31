@@ -1,5 +1,7 @@
 import React from "react";
-import "./LogInFormStyle.css";
+import styles from "./LogInFormStyle";
+import { withStyles } from "@material-ui/core/styles";
+import { NavLink } from "react-router-dom";
 import {
   MDBContainer,
   MDBRow,
@@ -12,15 +14,16 @@ import {
   MDBInput
 } from "mdbreact";
 
-class LoginButton extends React.Component {
+class LogIn extends React.Component {
   render() {
+    const { classes } = this.props;
     return (
-      <MDBContainer className="d-flex align-content-center body" >
-        <MDBRow >
+      <MDBContainer className={classes.body}>
+        <MDBRow className={classes.content}>
           <MDBCol>
             <MDBCard>
               <MDBCardBody className="mx-4">
-                <div className="text-center" >
+                <div className="text-center">
                   <h3 className="dark-grey-text mb-5">
                     <strong>Sign in</strong>
                   </h3>
@@ -46,15 +49,22 @@ class LoginButton extends React.Component {
                     Password?
                   </a>
                 </p>
+
                 <div className="text-center  mb-3">
-                  <MDBBtn
-                    type="button"
-                    gradient="winter-neva"
-                    rounded
-                    className="btn-block z-depth-1a"
-                  >
-                    Sign in
-                  </MDBBtn>
+                  <NavLink component={NavLink} to="/">
+                    <MDBBtn
+                      type="button"
+                      active
+                      gradient="winter-neva"
+                      rounded
+                      className="btn-block z-depth-1a"
+                      // when i want to riderect to other page
+                      // href="/"
+                      // target="_blanc"
+                    >
+                      Sign in
+                    </MDBBtn>
+                  </NavLink>
                 </div>
                 <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
                   or Sign in with:
@@ -90,6 +100,7 @@ class LoginButton extends React.Component {
                   </MDBBtn>
                 </div>
               </MDBCardBody>
+
               <MDBModalFooter className="mx-5 pt-3 mb-1">
                 <p className="font-small grey-text d-flex justify-content-end">
                   Not a member?
@@ -106,6 +117,4 @@ class LoginButton extends React.Component {
   }
 }
 
-
-
-export default LoginButton;
+export default withStyles(styles, { withTheme: true })(LogIn);

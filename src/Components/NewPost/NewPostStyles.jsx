@@ -9,14 +9,25 @@ const styles = theme => ({
       marginLeft: 240
     }
   },
+  head: {
+    display: 'flex',
+    width: 140,
+   margin: "auto",
+  },  
+ 
+  card: {
+    width: 400,
+    margin: "auto",
+    marginBottom: 20,
+    flexWrap: 1,
+  },
 
   toolbar: theme.mixins.toolbar,
   container: {
     display: "flex",
-    flexWrap: 1,
-    maxwith: 400,
-    margin: "auto"
-  }
+    
+    },
+   
 });
 
 export default styles;
