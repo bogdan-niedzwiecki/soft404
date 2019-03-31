@@ -35,7 +35,7 @@ class NewPost extends React.Component {
                   container
                   direction="column"
                   justify="space-around"
-                  alignItems="center"
+                  alignItems="stretch"
                 >
                   <TextField
                     id="outlined-required"

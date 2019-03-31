@@ -4,7 +4,7 @@ import Header from "./Components/Header/index";
 import PostsList from "./Components/PostsList/index";
 import Footer from "./Components/Footer/index";
 import NewPost from "./Components/NewPost/NewPost";
-import LogIn from "./Components/LogIn/LoginForm";
+import Login from "./Components/Login/LoginForm";
 import {
   BrowserRouter,
   Route,
@@ -17,8 +17,8 @@ class App extends Component {
       <BrowserRouter>
         <Header/>
         <Route exact path="/" component={PostsList} />
-        <Route exact path="/LogIn" component={LogIn} />
-        <Route exact path="/create" component={NewPost} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/addPost" component={NewPost} />
         <Footer />
       </BrowserRouter>
     ); 

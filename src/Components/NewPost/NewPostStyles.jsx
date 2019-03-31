@@ -3,31 +3,27 @@ const styles = theme => ({
     display: "flex"
   },
   content: {
+    marginTop: 30,
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: 240
-    }
+    padding: theme.spacing.unit * 3
   },
   head: {
-    display: 'flex',
+    display: "flex",
     width: 140,
-   margin: "auto",
-  },  
- 
+    margin: "auto"
+  },
+
   card: {
-    width: 400,
+    width: 600,
     margin: "auto",
     marginBottom: 20,
-    flexWrap: 1,
+    flexWrap: 1
   },
 
   toolbar: theme.mixins.toolbar,
   container: {
-    display: "flex",
-    
-    },
-   
+    display: "flex"
+  }
 });
 
 export default styles;

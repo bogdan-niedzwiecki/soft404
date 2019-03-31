@@ -1,19 +1,12 @@
 const styles = theme => ({
   body: {
-    display: "flex"
-
+    display: "flex",
+    marginTop: 120
   },
 
-  toolbar: theme.mixins.toolbar,
   content: {
-    flexGrow: 1,
-    maxwith: 600,
-    margin: "auto",
-    
-    padding: theme.spacing.unit * 10,
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: 240
-    }
+    width: 625,
+    margin: "auto"
   },
 });
 export default styles;
