@@ -6,14 +6,16 @@ import Footer from "./Components/Footer/index";
 import NewPost from "./Components/NewPost/NewPost";
 import Login from "./Components/LogIn/LoginForm";
 import { BrowserRouter, Route } from "react-router-dom";
+import Profile from "./Components/Profile/Profile";
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <Header />
-        <Route exact path="/" component={PostsList} />
+        <Route exact path="/" component={Profile} />
+        {/* <Route exact path="/" component={PostsList} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/addPost" component={NewPost} />
+        <Route exact path="/addPost" component={NewPost} /> */}
         <Footer />
       </BrowserRouter>
     );
