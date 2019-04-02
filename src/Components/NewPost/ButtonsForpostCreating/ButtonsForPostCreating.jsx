@@ -11,23 +11,27 @@ import SaveIcon from "@material-ui/icons/Save";
 import styles from "./ButtonsForPostCreatingStyle";
 import { NavLink } from "react-router-dom";
 
-function ButtonsForCreatingPost (props) {
-
-    const { classes } = props;
-    return (
+function ButtonsForCreatingPost(props) {
+  const { classes } = props;
+  return (
     <div className={classes.root}>
       <Grid container justify="center">
         <Grid item>
           <Tooltip title="SaveME!" placement="bottom-end">
-            <Button variant="contained" size="small" className={classes.button} component={NavLink} to="/posts">
+            <Button
+              variant="contained"
+              size="small"
+              className={classes.button}
+              component={NavLink}
+              to="/"
+            >
               Save
               <SaveIcon
                 className={classNames(classes.leftIcon, classes.iconSmall)}
               />
             </Button>
           </Tooltip>
-          {/* <AlertForPost /> */}
-          <Tooltip title="Cancel" placement="bottom-end"  >
+          <Tooltip title="Cancel" placement="bottom-end">
             <IconButton aria-label="Delete" component={NavLink} to="/">
               <DeleteIcon />
             </IconButton>
@@ -40,13 +44,13 @@ function ButtonsForCreatingPost (props) {
               type="file"
             />  */}
             <label htmlFor="icon-button-file">
-            <IconButton
-              color="primary"
-              className={classes.button}
-              component="span"
-            >
-              <PhotoCamera />
-            </IconButton>
+              <IconButton
+                color="primary"
+                className={classes.button}
+                component="span"
+              >
+                <PhotoCamera />
+              </IconButton>
             </label>
           </Tooltip>
         </Grid>
@@ -54,10 +58,5 @@ function ButtonsForCreatingPost (props) {
     </div>
   );
 }
-
-
-
-
-
 
 export default withStyles(styles)(ButtonsForCreatingPost);
