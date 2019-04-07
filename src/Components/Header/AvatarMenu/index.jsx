@@ -1,16 +1,11 @@
 import React from "react";
-import IconButton from "@material-ui/core/IconButton";
+import { IconButton, MenuItem, ListItemText, ListItemIcon, Menu, Avatar, Tooltip} from "@material-ui/core";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import LogoutIcon from "@material-ui/icons/Input";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import { withStyles } from "@material-ui/core/styles";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import Avatar from "@material-ui/core/Avatar";
 import { NavLink } from "react-router-dom";
-import Tooltip from '@material-ui/core/Tooltip';
-
+import ProfileArea from "../../Profile/ProfileArea";
+// import avatar from "../../Images/Avatar.jpg"
 const styles = () => ({
   avatar: {
     margin: -10,
@@ -35,16 +30,18 @@ class AvatarMenu extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        <Tooltip title="Hello, <user_name>">
+        <Tooltip title={ProfileArea.username="Morty"}  
+          >
         <IconButton
           aria-haspopup="true"
           onClick={this.handleClick}
           color="inherit"
         >
           <Avatar
-            alt="Remy Sharp"
+            alt="NEO"
             className={classes.avatar}
             src={this.props.src}
+            // image={avatar}
           />
         </IconButton>
         </Tooltip>

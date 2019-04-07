@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "typeface-roboto";
+// import "typeface-roboto";
 import Header from "./Components/Header/index";
 import PostsList from "./Components/PostsList/index";
 import Footer from "./Components/Footer/index";
@@ -12,12 +12,12 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Header />
-        <Route exact path="/" component={Profile} />
-        {/* <Route exact path="/" component={PostsList} />
+        <Route exact path="/profile" component={Profile} />
+        <Route exact path="/" component={PostsList} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/addPost" component={NewPost} /> */}
+        <Route exact path="/addPost" component={NewPost} />
         <Footer />
-      </BrowserRouter>
+      </BrowserRouter>  
     );
   }
 }

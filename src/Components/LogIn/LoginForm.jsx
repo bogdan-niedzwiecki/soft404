@@ -58,9 +58,7 @@ class LogIn extends React.Component {
                       gradient="winter-neva"
                       rounded
                       className="btn-block z-depth-1a"
-                      // when i want to riderect to other page
-                      // href="/"
-                      // target="_blanc"
+                      
                     >
                       Sign in
                     </MDBBtn>

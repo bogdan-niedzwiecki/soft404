@@ -15,8 +15,8 @@ function ButtonsForCreatingPost(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <Grid container justify="center">
-        <Grid item>
+      
+        <Grid  item justify="space-between" alignItems="center">
           <Tooltip title="SaveME!" placement="bottom-end">
             <Button
               variant="contained"
@@ -54,7 +54,6 @@ function ButtonsForCreatingPost(props) {
             </label>
           </Tooltip>
         </Grid>
-      </Grid>
     </div>
   );
 }
