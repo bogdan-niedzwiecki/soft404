@@ -1,6 +1,7 @@
 import React from "react";
 import ProfileArea from "./ProfileArea";
 import classnames from "classnames";
+import { NavLink } from "react-router-dom";
 import styles from "./ProfileStyle";
 import {
   CardContent,
@@ -50,12 +51,12 @@ class Profile extends React.Component {
         <CardActions >
           <Grid container justify="space-around" alignItems="baseline">
             <Tooltip title="Edit">
-              <Fab color="secondary" aria-label="Edit">
+              <Fab color="secondary" aria-label="Edit" component={NavLink} to="/editProfile">
                 <Icon>edit_icon</Icon>
               </Fab>
             </Tooltip>
             <Tooltip title="Delete">
-              <Fab aria-label="Delete">
+              <Fab aria-label="Delete" component={NavLink} to="/">
                 <DeleteIcon />
               </Fab>
             </Tooltip>
