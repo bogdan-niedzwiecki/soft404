@@ -2,13 +2,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import CreateIcon from '@material-ui/icons/Create';
 const styles = () => ({
   fabButton: {
-    position: 'absolute',
+    position: "fixed",
     zIndex: 1,
-    top: 40,
-    right: 100
+    bottom: 30,
+    right: 30
   },
 });
 
@@ -19,7 +19,7 @@ class AddPostButton extends React.Component {
       <div>
         <Fab color="secondary" aria-label="Add" className={classes.fabButton} component={NavLink}
           to="/addPost">
-            <AddIcon />
+            <CreateIcon />
         </Fab>
       </div>
     );

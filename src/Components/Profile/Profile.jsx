@@ -17,8 +17,9 @@ import {
   Grid
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import avatar from "../Images/Avatar.jpg";
+import { Redirect } from "react-router";
 
 class Profile extends React.Component {
   state = { expanded: false };
@@ -28,67 +29,68 @@ class Profile extends React.Component {
   };
 
   render() {
+    if (!sessionStorage.getItem("access_token")) {
+      return <Redirect to="/login" />;
+    }
+
     const { classes } = this.props;
     return (
-      <Card className={classes.content}>
-        <CardContent>
-          <CardMedia
-            className={classes.media}
-            component="img"
-            alt="Nice Photo"
-            image={avatar}
-            title="Contemplative Reptile"
-          />
-          <ProfileArea
-            username="Morty"
-            emailAddress="something@gmai.com"
-            age="5"
-            phone="73569877"
-          />
-        </CardContent>
-
-        <CardActions >
-          <Grid container justify="space-around" alignItems="baseline">
-            <Tooltip title="Edit">
-              <Fab color="secondary" aria-label="Edit">
-                <Icon>edit_icon</Icon>
-              </Fab>
-            </Tooltip>
-            <Tooltip title="Delete">
-              <Fab aria-label="Delete">
-                <DeleteIcon />
-              </Fab>
-            </Tooltip>
-          </Grid>
-          <Tooltip title="About me">
-            <IconButton
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.expanded
-              })}
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
-              aria-label="Show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          </Tooltip>
-        </CardActions>
-        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+      <main className={classes.root}>
+        <Card className={classes.content}>
           <CardContent>
-            <Typography paragraph>
-              An ex-hit-man comes out of retirement to track down the gangsters
-              that killed his dog and took everything from him.
-            </Typography>
-            <Typography paragraph>
-              The story focuses on John Wick (Reeves), searching for the men who
-              broke into his home, stole his vintage car and killed his puppy,
-              which serves as a memento of his recently deceased wife
-              (Moynahan). Stahelski and David Leitch directed the film together,
-              though only Stahelski was credited.
-            </Typography>
+            <CardMedia
+              className={classes.media}
+              component="img"
+              alt="user photo"
+              image={sessionStorage.getItem("avatar")}
+            />
+            <ProfileArea
+              username={sessionStorage.getItem("name")}
+              emailAddress={sessionStorage.getItem("email")}
+              age="example_age"
+              phone="example_phone"
+            />
           </CardContent>
-        </Collapse>
-      </Card>
+
+          <CardActions>
+            <IconButton aria-label="Edit profile">
+              <EditIcon />
+            </IconButton>
+
+            <IconButton aria-label="Delete profile">
+              <DeleteIcon />
+            </IconButton>
+
+            <Tooltip title="About me">
+              <IconButton
+                className={classnames(classes.expand, {
+                  [classes.expandOpen]: this.state.expanded
+                })}
+                onClick={this.handleExpandClick}
+                aria-expanded={this.state.expanded}
+                aria-label="Show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            </Tooltip>
+          </CardActions>
+          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography paragraph>
+                An ex-hit-man comes out of retirement to track down the
+                gangsters that killed his dog and took everything from him.
+              </Typography>
+              <Typography paragraph>
+                The story focuses on John Wick (Reeves), searching for the men
+                who broke into his home, stole his vintage car and killed his
+                puppy, which serves as a memento of his recently deceased wife
+                (Moynahan). Stahelski and David Leitch directed the film
+                together, though only Stahelski was credited.
+              </Typography>
+            </CardContent>
+          </Collapse>
+        </Card>
+      </main>
     );
   }
 }

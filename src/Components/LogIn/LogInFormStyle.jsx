@@ -1,7 +1,7 @@
 const styles = theme => ({
-  body: {
+  root: {
     display: "flex",
-    marginTop: 120
+    padding: `0 ${theme.spacing.unit * 3}px`
   },
 
   content: {

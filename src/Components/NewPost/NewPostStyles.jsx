@@ -1,14 +1,14 @@
 const styles = theme => ({
+  root: {
+    padding: `0 ${theme.spacing.unit * 3}px`
+  },
   content: {
-    maxWidth: 400,
-    marginTop: "5%",
+    maxWidth: 600,
     margin: "auto"
   },
-  // footer: {
-  //   width: 100,
-  //   margin: "auto"
-  // },
-
+  container: {
+    paddingTop: -200
+  },
   toolbar: theme.mixins.toolbar
 });
 

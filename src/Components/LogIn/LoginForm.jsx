@@ -13,12 +13,51 @@ import {
   MDBBtn,
   MDBInput
 } from "mdbreact";
+import { Redirect } from 'react-router'
+import GoogleLogin from "react-google-login";
+
 
 class LogIn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userData: {
+        name: null,
+        surname: null,
+        userpic: null
+      }
+    };
+  }
   render() {
     const { classes } = this.props;
+
+    const responseGoogle = response => {
+      sessionStorage.setItem('access_token', response.Zi.access_token);
+      sessionStorage.setItem('name', response.w3.ofa);
+      sessionStorage.setItem('surname',response.w3.wea);
+      sessionStorage.setItem('avatar',response.w3.Paa);
+      sessionStorage.setItem('email',response.w3.U3);
+      console.log("response app/: ", response);
+      this.setState({
+        userData: {
+          name: response.w3.ofa,
+          surname: response.w3.wea,
+          userpic: response.w3.Paa
+        }
+      });
+      this.props.onSuccessLogin(this.state.userData);
+    };
+    const notResponseGoogle = response => {
+      console.log("Response is failed");
+      console.log(response);
+    };
+
+    if (sessionStorage.getItem("access_token")) {
+      return <Redirect to='/'/>;
+    }
+    
     return (
-      <MDBContainer className={classes.body}>
+      <MDBContainer className={classes.root}>
         <MDBRow className={classes.content}>
           <MDBCol>
             <MDBCard>
@@ -54,11 +93,10 @@ class LogIn extends React.Component {
                   <NavLink component={NavLink} to="/">
                     <MDBBtn
                       type="button"
+                      color="deep-orange"
                       active
-                      gradient="winter-neva"
-                      rounded
+                      outline="true"
                       className="btn-block z-depth-1a"
-                      
                     >
                       Sign in
                     </MDBBtn>
@@ -68,34 +106,13 @@ class LogIn extends React.Component {
                   or Sign in with:
                 </p>
                 <div className="row my-3 d-flex justify-content-center">
-                  <MDBBtn
-                    type="button"
-                    color="white"
-                    rounded
-                    className="mr-md-3 z-depth-1a"
-                  >
-                    <MDBIcon
-                      fab
-                      icon="facebook-f"
-                      className="blue-text text-center"
-                    />
-                  </MDBBtn>
-                  <MDBBtn
-                    type="button"
-                    color="white"
-                    rounded
-                    className="mr-md-3 z-depth-1a"
-                  >
-                    <MDBIcon fab icon="twitter" className="blue-text" />
-                  </MDBBtn>
-                  <MDBBtn
-                    type="button"
-                    color="white"
-                    rounded
-                    className="z-depth-1a"
-                  >
-                    <MDBIcon fab icon="google-plus-g" className="blue-text" />
-                  </MDBBtn>
+                  <GoogleLogin
+                    clientId="576077564511-fd1t0nbqe1av9rr70to25hnuce1j0mg7.apps.googleusercontent.com"
+                    buttonText="Sign in"
+                    onSuccess={responseGoogle}
+                    onFailure={notResponseGoogle}
+                    cookiePolicy={"single_host_origin"}
+                  />
                 </div>
               </MDBCardBody>
 

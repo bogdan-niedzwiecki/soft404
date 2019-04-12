@@ -24,7 +24,7 @@ const styles = () => ({
   card: {
     maxWidth: 600,
     margin: "auto",
-    marginBottom: 50
+    marginBottom: 40
   },
   media: {
     height: 0,
@@ -61,7 +61,7 @@ class Post extends React.Component {
             <Avatar
               aria-label="Post"
               className={classes.avatar}
-              src={"https://material-ui.com/static/images/avatar/1.jpg"}
+              src={sessionStorage.getItem("avatar")}
             />
           }
           title={this.props.title}
@@ -80,7 +80,11 @@ class Post extends React.Component {
           />
           <CardContent>
             <Typography paragraph>
-              {this.props.content.slice(0, this.props.content.lastIndexOf(" ", 200))}...
+              {this.props.content.slice(
+                0,
+                this.props.content.lastIndexOf(" ", 200)
+              )}
+              ...
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -91,7 +95,10 @@ class Post extends React.Component {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {this.props.title}
+            <Typography paragraph variant="title">
+              {this.props.title}
+            </Typography>
+
             <Typography paragraph variant="caption">
               {this.props.date.toLocaleDateString("en-US", {
                 weekday: "long",
@@ -104,7 +111,7 @@ class Post extends React.Component {
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               <img src={this.props.img} className={classes.image} />
-
+              <Typography paragraph />
               <Typography paragraph>{this.props.content}</Typography>
             </DialogContentText>
           </DialogContent>

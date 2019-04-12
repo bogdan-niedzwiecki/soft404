@@ -7,7 +7,7 @@ import InputBase from "@material-ui/core/InputBase";
 const styles = theme => ({
   search: {
     position: "relative",
-    
+    left: "7%",
     borderRadius: 16,
     backgroundColor: fade(theme.palette.common.white, 0.9),
     "&:hover": {

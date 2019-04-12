@@ -1,23 +1,68 @@
 import React, { Component } from "react";
-// import "typeface-roboto";
+import { Redirect } from "react-router";
 import Header from "./Components/Header/index";
 import PostsList from "./Components/PostsList/index";
 import Footer from "./Components/Footer/index";
 import NewPost from "./Components/NewPost/NewPost";
-import Login from "./Components/LogIn/LoginForm";
 import { BrowserRouter, Route } from "react-router-dom";
 import Profile from "./Components/Profile/Profile";
+import LoginForm from "./Components/Login/LoginForm";
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userData: {
+        name: null,
+        surname: null,
+        userpic: null
+      }
+    };
+    this.getUserData = this.getUserData.bind(this);
+  }
+  getUserData(userDetails) {
+    this.setState({
+      userData: {
+        name: userDetails.name,
+        surname: userDetails.surname,
+        userpic: userDetails.userpic
+      }
+    });
+  }
   render() {
     return (
       <BrowserRouter>
-        <Header />
-        <Route exact path="/profile" component={Profile} />
+        <Route
+          path="/"
+          render={() => {
+            return <Header />;
+          }}
+        />
+        <Route
+          exact
+          path="/login"
+          render={() => {
+            return <LoginForm onSuccessLogin={this.getUserData} />;
+          }}
+        />
+        <Route
+          exact
+          path="/logout"
+          render={() => {
+            sessionStorage.removeItem('access_token');
+            return <Redirect to="/login" />;
+          }}
+        />
+
         <Route exact path="/" component={PostsList} />
-        <Route exact path="/login" component={Login} />
         <Route exact path="/addPost" component={NewPost} />
-        <Footer />
-      </BrowserRouter>  
+        <Route exact path="/profile" component={Profile} />
+        <Route
+          path="/"
+          render={() => {
+            return <Footer />;
+          }}
+        />
+      </BrowserRouter>
     );
   }
 }

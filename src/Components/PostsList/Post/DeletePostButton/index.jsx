@@ -55,5 +55,4 @@ class DeletePostButton extends React.Component {
     );
   }
 }
-
-export default DeletePostButton;
+export default (DeletePostButton);
