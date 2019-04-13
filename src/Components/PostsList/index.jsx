@@ -1,7 +1,6 @@
 import React from "react";
 import Post from "./Post/index";
 import { withStyles } from "@material-ui/core/styles";
-import { Redirect } from "react-router";
 
 const styles = theme => ({
   root: {
@@ -12,11 +11,6 @@ const styles = theme => ({
 class PostsList extends React.Component {
   render() {
     const { classes } = this.props;
-
-    if (!sessionStorage.getItem("access_token")) {
-      return <Redirect to="/login" />;
-    }
-
     return (
       <main className={classes.root}>
         <Post

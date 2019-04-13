@@ -18,7 +18,7 @@ class AddPostButton extends React.Component {
     return (
       <div>
         <Fab color="secondary" aria-label="Add" className={classes.fabButton} component={NavLink}
-          to="/addPost">
+          to="/create_post">
             <CreateIcon />
         </Fab>
       </div>

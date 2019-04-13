@@ -8,16 +8,10 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardActions from "@material-ui/core/CardActions";
 import { CardContent } from "@material-ui/core";
-import { Redirect } from "react-router";
 
 class NewPost extends React.Component {
   render() {
     const { classes } = this.props;
-
-    if (!sessionStorage.getItem("access_token")) {
-      return <Redirect to="/login" />;
-    }
-
     return (
       <main className={classes.root}>
         <Card className={classes.content}>

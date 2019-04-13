@@ -4,9 +4,6 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import LogoutIcon from "@material-ui/icons/Input";
 import { withStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
-import ProfileArea from "../../Profile/ProfileArea";
-import { isNull } from "util";
-// import avatar from "../../Images/Avatar.jpg"
 const styles = () => ({
   avatar: {
     margin: -8,

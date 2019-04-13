@@ -9,17 +9,13 @@ import {
   CardActions,
   Card,
   withStyles,
-  Icon,
   Tooltip,
-  Fab,
   Collapse,
   IconButton,
-  Grid
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { Redirect } from "react-router";
 
 class Profile extends React.Component {
   state = { expanded: false };
@@ -29,10 +25,6 @@ class Profile extends React.Component {
   };
 
   render() {
-    if (!sessionStorage.getItem("access_token")) {
-      return <Redirect to="/login" />;
-    }
-
     const { classes } = this.props;
     return (
       <main className={classes.root}>

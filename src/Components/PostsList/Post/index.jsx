@@ -5,7 +5,6 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
@@ -36,7 +35,13 @@ const styles = () => ({
 
   image: {
     borderRadius: 5,
-    width: "100%"
+    width: "100%",
+    marginBottom: 20
+  },
+  date: {
+    fontSize: 13,
+    color: "grey",
+    fontWeight: "normal"
   }
 });
 
@@ -72,7 +77,7 @@ class Post extends React.Component {
             day: "numeric"
           })}
         />
-        <CardActionArea onClick={this.handleClickOpen}>
+        <CardActionArea onClick={this.handleClickOpen} style={{ outline: 0 }}>
           <CardMedia
             className={classes.media}
             image={this.props.img}
@@ -95,24 +100,21 @@ class Post extends React.Component {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            <Typography paragraph variant="title">
-              {this.props.title}
-            </Typography>
-
-            <Typography paragraph variant="caption">
+            {this.props.title}
+            <br />
+            <span className={classes.date}>
               {this.props.date.toLocaleDateString("en-US", {
                 weekday: "long",
                 year: "numeric",
                 month: "long",
                 day: "numeric"
               })}
-            </Typography>
+            </span>
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              <img src={this.props.img} className={classes.image} />
-              <Typography paragraph />
-              <Typography paragraph>{this.props.content}</Typography>
+              <img src={this.props.img} className={classes.image} alt="" />
+              {this.props.content}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -123,7 +125,11 @@ class Post extends React.Component {
         </Dialog>
         <CardActions className={classes.actions} disableActionSpacing>
           <DeletePostButton />
-          <IconButton aria-label="Edit post" component={NavLink} to="/editPost">
+          <IconButton
+            aria-label="Edit post"
+            component={NavLink}
+            to="/edit_post"
+          >
             <EditIcon />
           </IconButton>
         </CardActions>

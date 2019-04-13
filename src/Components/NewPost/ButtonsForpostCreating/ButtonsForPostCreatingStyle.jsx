@@ -1,5 +1,3 @@
-export default styles;
-
 const styles = theme => ({
   root: {
     width: 500,
@@ -29,3 +27,4 @@ const styles = theme => ({
     display: "none"
   }
 });
+export default styles;

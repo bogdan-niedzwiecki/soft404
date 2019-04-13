@@ -17,8 +17,6 @@ const styles = theme => ({
 class Header extends React.Component {
   render() {
     const { classes } = this.props;
-
-    if (sessionStorage.getItem("access_token")) {
       return (
         <header className={classes.root}>
           <AppBar position="fixed" color="default">
@@ -39,9 +37,6 @@ class Header extends React.Component {
           </AppBar>
         </header>
       );
-    } else {
-      return <header style={{marginBottom: 50}}/>;
-    }
   }
 }
 

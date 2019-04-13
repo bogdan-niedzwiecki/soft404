@@ -18,6 +18,7 @@ class App extends Component {
       }
     };
     this.getUserData = this.getUserData.bind(this);
+    this.removeUserStorage = this.removeUserStorage.bind(this);
   }
   getUserData(userDetails) {
     this.setState({
@@ -28,13 +29,25 @@ class App extends Component {
       }
     });
   }
+
+  removeUserStorage() {
+    sessionStorage.removeItem("access_token");
+    sessionStorage.removeItem("name");
+    sessionStorage.removeItem("surname");
+    sessionStorage.removeItem("avatar");
+    sessionStorage.removeItem("email");
+  }
   render() {
     return (
       <BrowserRouter>
         <Route
           path="/"
           render={() => {
-            return <Header />;
+            if (sessionStorage.getItem("access_token")) {
+              return <Header />;
+            } else {
+              return;
+            }
           }}
         />
         <Route
@@ -48,18 +61,51 @@ class App extends Component {
           exact
           path="/logout"
           render={() => {
-            sessionStorage.removeItem('access_token');
+            this.removeUserStorage();
             return <Redirect to="/login" />;
           }}
         />
-
-        <Route exact path="/" component={PostsList} />
-        <Route exact path="/addPost" component={NewPost} />
-        <Route exact path="/profile" component={Profile} />
+        <Route
+          exact
+          path="/"
+          render={() => {
+            if (sessionStorage.getItem("access_token")) {
+              return <PostsList />;
+            } else {
+              return <Redirect to="/login" />;
+            }
+          }}
+        />
+        <Route
+          exact
+          path="/create_post"
+          render={() => {
+            if (sessionStorage.getItem("access_token")) {
+              return <NewPost />;
+            } else {
+              return <Redirect to="/login" />;
+            }
+          }}
+        />
+        <Route
+          exact
+          path="/profile"
+          render={() => {
+            if (sessionStorage.getItem("access_token")) {
+              return <Profile />;
+            } else {
+              return <Redirect to="/login" />;
+            }
+          }}
+        />
         <Route
           path="/"
           render={() => {
-            return <Footer />;
+            if (sessionStorage.getItem("access_token")) {
+              return <Footer />;
+            } else {
+              return;
+            }
           }}
         />
       </BrowserRouter>

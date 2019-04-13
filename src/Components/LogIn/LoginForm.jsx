@@ -9,7 +9,6 @@ import {
   MDBCard,
   MDBCardBody,
   MDBModalFooter,
-  MDBIcon,
   MDBBtn,
   MDBInput
 } from "mdbreact";
@@ -17,7 +16,7 @@ import { Redirect } from 'react-router'
 import GoogleLogin from "react-google-login";
 
 
-class LogIn extends React.Component {
+class LoginFrom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -132,4 +131,4 @@ class LogIn extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(LogIn);
+export default withStyles(styles, { withTheme: true })(LoginFrom);

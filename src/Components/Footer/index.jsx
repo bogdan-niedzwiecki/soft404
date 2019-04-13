@@ -1,5 +1,4 @@
 import React from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -14,22 +13,22 @@ const styles = theme => ({
 class Footer extends React.Component {
   render() {
     const { classes } = this.props;
-    if (sessionStorage.getItem("access_token")) {
-      return (
-        <footer className={classes.root}>
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="textSecondary"
-            paragraph
-          >
-            Built with ❤️ by Soft404 team.
-          </Typography>
-        </footer>
-      );
-    } else {
-      return (<footer/>);
-    }
+    return (
+      <footer className={classes.root}>
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="textSecondary"
+          paragraph
+        >
+          Built with
+          <span role="img" aria-labelledby="footer-emoji">
+            ❤️
+          </span>
+          by Soft404 team.
+        </Typography>
+      </footer>
+    );
   }
 }
 export default withStyles(styles, { withTheme: true })(Footer);
