@@ -7,6 +7,7 @@ import NewPost from "./Components/NewPost/NewPost";
 import { BrowserRouter, Route } from "react-router-dom";
 import Profile from "./Components/Profile/Profile";
 import LoginForm from "./Components/Login/LoginForm";
+import EditProfile from "./Components/Profile/EditProfile/EditProfie"
 class App extends Component {
   constructor(props) {
     super(props);
@@ -93,6 +94,17 @@ class App extends Component {
           render={() => {
             if (sessionStorage.getItem("access_token")) {
               return <Profile />;
+            } else {
+              return <Redirect to="/login" />;
+            }
+          }}
+        />
+         <Route
+          exact
+          path="/edit_Profile"
+          render={() => {
+            if (sessionStorage.getItem("access_token")) {
+              return <EditProfile />;
             } else {
               return <Redirect to="/login" />;
             }

@@ -110,12 +110,14 @@ class NewPost extends React.Component {
               <CardActions className={classes.footer}>
               <Tooltip title="SaveME!" placement="bottom-end">
                 <Button
-                  variant="contained"
-                  size="large"
-                  color="inherit"
+                  variant="outlined"
+                  aria-label="Save"
+                  size="medium"
+                  color="primary"
                   onClick={this.handleSubmit}
+                  autoFocus
                   component={NavLink}
-                  to="/post"
+                  to="/"
                 >
                   Save
                   <SaveIcon/>

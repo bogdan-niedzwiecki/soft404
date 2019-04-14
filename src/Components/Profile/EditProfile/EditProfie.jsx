@@ -1,8 +1,8 @@
 import React from "react";
-import ProfileArea from "./ProfileArea";
+import ProfileArea from "../ProfileArea";
 import classnames from "classnames";
 import { NavLink } from "react-router-dom";
-import styles from "./ProfileStyle";
+import styles from "../ProfileStyle";
 import {
   CardContent,
   CardMedia,
@@ -20,11 +20,10 @@ import {
   DialogContentText,
   DialogTitle, Grid
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
+import SaveIcon from "@material-ui/icons/Save";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-class Profile extends React.Component {
+class EditProfile extends React.Component {
   state = {
     open: false,
     expanded: false
@@ -63,17 +62,25 @@ class Profile extends React.Component {
           </CardContent>
 
           <CardActions>
-            <Tooltip title="Edit Profile">
-            <IconButton aria-label="Edit profile" color="primary" size="large" component={NavLink} to="/edit_Profile">
-              <EditIcon />
-            </IconButton>
-            </Tooltip>
-            <Tooltip title="Delete Profile"> 
-            <IconButton aria-label="Delete profile" color="secondary" size="large" onClick={this.handleClickOpen}>
-              <DeleteIcon />
-            </IconButton>
-            </Tooltip>
-
+              <Grid container   
+                justify="center"
+                alignItems="stretch">
+              <Tooltip title="SaveME!" placement="bottom-end">
+                <Button
+                  variant="outlined"
+                  aria-label="Save"
+                  size="large"
+                  color="primary"
+                  onClick={this.handleClickOpen}
+                >
+                  Save
+                  <SaveIcon/>
+                </Button>
+              </Tooltip>
+              </Grid>
+           
+           
+            <Grid item xs={2}>
             <Tooltip title="About me">
               <IconButton
                 className={classnames(classes.expand, {
@@ -86,6 +93,7 @@ class Profile extends React.Component {
                 <ExpandMoreIcon />
               </IconButton>
             </Tooltip>
+            </Grid>
           </CardActions>
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             <CardContent>
@@ -109,10 +117,10 @@ class Profile extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Delete Account Page"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Edit Account"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-             After choosing this option you will delete all your profile information. 
+            The changes you made will be saved ! 
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -121,11 +129,11 @@ class Profile extends React.Component {
               justify="space-around"
               alignItems="center"  >
 
-            <Button onClick={this.handleClose}  variant="contained" size="medium" color="primary">
+            <Button onClick={this.handleClose}  variant="contained" size="medium" color="inherit">
               Cancel
             </Button>
-            <Button onClick={this.handleClose}  variant="contained" size="medium" color="secondary" component={NavLink} to="/logout"  >
-              Delete
+            <Button onClick={this.handleClose}  variant="contained" size="medium" color="primary" component={NavLink} to="/profile"  >
+              Save
             </Button>
             </Grid>
           </DialogActions>
@@ -135,4 +143,4 @@ class Profile extends React.Component {
   }
 }
 
-export default withStyles(styles)(Profile);
+export default withStyles(styles)(EditProfile);
