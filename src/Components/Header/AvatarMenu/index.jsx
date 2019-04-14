@@ -4,11 +4,9 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import LogoutIcon from "@material-ui/icons/Input";
 import { withStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
-import ProfileArea from "../../Profile/ProfileArea";
-// import avatar from "../../Images/Avatar.jpg"
 const styles = () => ({
   avatar: {
-    margin: -10,
+    margin: -8,
   }
 });
 
@@ -24,24 +22,23 @@ class AvatarMenu extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
-
   render() {
     const { anchorEl } = this.state;
     const { classes } = this.props;
     return (
       <div>
-        <Tooltip title={ProfileArea.username="Morty"}  
+        <Tooltip title={`Hello, ${sessionStorage.getItem('name')}`}
           >
         <IconButton
           aria-haspopup="true"
           onClick={this.handleClick}
           color="inherit"
+          style={{outline: 0}}
         >
           <Avatar
-            alt="NEO"
+            alt="user photo"
             className={classes.avatar}
-            src={this.props.src}
-            // image={avatar}
+            src={sessionStorage.getItem('avatar')}
           />
         </IconButton>
         </Tooltip>
@@ -63,15 +60,14 @@ class AvatarMenu extends React.Component {
               
             />
           </MenuItem>
-          <MenuItem component={NavLink} to="/logout">
+          <MenuItem component={NavLink} to="/logout" >
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>
             <ListItemText
               classes={{ primary: classes.primary }}
               inset
-              primary="Logout"
-              component={NavLink} to="/logout"
+              primary="Sign out"
             />
           </MenuItem>
         </Menu>

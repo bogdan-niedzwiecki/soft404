@@ -30,7 +30,7 @@ class DeletePostButton extends React.Component {
         </IconButton>
         <Dialog
           maxWidth="sm"
-          fullWidth="true"
+          fullWidth
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"
@@ -55,5 +55,4 @@ class DeletePostButton extends React.Component {
     );
   }
 }
-
-export default DeletePostButton;
+export default (DeletePostButton);
