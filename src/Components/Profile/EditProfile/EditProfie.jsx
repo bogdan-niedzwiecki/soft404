@@ -18,7 +18,8 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle, Grid
+  DialogTitle,
+  Grid
 } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -41,10 +42,9 @@ class EditProfile extends React.Component {
     this.setState({ open: false });
   };
 
-
   render() {
-    
     const { classes } = this.props;
+
     return (
       <main className={classes.root}>
         <Card className={classes.content}>
@@ -62,9 +62,7 @@ class EditProfile extends React.Component {
           </CardContent>
 
           <CardActions>
-              <Grid container   
-                justify="center"
-                alignItems="stretch">
+            <Grid container justify="center" alignItems="stretch">
               <Tooltip title="SaveME!" placement="bottom-end">
                 <Button
                   variant="outlined"
@@ -74,25 +72,24 @@ class EditProfile extends React.Component {
                   onClick={this.handleClickOpen}
                 >
                   Save
-                  <SaveIcon/>
+                  <SaveIcon />
                 </Button>
               </Tooltip>
-              </Grid>
-           
-           
+            </Grid>
+
             <Grid item xs={2}>
-            <Tooltip title="About me">
-              <IconButton
-                className={classnames(classes.expand, {
-                  [classes.expandOpen]: this.state.expanded
-                })}
-                onClick={this.handleExpandClick}
-                aria-expanded={this.state.expanded}
-                aria-label="Show more"
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </Tooltip>
+              <Tooltip title="About me">
+                <IconButton
+                  className={classnames(classes.expand, {
+                    [classes.expandOpen]: this.state.expanded
+                  })}
+                  onClick={this.handleExpandClick}
+                  aria-expanded={this.state.expanded}
+                  aria-label="Show more"
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+              </Tooltip>
             </Grid>
           </CardActions>
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
@@ -120,21 +117,34 @@ class EditProfile extends React.Component {
           <DialogTitle id="alert-dialog-title">{"Edit Account"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-            The changes you made will be saved ! 
+              The changes you made will be saved !
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Grid container
+            <Grid
+              container
               direction="row"
               justify="space-around"
-              alignItems="center"  >
-
-            <Button onClick={this.handleClose}  variant="contained" size="medium" color="inherit">
-              Cancel
-            </Button>
-            <Button onClick={this.handleClose}  variant="contained" size="medium" color="primary" component={NavLink} to="/profile"  >
-              Save
-            </Button>
+              alignItems="center"
+            >
+              <Button
+                onClick={this.handleClose}
+                variant="contained"
+                size="medium"
+                color="inherit"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={this.handleClose}
+                variant="contained"
+                size="medium"
+                color="primary"
+                component={NavLink}
+                to="/profile"
+              >
+                Save
+              </Button>
             </Grid>
           </DialogActions>
         </Dialog>

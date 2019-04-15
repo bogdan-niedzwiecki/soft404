@@ -1,17 +1,17 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
-
+import React from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 
 class DeletePostButton extends React.Component {
   state = {
-    open: false,
+    open: false
   };
 
   handleClickOpen = () => {
@@ -25,9 +25,15 @@ class DeletePostButton extends React.Component {
   render() {
     return (
       <div>
-        <IconButton aria-label="Delete post" onClick={this.handleClickOpen}>
+        <Tooltip title="Delete">
+          <IconButton
+            aria-label="Delete post"
+            onClick={this.handleClickOpen}
+            color="secondary"
+          >
             <DeleteIcon />
-        </IconButton>
+          </IconButton>
+        </Tooltip>
         <Dialog
           maxWidth="sm"
           fullWidth
@@ -36,7 +42,9 @@ class DeletePostButton extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Delete this post?"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">
+            {"Delete this post?"}
+          </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               Are you sure you want to remove this post from posts list ?
@@ -55,4 +63,4 @@ class DeletePostButton extends React.Component {
     );
   }
 }
-export default (DeletePostButton);
+export default DeletePostButton;

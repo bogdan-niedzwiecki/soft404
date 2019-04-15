@@ -1,49 +1,27 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import {
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Avatar,
+  IconButton,
+  Typography,
+  CardActionArea,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Tooltip
+} from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { NavLink } from "react-router-dom";
 import DeletePostButton from "./DeletePostButton/index";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-
-const styles = () => ({
-  card: {
-    maxWidth: 600,
-    margin: "auto",
-    marginBottom: 40
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%" // 16:9
-  },
-  actions: {
-    display: "flex"
-  },
-
-  image: {
-    borderRadius: 5,
-    width: "100%",
-    marginBottom: 20
-  },
-  date: {
-    fontSize: 13,
-    color: "grey",
-    fontWeight: "normal"
-  }
-});
+import styles from "./PostStyles";
 
 class Post extends React.Component {
   state = { open: false };
@@ -125,13 +103,16 @@ class Post extends React.Component {
         </Dialog>
         <CardActions className={classes.actions} disableActionSpacing>
           <DeletePostButton />
-          <IconButton
-            aria-label="Edit post"
-            component={NavLink}
-            to="/edit_post"
-          >
-            <EditIcon />
-          </IconButton>
+          <Tooltip title="Edit">
+            <IconButton
+              aria-label="Edit post"
+              component={NavLink}
+              to="/edit_post"
+              color="primary"
+            >
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
         </CardActions>
       </Card>
     );

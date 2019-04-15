@@ -18,9 +18,7 @@ import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import SaveIcon from "@material-ui/icons/Save";
 import { NavLink } from "react-router-dom";
 
-
 class NewPost extends React.Component {
-
   constructor(props) {
     super(props);
     this.takingTitleChange = this.takingTitleChange.bind(this);
@@ -55,15 +53,13 @@ class NewPost extends React.Component {
   };
 
   render() {
-
     const {
-      post: { title, text }
-    } = this.state,
-    { classes } = this.props;
+        post: { title, text }
+      } = this.state,
+      { classes } = this.props;
 
     return (
- 
-<Card className={classes.content}>
+      <Card className={classes.content}>
         <CssBaseline />
         <div className={classes.toolbar} />
         <form className={classes.container} noValidate autoComplete="off">
@@ -93,62 +89,66 @@ class NewPost extends React.Component {
               />
 
               <TextField
-                  id="update"
-                  label="Content of the Post"
-                  placeholder="It was a monday, day like any other day"
-                  rows="10"
-                  rowsMax="13"
-                  required={true}
-                  inputProps={{ maxLength: 1000 }}
-                  multiline
-                  margin="normal"
-                  variant="outlined"
-                  value={text}
-                  onChange={this.takingTextChange}
-               
+                id="update"
+                label="Content of the Post"
+                placeholder="It was a monday, day like any other day"
+                rows="10"
+                rowsMax="13"
+                required={true}
+                inputProps={{ maxLength: 1000 }}
+                multiline
+                margin="normal"
+                variant="outlined"
+                value={text}
+                onChange={this.takingTextChange}
               />
               <CardActions className={classes.footer}>
-              <Tooltip title="SaveME!" placement="bottom-end">
-                <Button
-                  variant="outlined"
-                  aria-label="Save"
-                  size="medium"
-                  color="primary"
-                  onClick={this.handleSubmit}
-                  autoFocus
-                  component={NavLink}
-                  to="/"
-                >
-                  Save
-                  <SaveIcon/>
-                </Button>
-              </Tooltip>
-              <Tooltip title="Cancel" placement="bottom-center">
-                <IconButton aria-label="Delete" onClick={this.handleDataReset} color="secondary" size="medium">
-                  <DeleteIcon />
-                </IconButton>
-              </Tooltip>
-
-              <input
-                component="span"
-                accept="image/*"
-                style={{ display: "none" }}
-                id="raised-button-file"
-                multiple
-                type="file"
-              />
-              <label htmlFor="raised-button-file">
-                <Tooltip title="Upload Photo" placement="bottom-right">
-                  <IconButton
-                    variant="contained"
+                <Tooltip title="SaveME!" placement="bottom-end">
+                  <Button
+                    variant="outlined"
+                    aria-label="Save"
+                    size="medium"
                     color="primary"
-                    component="span"
+                    onClick={this.handleSubmit}
+                    autoFocus
+                    component={NavLink}
+                    to="/"
+                  >
+                    Save
+                    <SaveIcon />
+                  </Button>
+                </Tooltip>
+                <Tooltip title="Cancel" placement="bottom-center">
+                  <IconButton
+                    aria-label="Delete"
+                    onClick={this.handleDataReset}
+                    color="secondary"
                     size="medium"
                   >
-                    <PhotoCamera />
+                    <DeleteIcon />
                   </IconButton>
                 </Tooltip>
-              </label>
+
+                <input
+                  component="span"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  id="raised-button-file"
+                  multiple
+                  type="file"
+                />
+                <label htmlFor="raised-button-file">
+                  <Tooltip title="Upload Photo" placement="bottom-right">
+                    <IconButton
+                      variant="contained"
+                      color="primary"
+                      component="span"
+                      size="medium"
+                    >
+                      <PhotoCamera />
+                    </IconButton>
+                  </Tooltip>
+                </label>
               </CardActions>
             </Grid>
           </CardContent>
