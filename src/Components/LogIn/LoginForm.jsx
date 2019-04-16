@@ -44,24 +44,28 @@ class LoginForm extends React.Component {
       )
         .then(response => response.json())
         .then(resp => {
-          sessionStorage.setItem("azure_access_token", resp.authenticationToken);
-          this.setState({
-            userData: {
-              azure_token: resp.authenticationToken
-            }
-          }, () => this.props.onSuccessLogin(this.state.userData));
+          sessionStorage.setItem(
+            "azure_access_token",
+            resp.authenticationToken
+          );
+          this.setState(
+            {
+              userData: {
+                azure_token: resp.authenticationToken
+              }
+            },
+            () => this.props.onSuccessLogin(this.state.userData)
+          );
         });
 
       sessionStorage.setItem("name", response.w3.ofa);
       sessionStorage.setItem("surname", response.w3.wea);
       sessionStorage.setItem("avatar", response.w3.Paa);
       sessionStorage.setItem("email", response.w3.U3);
-
-      
     };
 
     const noResponseGoogle = response => {
-      console.log("Login has been failed");
+      alert("Login has been failed");
       console.log(response);
     };
 

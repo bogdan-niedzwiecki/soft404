@@ -15,8 +15,8 @@ class App extends Component {
         azure_token: false
       }
     };
-    // this.getUserData = this.getUserData.bind(this);
   }
+
   getUserData(userDetails) {
     this.setState({
       userData: {
@@ -30,70 +30,62 @@ class App extends Component {
       <BrowserRouter>
         <Route
           path="/"
-          render={() => {
-            if (sessionStorage.getItem("azure_access_token")) {
-              return <Header />;
-            } else {
-              return;
-            }
-          }}
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <Header />
+            ) : (
+              <React.Fragment />
+            )
+          }
         />
         <Route
           exact
           path="/login"
-          render={() => {
-            return <LoginForm onSuccessLogin={()=>this.getUserData} />;
-          }}
+          render={() => <LoginForm onSuccessLogin={() => this.getUserData} />}
         />
-        <Route
-          exact
-          path="/logout"
-          render={() => {
-            return <Redirect to="/login" />;
-          }}
-        />
+        <Route exact path="/logout" render={() => <Redirect to="/login" />} />
         <Route
           exact
           path="/"
-          render={() => {
-            if (sessionStorage.getItem("azure_access_token")) {
-              return <PostsList />;
-            } else {
-              return <Redirect to="/login" />;
-            }
-          }}
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <PostsList />
+            ) : (
+              <Redirect to="/login" />
+            )
+          }
         />
         <Route
           exact
           path="/create_post"
-          render={() => {
-            if (sessionStorage.getItem("azure_access_token")) {
-              return <NewPost authToken={this.state.userData.token} />;
-            } else {
-              return <Redirect to="/login" />;
-            }
-          }}
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <NewPost authToken={this.state.userData.token} />
+            ) : (
+              <Redirect to="/login" />
+            )
+          }
         />
         <Route
           exact
           path="/profile"
-          render={() => {
-            if (sessionStorage.getItem("azure_access_token")) {
-              return <Profile />;
-            } else {
-              return <Redirect to="/login" />;
-            }
-          }}
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <Profile />
+            ) : (
+              <Redirect to="/login" />
+            )
+          }
         />
         <Route
           path="/"
-          render={() => {
-            if (sessionStorage.getItem("azure_access_token")) {
-              return <Footer />;
-            } else {
-              return;
-            }
-          }}
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <Footer />
+            ) : (
+              <React.Fragment />
+            )
+          }
         />
       </BrowserRouter>
     );
