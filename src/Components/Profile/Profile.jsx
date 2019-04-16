@@ -39,8 +39,6 @@ class Profile extends React.Component {
             <ProfileArea
               username={sessionStorage.getItem("name")}
               emailAddress={sessionStorage.getItem("email")}
-              age="example_age"
-              phone="example_phone"
             />
           </CardContent>
 

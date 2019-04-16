@@ -9,6 +9,10 @@ const styles = theme => ({
   container: {
     paddingTop: -200
   },
+  footer: {
+    margin: "auto"
+  },
+
   toolbar: theme.mixins.toolbar
 });
 

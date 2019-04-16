@@ -25,7 +25,7 @@ class DeletePostButton extends React.Component {
   render() {
     return (
       <div>
-        <IconButton aria-label="Delete post" onClick={this.handleClickOpen}>
+        <IconButton aria-label="Delete post" color="secondary" onClick={this.handleClickOpen}>
             <DeleteIcon />
         </IconButton>
         <Dialog

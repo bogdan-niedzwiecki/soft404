@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
-import Header from "./Components/Header/index";
-import PostsList from "./Components/PostsList/index";
-import Footer from "./Components/Footer/index";
-import NewPost from "./Components/NewPost/NewPost";
+import Header from "./Components/Header/";
+import PostsList from "./Components/PostsList/";
+import Footer from "./Components/Footer/";
+import NewPost from "./Components/NewPost/";
 import { BrowserRouter, Route } from "react-router-dom";
 import Profile from "./Components/Profile/Profile";
 import LoginForm from "./Components/Login/LoginForm";
@@ -12,38 +12,26 @@ class App extends Component {
     super(props);
     this.state = {
       userData: {
-        name: null,
-        surname: null,
-        userpic: null
+        azure_token: false
       }
     };
-    this.getUserData = this.getUserData.bind(this);
-    this.removeUserStorage = this.removeUserStorage.bind(this);
+    // this.getUserData = this.getUserData.bind(this);
   }
   getUserData(userDetails) {
     this.setState({
       userData: {
-        name: userDetails.name,
-        surname: userDetails.surname,
-        userpic: userDetails.userpic
+        azure_token: userDetails.azure_token
       }
     });
   }
 
-  removeUserStorage() {
-    sessionStorage.removeItem("access_token");
-    sessionStorage.removeItem("name");
-    sessionStorage.removeItem("surname");
-    sessionStorage.removeItem("avatar");
-    sessionStorage.removeItem("email");
-  }
   render() {
     return (
       <BrowserRouter>
         <Route
           path="/"
           render={() => {
-            if (sessionStorage.getItem("access_token")) {
+            if (sessionStorage.getItem("azure_access_token")) {
               return <Header />;
             } else {
               return;
@@ -54,14 +42,13 @@ class App extends Component {
           exact
           path="/login"
           render={() => {
-            return <LoginForm onSuccessLogin={this.getUserData} />;
+            return <LoginForm onSuccessLogin={()=>this.getUserData} />;
           }}
         />
         <Route
           exact
           path="/logout"
           render={() => {
-            this.removeUserStorage();
             return <Redirect to="/login" />;
           }}
         />
@@ -69,7 +56,7 @@ class App extends Component {
           exact
           path="/"
           render={() => {
-            if (sessionStorage.getItem("access_token")) {
+            if (sessionStorage.getItem("azure_access_token")) {
               return <PostsList />;
             } else {
               return <Redirect to="/login" />;
@@ -80,8 +67,8 @@ class App extends Component {
           exact
           path="/create_post"
           render={() => {
-            if (sessionStorage.getItem("access_token")) {
-              return <NewPost />;
+            if (sessionStorage.getItem("azure_access_token")) {
+              return <NewPost authToken={this.state.userData.token} />;
             } else {
               return <Redirect to="/login" />;
             }
@@ -91,7 +78,7 @@ class App extends Component {
           exact
           path="/profile"
           render={() => {
-            if (sessionStorage.getItem("access_token")) {
+            if (sessionStorage.getItem("azure_access_token")) {
               return <Profile />;
             } else {
               return <Redirect to="/login" />;
@@ -101,7 +88,7 @@ class App extends Component {
         <Route
           path="/"
           render={() => {
-            if (sessionStorage.getItem("access_token")) {
+            if (sessionStorage.getItem("azure_access_token")) {
               return <Footer />;
             } else {
               return;
