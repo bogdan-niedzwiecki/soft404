@@ -9,16 +9,68 @@ import {
   MDBCard,
   MDBCardBody,
   MDBModalFooter,
-  MDBIcon,
   MDBBtn,
   MDBInput
 } from "mdbreact";
+import { Redirect } from "react-router";
+import GoogleLogin from "react-google-login";
 
-class LogIn extends React.Component {
+class LoginForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userData: {
+        google_token: false,
+        azure_token: false,
+        name: null,
+        surname: null,
+        userpic: null
+      }
+    };
+  }
   render() {
     const { classes } = this.props;
+
+    const responseGoogle = response => {
+      fetch(
+        "https://delfinkitrainingapi.azurewebsites.net/.auth/login/google",
+        {
+          method: "POST",
+          headers: { "content-type": "Application/JSON" },
+          body: JSON.stringify({
+            id_token: response.tokenId
+          })
+        }
+      )
+        .then(response => response.json())
+        .then(resp => {
+          sessionStorage.setItem("azure_access_token", resp.authenticationToken);
+          this.setState({
+            userData: {
+              azure_token: resp.authenticationToken
+            }
+          }, () => this.props.onSuccessLogin(this.state.userData));
+        });
+
+      sessionStorage.setItem("name", response.w3.ofa);
+      sessionStorage.setItem("surname", response.w3.wea);
+      sessionStorage.setItem("avatar", response.w3.Paa);
+      sessionStorage.setItem("email", response.w3.U3);
+
+      
+    };
+
+    const noResponseGoogle = response => {
+      console.log("Login has been failed");
+      console.log(response);
+    };
+
+    if (sessionStorage.getItem("azure_access_token")) {
+      return <Redirect to="/" />;
+    }
+
     return (
-      <MDBContainer className={classes.body}>
+      <MDBContainer className={classes.root}>
         <MDBRow className={classes.content}>
           <MDBCol>
             <MDBCard>
@@ -28,75 +80,57 @@ class LogIn extends React.Component {
                     <strong>Sign in</strong>
                   </h3>
                 </div>
-                <MDBInput
-                  label="Your email"
-                  group
-                  type="email"
-                  validate
-                  error="wrong"
-                  success="right"
-                />
-                <MDBInput
-                  label="Your password"
-                  group
-                  type="password"
-                  validate
-                  containerClass="mb-0"
-                />
-                <p className="font-small blue-text d-flex justify-content-end pb-3">
-                  Forgot
-                  <a href="#!" className="blue-text ml-1">
-                    Password?
-                  </a>
-                </p>
+                <form>
+                  <MDBInput
+                    label="Your email"
+                    group
+                    type="email"
+                    validate
+                    error="wrong"
+                    success="right"
+                    autoComplete="current-email"
+                  />
+                  <MDBInput
+                    label="Your password"
+                    group
+                    type="password"
+                    validate
+                    containerClass="mb-0"
+                    autoComplete="current-password"
+                  />
+                  <p className="font-small blue-text d-flex justify-content-end pb-3">
+                    Forgot
+                    <a href="#!" className="blue-text ml-1">
+                      Password?
+                    </a>
+                  </p>
 
-                <div className="text-center  mb-3">
-                  <NavLink component={NavLink} to="/">
-                    <MDBBtn
-                      type="button"
-                      active
-                      gradient="winter-neva"
-                      rounded
-                      className="btn-block z-depth-1a"
-                      
-                    >
-                      Sign in
-                    </MDBBtn>
-                  </NavLink>
-                </div>
-                <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
-                  or Sign in with:
-                </p>
-                <div className="row my-3 d-flex justify-content-center">
-                  <MDBBtn
-                    type="button"
-                    color="white"
-                    rounded
-                    className="mr-md-3 z-depth-1a"
-                  >
-                    <MDBIcon
-                      fab
-                      icon="facebook-f"
-                      className="blue-text text-center"
+                  <div className="text-center  mb-3">
+                    <NavLink to="/">
+                      <MDBBtn
+                        type="button"
+                        color="deep-orange"
+                        active
+                        outline
+                        className="btn-block z-depth-1a"
+                      >
+                        Sign in
+                      </MDBBtn>
+                    </NavLink>
+                  </div>
+                  <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
+                    or Sign in with:
+                  </p>
+                  <div className="row my-3 d-flex justify-content-center">
+                    <GoogleLogin
+                      clientId="576077564511-fd1t0nbqe1av9rr70to25hnuce1j0mg7.apps.googleusercontent.com"
+                      buttonText="Sign in"
+                      onSuccess={responseGoogle}
+                      onFailure={noResponseGoogle}
+                      cookiePolicy={"single_host_origin"}
                     />
-                  </MDBBtn>
-                  <MDBBtn
-                    type="button"
-                    color="white"
-                    rounded
-                    className="mr-md-3 z-depth-1a"
-                  >
-                    <MDBIcon fab icon="twitter" className="blue-text" />
-                  </MDBBtn>
-                  <MDBBtn
-                    type="button"
-                    color="white"
-                    rounded
-                    className="z-depth-1a"
-                  >
-                    <MDBIcon fab icon="google-plus-g" className="blue-text" />
-                  </MDBBtn>
-                </div>
+                  </div>
+                </form>
               </MDBCardBody>
 
               <MDBModalFooter className="mx-5 pt-3 mb-1">
@@ -115,4 +149,4 @@ class LogIn extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(LogIn);
+export default withStyles(styles, { withTheme: true })(LoginForm);

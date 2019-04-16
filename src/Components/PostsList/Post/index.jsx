@@ -5,7 +5,6 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
@@ -24,7 +23,7 @@ const styles = () => ({
   card: {
     maxWidth: 600,
     margin: "auto",
-    marginBottom: 50
+    marginBottom: 40
   },
   media: {
     height: 0,
@@ -36,7 +35,13 @@ const styles = () => ({
 
   image: {
     borderRadius: 5,
-    width: "100%"
+    width: "100%",
+    marginBottom: 20
+  },
+  date: {
+    fontSize: 13,
+    color: "grey",
+    fontWeight: "normal"
   }
 });
 
@@ -61,7 +66,7 @@ class Post extends React.Component {
             <Avatar
               aria-label="Post"
               className={classes.avatar}
-              src={"https://material-ui.com/static/images/avatar/1.jpg"}
+              src={sessionStorage.getItem("avatar")}
             />
           }
           title={this.props.title}
@@ -72,7 +77,7 @@ class Post extends React.Component {
             day: "numeric"
           })}
         />
-        <CardActionArea onClick={this.handleClickOpen}>
+        <CardActionArea onClick={this.handleClickOpen} style={{ outline: 0 }}>
           <CardMedia
             className={classes.media}
             image={this.props.img}
@@ -80,7 +85,11 @@ class Post extends React.Component {
           />
           <CardContent>
             <Typography paragraph>
-              {this.props.content.slice(0, this.props.content.lastIndexOf(" ", 200))}...
+              {this.props.content.slice(
+                0,
+                this.props.content.lastIndexOf(" ", 200)
+              )}
+              ...
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -92,20 +101,20 @@ class Post extends React.Component {
         >
           <DialogTitle id="alert-dialog-title">
             {this.props.title}
-            <Typography paragraph variant="caption">
+            <br />
+            <span className={classes.date}>
               {this.props.date.toLocaleDateString("en-US", {
                 weekday: "long",
                 year: "numeric",
                 month: "long",
                 day: "numeric"
               })}
-            </Typography>
+            </span>
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              <img src={this.props.img} className={classes.image} />
-
-              <Typography paragraph>{this.props.content}</Typography>
+              <img src={this.props.img} className={classes.image} alt="" />
+              {this.props.content}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -116,7 +125,11 @@ class Post extends React.Component {
         </Dialog>
         <CardActions className={classes.actions} disableActionSpacing>
           <DeletePostButton />
-          <IconButton aria-label="Edit post" component={NavLink} to="/editPost">
+          <IconButton
+            aria-label="Edit post"
+            component={NavLink}
+            to="/edit_post"
+          >
             <EditIcon />
           </IconButton>
         </CardActions>

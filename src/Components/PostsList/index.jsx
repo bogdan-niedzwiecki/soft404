@@ -3,25 +3,19 @@ import Post from "./Post/index";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
-  toolbar: theme.mixins.toolbar,
-  content: {
-    marginTop: 30,
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+  root: {
+    padding: `0 ${theme.spacing.unit * 3}px`
   }
 });
 
 class PostsList extends React.Component {
   render() {
     const { classes } = this.props;
-
     return (
-      <div>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Post
-            title="1Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            content="Nullam tincidunt metus tincidunt, dignissim nibh non,
+      <main className={classes.root}>
+        <Post
+          title="1Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          content="Nullam tincidunt metus tincidunt, dignissim nibh non,
             tincidunt turpis. Duis sit amet ex est. Aenean quis pellentesque arcu.
             Sed luctus nisl ut leo ullamcorper molestie. Nunc fermentum pretium neque,
             a vehicula mi interdum quis. Nunc est lacus, posuere ut velit in, porta vestibulum arcu.
@@ -52,13 +46,13 @@ class PostsList extends React.Component {
             id fermentum purus. Aenean ullamcorper est arcu, ac euismod odio suscipit sed. 
             Integer diam dui, egestas eu ligula ut, feugiat rhoncus nulla.
             Sed vel nulla in nulla gravida semper."
-            img="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/paella_7100_16x9.jpg"
-            altImg="alternative image text 1"
-            date={new Date()}
-          />
-          <Post
-            title="2Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            content="Nullam tincidunt metus tincidunt, dignissim nibh non,
+          img="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/paella_7100_16x9.jpg"
+          altImg="alternative image text 1"
+          date={new Date()}
+        />
+        <Post
+          title="2Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          content="Nullam tincidunt metus tincidunt, dignissim nibh non,
             tincidunt turpis. Duis sit amet ex est. Aenean quis pellentesque arcu.
             Sed luctus nisl ut leo ullamcorper molestie. Nunc fermentum pretium neque,
             a vehicula mi interdum quis. Nunc est lacus, posuere ut velit in, porta vestibulum arcu.
@@ -69,13 +63,13 @@ class PostsList extends React.Component {
             id fermentum purus. Aenean ullamcorper est arcu, ac euismod odio suscipit sed. 
             Integer diam dui, egestas eu ligula ut, feugiat rhoncus nulla.
             Sed vel nulla in nulla gravida semper."
-            img="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/paella_7100_16x9.jpg"
-            altImg="alternative image text 1"
-            date={new Date()}
-          />
-          <Post
-            title="3Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            content="Nullam tincidunt metus tincidunt, dignissim nibh non,
+          img="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/paella_7100_16x9.jpg"
+          altImg="alternative image text 1"
+          date={new Date()}
+        />
+        <Post
+          title="3Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          content="Nullam tincidunt metus tincidunt, dignissim nibh non,
             tincidunt turpis. Duis sit amet ex est. Aenean quis pellentesque arcu.
             Sed luctus nisl ut leo ullamcorper molestie. Nunc fermentum pretium neque,
             a vehicula mi interdum quis. Nunc est lacus, posuere ut velit in, porta vestibulum arcu.
@@ -86,12 +80,11 @@ class PostsList extends React.Component {
             id fermentum purus. Aenean ullamcorper est arcu, ac euismod odio suscipit sed. 
             Integer diam dui, egestas eu ligula ut, feugiat rhoncus nulla.
             Sed vel nulla in nulla gravida semper."
-            img="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/paella_7100_16x9.jpg"
-            altImg="alternative image text 1"
-            date={new Date()}
-          />
-        </main>
-      </div>
+          img="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/paella_7100_16x9.jpg"
+          altImg="alternative image text 1"
+          date={new Date()}
+        />
+      </main>
     );
   }
 }
