@@ -24,7 +24,7 @@ class NewPost extends React.Component {
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handlePhotoChange = this.handlePhotoChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { post: { title: "", text: "" } };
+    this.state = { post: { title: "", text: "" }, selectedFile: null };
   }
   handleTitleChange(event) {
     this.setState({ post: { ...this.state.post, title: event.target.value } });
@@ -39,9 +39,9 @@ class NewPost extends React.Component {
     this.setState({
       post: {
         title: "",
-        text: "",
-        selectedFile: ""
-      }
+        text: ""
+      },
+      selectedFile: null
     });
   };
 
