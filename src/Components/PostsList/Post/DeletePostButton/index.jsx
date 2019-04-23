@@ -30,7 +30,7 @@ class DeletePostButton extends React.Component {
   deletePost(event) {
     event.preventDefault();
     fetch(
-      `https://delfinkitrainingapi.azurewebsites.net/api/post`, 
+      `https://delfinkitrainingapi.azurewebsites.net/api/post/${this.props.delete_id}`, 
         { 
       method: 'DELETE',
       headers: {
@@ -38,7 +38,7 @@ class DeletePostButton extends React.Component {
       }
       }
       ).then(r => console.log(r))
-       .then(console.log(this.props.Id))
+       .then(console.log(this.props.delete_id))
        .then(this.handleClose)
        .then(() => this.props.history.push("/"));
   }
