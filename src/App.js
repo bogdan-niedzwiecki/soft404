@@ -7,6 +7,7 @@ import NewPost from "./Components/NewPost/";
 import { BrowserRouter, Route } from "react-router-dom";
 import Profile from "./Components/Profile/Profile";
 import LoginForm from "./Components/Login/LoginForm";
+import EditPost from "./Components/PostsList/EditPost/index";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -66,9 +67,32 @@ class App extends Component {
             )
           }
         />
+
+        <Route
+          exact
+          path="/edit_Post"
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <EditPost authToken={this.state.userData.token} />
+            ) : (
+              <Redirect to="/login" />
+            )
+          }
+        />
         <Route
           exact
           path="/profile"
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <Profile />
+            ) : (
+              <Redirect to="/login" />
+            )
+          }
+        />
+         <Route
+          exact
+          path="/edit_Profile"
           render={() =>
             sessionStorage.getItem("azure_access_token") ? (
               <Profile />

@@ -18,35 +18,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { Tooltip } from '@material-ui/core';
+import styles from "./styles";
 
-const styles = () => ({
-  card: {
-    maxWidth: 600,
-    margin: "auto",
-    marginBottom: 40
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%" // 16:9
-  },
-  actions: {
-    display: "flex"
-  },
-
-  image: {
-    borderRadius: 5,
-    width: "100%",
-    marginBottom: 20
-  },
-  date: {
-    fontSize: 13,
-    color: "grey",
-    fontWeight: "normal"
-  },
-  text: {
-    wordWrap: "break-word"
-  }
-});
 
 class Post extends React.Component {
   state = { open: false };
@@ -133,9 +107,11 @@ class Post extends React.Component {
           <IconButton
             aria-label="Edit post"
             component={NavLink}
-            to="/edit_post"
+            to="/edit_Post"
           >
-            <EditIcon />
+          <Tooltip title="Edit Post">
+            <EditIcon color="primary"/>
+            </Tooltip>
           </IconButton>
         </CardActions>
       </Card>

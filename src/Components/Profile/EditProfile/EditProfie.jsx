@@ -1,8 +1,8 @@
 import React from "react";
-import ProfileArea from "./ProfileArea";
+import ProfileArea from "../ProfileArea";
 import classnames from "classnames";
 import { NavLink } from "react-router-dom";
-import styles from "./ProfileStyle";
+import styles from "../ProfileStyle";
 import {
   CardContent,
   CardMedia,
@@ -18,19 +18,13 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle, Grid
+  DialogTitle,
+  Grid
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
+import SaveIcon from "@material-ui/icons/Save";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { withRouter } from "react-router";
 
-class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleDeleteProfile = this.handleDeleteProfile.bind(this);
-  }
-
+class EditProfile extends React.Component {
   state = {
     open: false,
     expanded: false
@@ -48,31 +42,9 @@ class Profile extends React.Component {
     this.setState({ open: false });
   };
 
-  removeUserStorage = () => {
-    sessionStorage.removeItem("azure_access_token");
-    sessionStorage.removeItem("name");
-    sessionStorage.removeItem("surname");
-    sessionStorage.removeItem("avatar");
-    sessionStorage.removeItem("email");
-  };
-
-  handleDeleteProfile(event) {
-     event.preventDefault();
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
-      method: "DELETE",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      }
-    }).then(r => console.log(r))
-      .then(this.removeUserStorage)
-      .then(() => this.props.history.push("/"));
-   
-  }
-
-
   render() {
-    
     const { classes } = this.props;
+
     return (
       <main className={classes.root}>
         <Card className={classes.content}>
@@ -90,29 +62,35 @@ class Profile extends React.Component {
           </CardContent>
 
           <CardActions>
-            <Tooltip title="Edit Profile">
-            <IconButton aria-label="Edit profile" color="primary" size="large" component={NavLink} to="/edit_Profile">
-              <EditIcon />
-            </IconButton>
-            </Tooltip>
-            <Tooltip title="Delete Profile"> 
-            <IconButton aria-label="Delete profile" color="secondary" size="large" onClick={this.handleClickOpen}>
-              <DeleteIcon />
-            </IconButton>
-            </Tooltip>
+            <Grid container justify="center" alignItems="stretch">
+              <Tooltip title="SaveME!" placement="bottom-end">
+                <Button
+                  variant="outlined"
+                  aria-label="Save"
+                  size="large"
+                  color="primary"
+                  onClick={this.handleClickOpen}
+                >
+                  Save
+                  <SaveIcon />
+                </Button>
+              </Tooltip>
+            </Grid>
 
-            <Tooltip title="About me">
-              <IconButton
-                className={classnames(classes.expand, {
-                  [classes.expandOpen]: this.state.expanded
-                })}
-                onClick={this.handleExpandClick}
-                aria-expanded={this.state.expanded}
-                aria-label="Show more"
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </Tooltip>
+            <Grid item xs={2}>
+              <Tooltip title="About me">
+                <IconButton
+                  className={classnames(classes.expand, {
+                    [classes.expandOpen]: this.state.expanded
+                  })}
+                  onClick={this.handleExpandClick}
+                  aria-expanded={this.state.expanded}
+                  aria-label="Show more"
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+              </Tooltip>
+            </Grid>
           </CardActions>
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             <CardContent>
@@ -136,25 +114,37 @@ class Profile extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Delete Account Page"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Edit Account"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-             After choosing this option you will delete all your profile information. 
+              The changes you made will be saved !
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Grid container
+            <Grid
+              container
               direction="row"
               justify="space-around"
-              alignItems="center" 
-               >
-
-            <Button onClick={this.handleClose}  variant="contained" size="medium" color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.handleDeleteProfile}  variant="contained" size="medium" color="secondary">
-              Delete
-            </Button>
+              alignItems="center"
+            >
+              <Button
+                onClick={this.handleClose}
+                variant="contained"
+                size="medium"
+                color="inherit"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={this.handleClose}
+                variant="contained"
+                size="medium"
+                color="primary"
+                component={NavLink}
+                to="/profile"
+              >
+                Save
+              </Button>
             </Grid>
           </DialogActions>
         </Dialog>
@@ -163,4 +153,4 @@ class Profile extends React.Component {
   }
 }
 
-export default withRouter(withStyles(styles)(Profile));
+export default withStyles(styles)(EditProfile);

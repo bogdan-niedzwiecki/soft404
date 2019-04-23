@@ -7,12 +7,17 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-
+import { withRouter } from "react-router";
+import { Tooltip } from '@material-ui/core';
 
 class DeletePostButton extends React.Component {
   state = {
     open: false,
   };
+  constructor(props) {
+    super(props);
+    this.deletePost = this.deletePost.bind(this);
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -22,12 +27,33 @@ class DeletePostButton extends React.Component {
     this.setState({ open: false });
   };
 
+  deletePost(event) {
+    event.preventDefault();
+    fetch(
+      `https://delfinkitrainingapi.azurewebsites.net/api/post`, 
+        { 
+      method: 'DELETE',
+      headers: {
+      'X-ZUMO-AUTH': sessionStorage.getItem("azure_access_token")
+      }
+      }
+      ).then(r => console.log(r))
+       .then(console.log(this.props.Id))
+       .then(this.handleClose)
+       .then(() => this.props.history.push("/"));
+  }
+
   render() {
+     
+
     return (
       <div>
+        
+        <Tooltip title="Delete">
         <IconButton aria-label="Delete post" color="secondary" onClick={this.handleClickOpen}>
             <DeleteIcon />
         </IconButton>
+        </Tooltip>
         <Dialog
           maxWidth="sm"
           fullWidth
@@ -43,7 +69,7 @@ class DeletePostButton extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="secondary">
+            <Button onClick={this.deletePost} color="secondary" >
               Delete
             </Button>
             <Button onClick={this.handleClose} color="default" autoFocus>
@@ -55,4 +81,4 @@ class DeletePostButton extends React.Component {
     );
   }
 }
-export default (DeletePostButton);
+export default withRouter(DeletePostButton);
