@@ -18,9 +18,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from "@material-ui/core";
 import styles from "./styles";
-
 
 class Post extends React.Component {
   state = { open: false };
@@ -40,7 +39,7 @@ class Post extends React.Component {
     }
   };
   transformDate = date => {
-    return date.slice(0, 10) + " at " + date.slice(12, 19);
+    return date.slice(0, 10) + " at " + date.slice(11, 19);
   };
 
   render() {
@@ -109,8 +108,8 @@ class Post extends React.Component {
             component={NavLink}
             to="/edit_Post"
           >
-          <Tooltip title="Edit Post">
-            <EditIcon color="primary"/>
+            <Tooltip title="Edit Post">
+              <EditIcon color="primary" />
             </Tooltip>
           </IconButton>
         </CardActions>

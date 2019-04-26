@@ -90,7 +90,7 @@ class App extends Component {
             )
           }
         />
-         <Route
+        <Route
           exact
           path="/edit_Profile"
           render={() =>

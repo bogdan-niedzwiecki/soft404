@@ -12,7 +12,7 @@ const styles = theme => ({
 class PostsList extends React.Component {
   state = { postsList: [] };
 
-  componentWillMount() {
+  componentDidMount() {
     fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
       method: "GET",
       headers: {
@@ -46,6 +46,7 @@ class PostsList extends React.Component {
         </li>
       );
     });
+
     return (
       <main className={classes.root}>
         <ul className={classes.list}>{arrList}</ul>

@@ -12,8 +12,8 @@ import {
   MDBBtn,
   MDBInput
 } from "mdbreact";
-import { Redirect } from "react-router";
 import GoogleLogin from "react-google-login";
+import { withRouter } from "react-router-dom";
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -28,50 +28,43 @@ class LoginForm extends React.Component {
       }
     };
   }
+
+  responseGoogle = response => {
+    fetch("https://delfinkitrainingapi.azurewebsites.net/.auth/login/google", {
+      method: "POST",
+      headers: { "content-type": "Application/JSON" },
+      body: JSON.stringify({
+        id_token: response.tokenId
+      })
+    })
+      .then(response => response.json())
+      .then(resp => {
+        sessionStorage.setItem("azure_access_token", resp.authenticationToken);
+        this.setState(
+          {
+            userData: {
+              azure_token: resp.authenticationToken
+            }
+          },
+          () => this.props.onSuccessLogin(this.state.userData)
+        );
+      })
+
+      .then(() => this.props.history.push("/"));
+
+    sessionStorage.setItem("name", response.w3.ofa);
+    sessionStorage.setItem("surname", response.w3.wea);
+    sessionStorage.setItem("avatar", response.w3.Paa);
+    sessionStorage.setItem("email", response.w3.U3);
+  };
+
+  noResponseGoogle = response => {
+    alert("Login has been failed");
+    console.log(response);
+  };
+
   render() {
     const { classes } = this.props;
-
-    const responseGoogle = response => {
-      fetch(
-        "https://delfinkitrainingapi.azurewebsites.net/.auth/login/google",
-        {
-          method: "POST",
-          headers: { "content-type": "Application/JSON" },
-          body: JSON.stringify({
-            id_token: response.tokenId
-          })
-        }
-      )
-        .then(response => response.json())
-        .then(resp => {
-          sessionStorage.setItem(
-            "azure_access_token",
-            resp.authenticationToken
-          );
-          this.setState(
-            {
-              userData: {
-                azure_token: resp.authenticationToken
-              }
-            },
-            () => this.props.onSuccessLogin(this.state.userData)
-          );
-        });
-
-      sessionStorage.setItem("name", response.w3.ofa);
-      sessionStorage.setItem("surname", response.w3.wea);
-      sessionStorage.setItem("avatar", response.w3.Paa);
-      sessionStorage.setItem("email", response.w3.U3);
-    };
-
-    const noResponseGoogle = response => {
-      alert("Login has been failed");
-      console.log(response);
-    };
-
-    if (sessionStorage.getItem("azure_access_token")) {
-      return <Redirect to="/" />;
-    }
 
     return (
       <MDBContainer className={classes.root}>
@@ -129,8 +122,8 @@ class LoginForm extends React.Component {
                     <GoogleLogin
                       clientId="576077564511-fd1t0nbqe1av9rr70to25hnuce1j0mg7.apps.googleusercontent.com"
                       buttonText="Sign in"
-                      onSuccess={responseGoogle}
-                      onFailure={noResponseGoogle}
+                      onSuccess={this.responseGoogle}
+                      onFailure={this.noResponseGoogle}
                       cookiePolicy={"single_host_origin"}
                     />
                   </div>
@@ -153,4 +146,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(LoginForm);
+export default withRouter(withStyles(styles, { withTheme: true })(LoginForm));

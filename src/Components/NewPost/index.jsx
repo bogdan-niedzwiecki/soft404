@@ -24,7 +24,7 @@ class NewPost extends React.Component {
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handlePhotoChange = this.handlePhotoChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { post: { title: "", text: "" }, selectedFile: null };
+    this.state = { post: { title: "", text: "" } };
   }
   handleTitleChange(event) {
     this.setState({ post: { ...this.state.post, title: event.target.value } });
@@ -40,8 +40,7 @@ class NewPost extends React.Component {
       post: {
         title: "",
         text: ""
-      },
-      selectedFile: null
+      }
     });
   };
 
@@ -103,7 +102,7 @@ class NewPost extends React.Component {
                 rows="10"
                 rowsMax="13"
                 required={true}
-                inputProps={{ maxLength: 1000 }}
+                // inputProps={{ maxLength: 1000 }}
                 multiline
                 margin="normal"
                 variant="outlined"
