@@ -1,92 +1,83 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
-import Header from "./Components/Header/index";
-import PostsList from "./Components/PostsList/index";
-import Footer from "./Components/Footer/index";
-import NewPost from "./Components/NewPost/NewPost";
+import Header from "./Components/Header/";
+import PostsList from "./Components/PostsList/";
+import Footer from "./Components/Footer/";
+import NewPost from "./Components/NewPost/";
 import { BrowserRouter, Route } from "react-router-dom";
 import Profile from "./Components/Profile/Profile";
 import LoginForm from "./Components/Login/LoginForm";
-import EditProfile from "./Components/Profile/EditProfile/EditProfie";
+import EditPost from "./Components/PostsList/EditPost/index";
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userData: {
-        name: null,
-        surname: null,
-        userpic: null
+        azure_token: false
       }
     };
-    this.getUserData = this.getUserData.bind(this);
-    this.removeUserStorage = this.removeUserStorage.bind(this);
   }
+
   getUserData(userDetails) {
     this.setState({
       userData: {
-        name: userDetails.name,
-        surname: userDetails.surname,
-        userpic: userDetails.userpic
+        azure_token: userDetails.azure_token
       }
     });
   }
 
-  removeUserStorage() {
-    sessionStorage.removeItem("access_token");
-    sessionStorage.removeItem("name");
-    sessionStorage.removeItem("surname");
-    sessionStorage.removeItem("avatar");
-    sessionStorage.removeItem("email");
-  }
   render() {
     return (
       <BrowserRouter>
         <Route
           path="/"
-          render={() => {
-            if (sessionStorage.getItem("access_token")) {
-              return <Header />;
-            } else {
-              return;
-            }
-          }}
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <Header />
+            ) : (
+              <React.Fragment />
+            )
+          }
         />
         <Route
           exact
           path="/login"
-          render={() => {
-            return <LoginForm onSuccessLogin={this.getUserData} />;
-          }}
+          render={() => <LoginForm onSuccessLogin={() => this.getUserData} />}
         />
-        <Route
-          exact
-          path="/logout"
-          render={() => {
-            this.removeUserStorage();
-            return <Redirect to="/login" />;
-          }}
-        />
+        <Route exact path="/logout" render={() => <Redirect to="/login" />} />
         <Route
           exact
           path="/"
-          render={() => {
-            if (sessionStorage.getItem("access_token")) {
-              return <PostsList />;
-            } else {
-              return <Redirect to="/login" />;
-            }
-          }}
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <PostsList />
+            ) : (
+              <Redirect to="/login" />
+            )
+          }
         />
         <Route
           exact
           path="/create_post"
-          render={() => {
-            if (sessionStorage.getItem("access_token")) {
-              return <NewPost />;
-            } else {
-              return <Redirect to="/login" />;
-            }
-          }}
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <NewPost authToken={this.state.userData.token} />
+            ) : (
+              <Redirect to="/login" />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/edit_Post"
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <EditPost authToken={this.state.userData.token} />
+            ) : (
+              <Redirect to="/login" />
+            )
+          }
         />
         <Route
           exact
@@ -102,13 +93,24 @@ class App extends Component {
         <Route
           exact
           path="/profile"
-          render={() => {
-            if (sessionStorage.getItem("access_token")) {
-              return <Profile />;
-            } else {
-              return <Redirect to="/login" />;
-            }
-          }}
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <Profile />
+            ) : (
+              <Redirect to="/login" />
+            )
+          }
+        />
+         <Route
+          exact
+          path="/edit_Profile"
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <Profile />
+            ) : (
+              <Redirect to="/login" />
+            )
+          }
         />
         <Route
           exact
@@ -123,13 +125,13 @@ class App extends Component {
         />
         <Route
           path="/"
-          render={() => {
-            if (sessionStorage.getItem("access_token")) {
-              return <Footer />;
-            } else {
-              return;
-            }
-          }}
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <Footer />
+            ) : (
+              <React.Fragment />
+            )
+          }
         />
       </BrowserRouter>
     );

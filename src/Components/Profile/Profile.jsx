@@ -23,8 +23,14 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { withRouter } from "react-router";
 
 class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleDeleteProfile = this.handleDeleteProfile.bind(this);
+  }
+
   state = {
     open: false,
     expanded: false
@@ -41,6 +47,27 @@ class Profile extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  removeUserStorage = () => {
+    sessionStorage.removeItem("azure_access_token");
+    sessionStorage.removeItem("name");
+    sessionStorage.removeItem("surname");
+    sessionStorage.removeItem("avatar");
+    sessionStorage.removeItem("email");
+  };
+
+  handleDeleteProfile(event) {
+     event.preventDefault();
+    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
+      method: "DELETE",
+      headers: {
+        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
+      }
+    }).then(r => console.log(r))
+      .then(this.removeUserStorage)
+      .then(() => this.props.history.push("/"));
+   
+  }
 
 
   render() {
@@ -119,12 +146,13 @@ class Profile extends React.Component {
             <Grid container
               direction="row"
               justify="space-around"
-              alignItems="center"  >
+              alignItems="center" 
+               >
 
             <Button onClick={this.handleClose}  variant="contained" size="medium" color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose}  variant="contained" size="medium" color="secondary" component={NavLink} to="/logout"  >
+            <Button onClick={this.handleDeleteProfile}  variant="contained" size="medium" color="secondary">
               Delete
             </Button>
             </Grid>
@@ -135,4 +163,4 @@ class Profile extends React.Component {
   }
 }
 
-export default withStyles(styles)(Profile);
+export default withRouter(withStyles(styles)(Profile));

@@ -1,89 +1,54 @@
 import React from "react";
-import Post from "./Post/index";
+import Post from "./Post/";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   root: {
     padding: `0 ${theme.spacing.unit * 3}px`
-  }
+  },
+  list: { listStyleType: "none" }
 });
 
 class PostsList extends React.Component {
+  state = { postsList: [] };
+
+  componentWillMount() {
+    fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
+      method: "GET",
+      headers: {
+        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
+      }
+    })
+      .then(response => response.json())
+      .then(resp =>
+        this.setState({
+          postsList: resp.sort((a, b) =>
+            a.PublishDate > b.PublishDate ? -1 : 1
+          )
+        })
+      )
+      .then(() => console.log(this.state.postsList));
+  }
+
   render() {
     const { classes } = this.props;
+
+    const arrList = this.state.postsList.map(item => {
+      return (
+        <li key={item.Id}>
+          <Post
+            id={item.Id}
+            title={item.Title}
+            thumbnailPhoto={item.ThumbnailPhoto}
+            text={item.Text}
+            publishDate={item.PublishDate}
+          />
+        </li>
+      );
+    });
     return (
       <main className={classes.root}>
-        <Post
-          title="1Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-          content="Nullam tincidunt metus tincidunt, dignissim nibh non,
-            tincidunt turpis. Duis sit amet ex est. Aenean quis pellentesque arcu.
-            Sed luctus nisl ut leo ullamcorper molestie. Nunc fermentum pretium neque,
-            a vehicula mi interdum quis. Nunc est lacus, posuere ut velit in, porta vestibulum arcu.
-            Suspendisse rhoncus metus neque, id rutrum nisl ultrices vitae.
-            Pellentesque quis lorem nec mi dapibus tristique. Morbi sit amet sem fermentum,
-            posuere lorem at, ullamcorper metus. Phasellus varius eget metus eu gravida. 
-            Integer imperdiet nisi at justo maximus egestas. Proin sit amet posuere leo, 
-            id fermentum purus. Aenean ullamcorper est arcu, ac euismod odio suscipit sed. 
-            Integer diam dui, egestas eu ligula ut, feugiat rhoncus nulla.
-            Sed vel nulla in nulla gravida semper.Nullam tincidunt metus tincidunt, dignissim nibh non,
-            tincidunt turpis. Duis sit amet ex est. Aenean quis pellentesque arcu.
-            Sed luctus nisl ut leo ullamcorper molestie. Nunc fermentum pretium neque,
-            a vehicula mi interdum quis. Nunc est lacus, posuere ut velit in, porta vestibulum arcu.
-            Suspendisse rhoncus metus neque, id rutrum nisl ultrices vitae.
-            Pellentesque quis lorem nec mi dapibus tristique. Morbi sit amet sem fermentum,
-            posuere lorem at, ullamcorper metus. Phasellus varius eget metus eu gravida. 
-            Integer imperdiet nisi at justo maximus egestas. Proin sit amet posuere leo, 
-            id fermentum purus. Aenean ullamcorper est arcu, ac euismod odio suscipit sed. 
-            Integer diam dui, egestas eu ligula ut, feugiat rhoncus nulla.
-            Sed vel nulla in nulla gravida semper.Nullam tincidunt metus tincidunt, dignissim nibh non,
-            tincidunt turpis. Duis sit amet ex est. Aenean quis pellentesque arcu.
-            Sed luctus nisl ut leo ullamcorper molestie. Nunc fermentum pretium neque,
-            a vehicula mi interdum quis. Nunc est lacus, posuere ut velit in, porta vestibulum arcu.
-            Suspendisse rhoncus metus neque, id rutrum nisl ultrices vitae.
-            Pellentesque quis lorem nec mi dapibus tristique. Morbi sit amet sem fermentum,
-            posuere lorem at, ullamcorper metus. Phasellus varius eget metus eu gravida. 
-            Integer imperdiet nisi at justo maximus egestas. Proin sit amet posuere leo, 
-            id fermentum purus. Aenean ullamcorper est arcu, ac euismod odio suscipit sed. 
-            Integer diam dui, egestas eu ligula ut, feugiat rhoncus nulla.
-            Sed vel nulla in nulla gravida semper."
-          img="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/paella_7100_16x9.jpg"
-          altImg="alternative image text 1"
-          date={new Date()}
-        />
-        <Post
-          title="2Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-          content="Nullam tincidunt metus tincidunt, dignissim nibh non,
-            tincidunt turpis. Duis sit amet ex est. Aenean quis pellentesque arcu.
-            Sed luctus nisl ut leo ullamcorper molestie. Nunc fermentum pretium neque,
-            a vehicula mi interdum quis. Nunc est lacus, posuere ut velit in, porta vestibulum arcu.
-            Suspendisse rhoncus metus neque, id rutrum nisl ultrices vitae.
-            Pellentesque quis lorem nec mi dapibus tristique. Morbi sit amet sem fermentum,
-            posuere lorem at, ullamcorper metus. Phasellus varius eget metus eu gravida. 
-            Integer imperdiet nisi at justo maximus egestas. Proin sit amet posuere leo, 
-            id fermentum purus. Aenean ullamcorper est arcu, ac euismod odio suscipit sed. 
-            Integer diam dui, egestas eu ligula ut, feugiat rhoncus nulla.
-            Sed vel nulla in nulla gravida semper."
-          img="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/paella_7100_16x9.jpg"
-          altImg="alternative image text 1"
-          date={new Date()}
-        />
-        <Post
-          title="3Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-          content="Nullam tincidunt metus tincidunt, dignissim nibh non,
-            tincidunt turpis. Duis sit amet ex est. Aenean quis pellentesque arcu.
-            Sed luctus nisl ut leo ullamcorper molestie. Nunc fermentum pretium neque,
-            a vehicula mi interdum quis. Nunc est lacus, posuere ut velit in, porta vestibulum arcu.
-            Suspendisse rhoncus metus neque, id rutrum nisl ultrices vitae.
-            Pellentesque quis lorem nec mi dapibus tristique. Morbi sit amet sem fermentum,
-            posuere lorem at, ullamcorper metus. Phasellus varius eget metus eu gravida. 
-            Integer imperdiet nisi at justo maximus egestas. Proin sit amet posuere leo, 
-            id fermentum purus. Aenean ullamcorper est arcu, ac euismod odio suscipit sed. 
-            Integer diam dui, egestas eu ligula ut, feugiat rhoncus nulla.
-            Sed vel nulla in nulla gravida semper."
-          img="https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/paella_7100_16x9.jpg"
-          altImg="alternative image text 1"
-          date={new Date()}
-        />
+        <ul className={classes.list}>{arrList}</ul>
       </main>
     );
   }
