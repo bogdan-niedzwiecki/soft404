@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -12,6 +13,19 @@ import Tooltip from "@material-ui/core/Tooltip";
 =======
 import { Tooltip } from "@material-ui/core";
 >>>>>>> postsList
+=======
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import { withRouter } from "react-router";
+import { Tooltip } from '@material-ui/core';
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
 
 class DeletePostButton extends React.Component {
   state = {
@@ -51,6 +65,7 @@ class DeletePostButton extends React.Component {
   render() {
     return (
       <div>
+<<<<<<< HEAD
         <Tooltip title="Delete">
           <IconButton
             aria-label="Delete post"
@@ -64,6 +79,13 @@ class DeletePostButton extends React.Component {
           >
             <DeleteIcon />
           </IconButton>
+=======
+        
+        <Tooltip title="Delete">
+        <IconButton aria-label="Delete post" color="secondary" onClick={this.handleClickOpen}>
+            <DeleteIcon />
+        </IconButton>
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
         </Tooltip>
         <Dialog
           maxWidth="sm"
@@ -94,4 +116,8 @@ class DeletePostButton extends React.Component {
     );
   }
 }
+<<<<<<< HEAD
 export default DeletePostButton;
+=======
+export default withRouter(DeletePostButton);
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361

@@ -27,13 +27,19 @@ import { withRouter } from "react-router";
 
 class Profile extends React.Component {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
   constructor(props) {
     super(props);
     this.handleDeleteProfile = this.handleDeleteProfile.bind(this);
   }
 
+<<<<<<< HEAD
 >>>>>>> postsList
+=======
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
   state = {
     open: false,
     expanded: false
@@ -52,7 +58,10 @@ class Profile extends React.Component {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
   removeUserStorage = () => {
     sessionStorage.removeItem("azure_access_token");
     sessionStorage.removeItem("name");
@@ -74,7 +83,10 @@ class Profile extends React.Component {
    
   }
 
+<<<<<<< HEAD
 >>>>>>> postsList
+=======
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
 
   render() {
     
@@ -153,20 +165,29 @@ class Profile extends React.Component {
               direction="row"
               justify="space-around"
 <<<<<<< HEAD
+<<<<<<< HEAD
               alignItems="center"  >
 =======
               alignItems="center" 
                >
 >>>>>>> postsList
+=======
+              alignItems="center" 
+               >
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
 
             <Button onClick={this.handleClose}  variant="contained" size="medium" color="primary">
               Cancel
             </Button>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <Button onClick={this.handleClose}  variant="contained" size="medium" color="secondary" component={NavLink} to="/logout"  >
 =======
             <Button onClick={this.handleDeleteProfile}  variant="contained" size="medium" color="secondary">
 >>>>>>> postsList
+=======
+            <Button onClick={this.handleDeleteProfile}  variant="contained" size="medium" color="secondary">
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
               Delete
             </Button>
             </Grid>

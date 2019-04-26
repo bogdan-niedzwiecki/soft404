@@ -8,10 +8,14 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Profile from "./Components/Profile/Profile";
 import LoginForm from "./Components/Login/LoginForm";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import EditProfile from "./Components/Profile/EditProfile/EditProfie";
 =======
 import EditPost from "./Components/PostsList/EditPost/index";
 >>>>>>> postsList
+=======
+import EditPost from "./Components/PostsList/EditPost/index";
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
 class App extends Component {
   constructor(props) {
     super(props);

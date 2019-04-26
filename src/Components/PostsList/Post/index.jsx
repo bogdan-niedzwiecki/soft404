@@ -22,8 +22,11 @@ import EditIcon from "@material-ui/icons/Edit";
 import { NavLink } from "react-router-dom";
 import DeletePostButton from "./DeletePostButton/index";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import styles from "./PostStyles";
 =======
+=======
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -33,7 +36,11 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Tooltip } from "@material-ui/core";
 import styles from "./styles";
+<<<<<<< HEAD
 >>>>>>> postsList
+=======
+
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
 
 class Post extends React.Component {
   state = { open: false };
@@ -117,6 +124,7 @@ class Post extends React.Component {
         </Dialog>
         <CardActions className={classes.actions} disableActionSpacing>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <DeletePostButton />
           <Tooltip title="Edit">
             <IconButton
@@ -129,6 +137,8 @@ class Post extends React.Component {
             </IconButton>
           </Tooltip>
 =======
+=======
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
           <DeletePostButton delete_id={id} />
           <IconButton
             aria-label="Edit post"
@@ -139,7 +149,10 @@ class Post extends React.Component {
               <EditIcon color="primary" />
             </Tooltip>
           </IconButton>
+<<<<<<< HEAD
 >>>>>>> postsList
+=======
+>>>>>>> 2edff0813f9000172cd742dc714fce4b52d8e361
         </CardActions>
       </Card>
     );
