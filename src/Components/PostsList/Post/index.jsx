@@ -21,7 +21,19 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import { NavLink } from "react-router-dom";
 import DeletePostButton from "./DeletePostButton/index";
+<<<<<<< HEAD
 import styles from "./PostStyles";
+=======
+import CardActionArea from "@material-ui/core/CardActionArea";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { Tooltip } from "@material-ui/core";
+import styles from "./styles";
+>>>>>>> postsList
 
 class Post extends React.Component {
   state = { open: false };
@@ -33,9 +45,26 @@ class Post extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+  transformText = txt => {
+    if (txt.length > 200) {
+      return `${txt.slice(0, txt.lastIndexOf(" ", 199)).slice(0, 199)}...`;
+    } else {
+      return txt;
+    }
+  };
+  transformDate = date => {
+    return date.slice(0, 10) + " at " + date.slice(11, 19);
+  };
 
   render() {
-    const { classes } = this.props;
+    const {
+      classes,
+      title,
+      thumbnailPhoto,
+      text,
+      publishDate,
+      id
+    } = this.props;
 
     return (
       <Card className={classes.card}>
@@ -47,27 +76,14 @@ class Post extends React.Component {
               src={sessionStorage.getItem("avatar")}
             />
           }
-          title={this.props.title}
-          subheader={this.props.date.toLocaleDateString("en-US", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-          })}
+          title={title}
+          subheader={this.transformDate(publishDate)}
         />
         <CardActionArea onClick={this.handleClickOpen} style={{ outline: 0 }}>
-          <CardMedia
-            className={classes.media}
-            image={this.props.img}
-            title={this.props.altImg}
-          />
+          <CardMedia className={classes.media} image={thumbnailPhoto} />
           <CardContent>
-            <Typography paragraph>
-              {this.props.content.slice(
-                0,
-                this.props.content.lastIndexOf(" ", 200)
-              )}
-              ...
+            <Typography paragraph className={classes.text}>
+              {this.transformText(text)}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -78,21 +94,19 @@ class Post extends React.Component {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {this.props.title}
+            {title}
             <br />
             <span className={classes.date}>
-              {this.props.date.toLocaleDateString("en-US", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-              })}
+              {this.transformDate(publishDate)}
             </span>
           </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              <img src={this.props.img} className={classes.image} alt="" />
-              {this.props.content}
+            <img src={thumbnailPhoto} className={classes.image} alt={title} />
+            <DialogContentText
+              id="alert-dialog-description"
+              className={classes.text}
+            >
+              {text}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -102,6 +116,7 @@ class Post extends React.Component {
           </DialogActions>
         </Dialog>
         <CardActions className={classes.actions} disableActionSpacing>
+<<<<<<< HEAD
           <DeletePostButton />
           <Tooltip title="Edit">
             <IconButton
@@ -113,6 +128,18 @@ class Post extends React.Component {
               <EditIcon />
             </IconButton>
           </Tooltip>
+=======
+          <DeletePostButton delete_id={id} />
+          <IconButton
+            aria-label="Edit post"
+            component={NavLink}
+            to="/edit_Post"
+          >
+            <Tooltip title="Edit Post">
+              <EditIcon color="primary" />
+            </Tooltip>
+          </IconButton>
+>>>>>>> postsList
         </CardActions>
       </Card>
     );

@@ -23,8 +23,17 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { withRouter } from "react-router";
 
 class Profile extends React.Component {
+<<<<<<< HEAD
+=======
+  constructor(props) {
+    super(props);
+    this.handleDeleteProfile = this.handleDeleteProfile.bind(this);
+  }
+
+>>>>>>> postsList
   state = {
     open: false,
     expanded: false
@@ -42,6 +51,30 @@ class Profile extends React.Component {
     this.setState({ open: false });
   };
 
+<<<<<<< HEAD
+=======
+  removeUserStorage = () => {
+    sessionStorage.removeItem("azure_access_token");
+    sessionStorage.removeItem("name");
+    sessionStorage.removeItem("surname");
+    sessionStorage.removeItem("avatar");
+    sessionStorage.removeItem("email");
+  };
+
+  handleDeleteProfile(event) {
+     event.preventDefault();
+    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
+      method: "DELETE",
+      headers: {
+        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
+      }
+    }).then(r => console.log(r))
+      .then(this.removeUserStorage)
+      .then(() => this.props.history.push("/"));
+   
+  }
+
+>>>>>>> postsList
 
   render() {
     
@@ -119,12 +152,21 @@ class Profile extends React.Component {
             <Grid container
               direction="row"
               justify="space-around"
+<<<<<<< HEAD
               alignItems="center"  >
+=======
+              alignItems="center" 
+               >
+>>>>>>> postsList
 
             <Button onClick={this.handleClose}  variant="contained" size="medium" color="primary">
               Cancel
             </Button>
+<<<<<<< HEAD
             <Button onClick={this.handleClose}  variant="contained" size="medium" color="secondary" component={NavLink} to="/logout"  >
+=======
+            <Button onClick={this.handleDeleteProfile}  variant="contained" size="medium" color="secondary">
+>>>>>>> postsList
               Delete
             </Button>
             </Grid>
@@ -135,4 +177,4 @@ class Profile extends React.Component {
   }
 }
 
-export default withStyles(styles)(Profile);
+export default withRouter(withStyles(styles)(Profile));
