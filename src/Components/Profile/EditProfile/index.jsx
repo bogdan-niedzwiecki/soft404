@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./ProfileStyle";
+import styles from "../ProfileStyle";
 import {
   CardContent,
   CardMedia,
@@ -76,11 +76,9 @@ class Profile extends React.Component {
             image={sessionStorage.getItem("avatar")}
             title={sessionStorage.getItem("name")}
           />
-          <CardContent className={classes.content}>
+          <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              {sessionStorage.getItem("name") +
-                " " +
-                sessionStorage.getItem("surname")}
+              {sessionStorage.getItem("name")}
             </Typography>
             <Typography component="p">
               {sessionStorage.getItem("email")}
@@ -156,4 +154,4 @@ class Profile extends React.Component {
   }
 }
 
-export default withRouter(withStyles(styles, { withTheme: true })(Profile));
+export default withRouter(withStyles(styles)(Profile));

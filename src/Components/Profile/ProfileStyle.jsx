@@ -2,30 +2,21 @@ const styles = theme => ({
   root: {
     padding: `0 ${theme.spacing.unit * 3}px`
   },
-  content: {
-    maxWidth: 600,
-    margin: "auto",
-    flexGrow: 1,
+  card: {
+    maxWidth: 400,
+    margin: "auto"
   },
   media: {
-    width: 120,
+    height: 150,
+    width: 150,
     margin: "auto",
-    marginBottom: 35,
+    marginTop: 40,
+    marginBottom: 20,
     borderRadius: "50%"
   },
-
-  actions: {
-    display: "flex"
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
-  },
-  expandOpen: {
-    transform: "rotate(180deg)"
+  content: {
+    width: 250,
+    margin: "auto"
   }
 });
 

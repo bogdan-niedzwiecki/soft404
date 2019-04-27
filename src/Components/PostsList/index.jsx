@@ -6,7 +6,7 @@ const styles = theme => ({
   root: {
     padding: `0 ${theme.spacing.unit * 3}px`
   },
-  list: { listStyleType: "none" }
+  list: { listStyleType: "none", marginLeft: "-40px" }
 });
 
 class PostsList extends React.Component {
@@ -26,13 +26,11 @@ class PostsList extends React.Component {
             a.PublishDate > b.PublishDate ? -1 : 1
           )
         })
-      )
-      .then(() => console.log(this.state.postsList));
+      );
   }
 
   render() {
     const { classes } = this.props;
-
     const arrList = this.state.postsList.map(item => {
       return (
         <li key={item.Id}>
