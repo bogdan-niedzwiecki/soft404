@@ -63,101 +63,103 @@ class NewPost extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Card className={classes.content}>
-        <div className={classes.toolbar} />
-        <form
-          className={classes.container}
-          noValidate
-          autoComplete="off"
-          onSubmit={this.handleSubmit}
-        >
-          <CardHeader
-            title="New Post"
-            subheader="Be Creative!"
-            style={{ textAlign: "center", marginTop: "-50px" }}
-          />
-          <CardContent>
-            <Grid
-              container
-              direction="column"
-              justify="space-around"
-              alignItems="stretch"
-            >
-              <TextField
-                id="outlined-required"
-                label="Title of the Post"
-                placeholder="Somewhere in the space"
-                margin="normal"
-                variant="outlined"
-                value={this.state.post.title}
-                onChange={this.handleTitleChange}
-                required={true}
-                inputProps={{ maxLength: 150, minLength: 10 }}
-              />
-
-              <TextField
-                id="update"
-                label="Content of the Post"
-                placeholder="It was a monday, day like any other day"
-                rows="10"
-                rowsMax="13"
-                required={true}
-                // inputProps={{ maxLength: 1000 }}
-                multiline
-                margin="normal"
-                variant="outlined"
-                value={this.state.post.text}
-                onChange={this.handleTextChange}
-              />
-              <CardActions className={classes.footer}>
-                <Button
+      <main className={classes.root}>
+        <Card className={classes.content}>
+          <div className={classes.toolbar} />
+          <form
+            className={classes.container}
+            noValidate
+            autoComplete="off"
+            onSubmit={this.handleSubmit}
+          >
+            <CardHeader
+              title="New Post"
+              subheader="Be Creative!"
+              style={{ textAlign: "center", marginTop: "-50px" }}
+            />
+            <CardContent>
+              <Grid
+                container
+                direction="column"
+                justify="space-around"
+                alignItems="stretch"
+              >
+                <TextField
+                  id="outlined-required"
+                  label="Title of the Post"
+                  placeholder="Somewhere in the space"
+                  margin="normal"
                   variant="outlined"
-                  aria-label="Save"
-                  size="medium"
-                  color="primary"
-                  autoFocus
-                  type="submit"
-                >
-                  Save
-                  <SaveIcon />
-                </Button>
-                <Tooltip title="Cancel" placement="bottom">
-                  <IconButton
-                    aria-label="Delete"
-                    onClick={this.handleDataReset}
-                    color="secondary"
-                    size="medium"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-
-                <input
-                  component="span"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  id="raised-button-file"
-                  multiple
-                  type="file"
-                  onChange={this.handlePhotoChange}
+                  value={this.state.post.title}
+                  onChange={this.handleTitleChange}
+                  required={true}
+                  inputProps={{ maxLength: 150, minLength: 10 }}
                 />
-                <label htmlFor="raised-button-file">
-                  <Tooltip title="Upload Photo" placement="bottom">
+
+                <TextField
+                  id="update"
+                  label="Content of the Post"
+                  placeholder="It was a monday, day like any other day"
+                  rows="10"
+                  rowsMax="13"
+                  required={true}
+                  // inputProps={{ maxLength: 1000 }}
+                  multiline
+                  margin="normal"
+                  variant="outlined"
+                  value={this.state.post.text}
+                  onChange={this.handleTextChange}
+                />
+                <CardActions className={classes.footer}>
+                  <Button
+                    variant="outlined"
+                    aria-label="Save"
+                    size="medium"
+                    color="primary"
+                    autoFocus
+                    type="submit"
+                  >
+                    Save
+                    <SaveIcon />
+                  </Button>
+                  <Tooltip title="Cancel" placement="bottom">
                     <IconButton
-                      variant="contained"
-                      color="primary"
-                      component="span"
+                      aria-label="Delete"
+                      onClick={this.handleDataReset}
+                      color="secondary"
                       size="medium"
                     >
-                      <PhotoCameraIcon />
+                      <DeleteIcon />
                     </IconButton>
                   </Tooltip>
-                </label>
-              </CardActions>
-            </Grid>
-          </CardContent>
-        </form>
-      </Card>
+
+                  <input
+                    component="span"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    id="raised-button-file"
+                    multiple
+                    type="file"
+                    onChange={this.handlePhotoChange}
+                  />
+                  <label htmlFor="raised-button-file">
+                    <Tooltip title="Upload Photo" placement="bottom">
+                      <IconButton
+                        variant="contained"
+                        color="primary"
+                        component="span"
+                        size="medium"
+                      >
+                        <PhotoCameraIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </label>
+                </CardActions>
+              </Grid>
+            </CardContent>
+          </form>
+        </Card>
+      </main>
     );
   }
 }
