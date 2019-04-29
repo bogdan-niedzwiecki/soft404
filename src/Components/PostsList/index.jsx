@@ -12,7 +12,8 @@ const styles = theme => ({
 class PostsList extends React.Component {
   state = { postsList: [] };
 
-  componentDidMount() {
+  render() {
+    const { classes } = this.props;
     fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
       method: "GET",
       headers: {
@@ -27,10 +28,6 @@ class PostsList extends React.Component {
           )
         })
       );
-  }
-
-  render() {
-    const { classes } = this.props;
     const arrList = this.state.postsList.map(item => {
       return (
         <li key={item.Id}>

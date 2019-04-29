@@ -24,11 +24,6 @@ class LoginForm extends React.Component {
   }
 
   responseGoogle = response => {
-    sessionStorage.setItem("name", response.w3.ofa);
-    sessionStorage.setItem("surname", response.w3.wea);
-    sessionStorage.setItem("avatar", response.w3.Paa);
-    sessionStorage.setItem("email", response.w3.U3);
-
     fetch("https://delfinkitrainingapi.azurewebsites.net/.auth/login/google", {
       method: "POST",
       headers: { "content-type": "Application/JSON" },
@@ -39,14 +34,13 @@ class LoginForm extends React.Component {
       .then(response => response.json())
       .then(resp => {
         sessionStorage.setItem("azure_access_token", resp.authenticationToken);
-        this.setState(
-          {
-            azure_token: resp.authenticationToken
-          },
-          () => this.props.onSuccessLogin(this.state.azure_token)
-        );
       })
       .then(() => this.props.history.push("/"));
+
+    sessionStorage.setItem("name", response.w3.ofa);
+    sessionStorage.setItem("surname", response.w3.wea);
+    sessionStorage.setItem("avatar", response.w3.Paa);
+    sessionStorage.setItem("email", response.w3.U3);
   };
 
   noResponseGoogle = response => {

@@ -10,43 +10,6 @@ import EditProfile from "./Components/Profile/EditProfile";
 import LoginForm from "./Components/Login/LoginForm";
 import EditPost from "./Components/PostsList/EditPost/index";
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userData: {
-        token: false,
-        name: "",
-        givenName: "",
-        id: "",
-        photo: null
-      }
-    };
-  }
-
-  getToken = azure_token => {
-    fetch("https://delfinkitrainingapi.azurewebsites.net/api/user", {
-      method: "GET",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      }
-    })
-      .then(response => response.json())
-      .then(resp => {
-        this.setState(
-          {
-            userData: {
-              token: azure_token,
-              name: resp.Name,
-              givenName: resp.GivenName,
-              id: resp.Id,
-              photo: resp.Photo
-            }
-          },
-          () => console.log("state.userData IN APP.JS", this.state.userData)
-        );
-      });
-  };
-
   render() {
     return (
       <BrowserRouter>
@@ -82,7 +45,7 @@ class App extends Component {
           path="/create_post"
           render={() =>
             sessionStorage.getItem("azure_access_token") ? (
-              <NewPost authToken={this.state.userData.token} />
+              <NewPost />
             ) : (
               <Redirect to="/login" />
             )
@@ -94,7 +57,7 @@ class App extends Component {
           path="/edit_Post"
           render={() =>
             sessionStorage.getItem("azure_access_token") ? (
-              <EditPost authToken={this.state.userData.token} />
+              <EditPost />
             ) : (
               <Redirect to="/login" />
             )
