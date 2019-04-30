@@ -1,12 +1,6 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import IconButton from "@material-ui/core/IconButton";
 import { Tooltip } from "@material-ui/core";
 
 class DeletePostButton extends React.Component {
@@ -26,8 +20,7 @@ class DeletePostButton extends React.Component {
     this.setState({ open: false });
   };
 
-  deletePost(event) {
-    event.preventDefault();
+  deletePost() {
     fetch(
       `https://delfinkitrainingapi.azurewebsites.net/api/post/${
         this.props.delete_id
@@ -40,7 +33,6 @@ class DeletePostButton extends React.Component {
       }
     )
       .then(r => console.log(r))
-      .then(console.log(this.props.delete_id))
       .then(this.handleClose);
   }
 

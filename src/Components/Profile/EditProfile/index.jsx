@@ -54,18 +54,23 @@ class Profile extends React.Component {
   };
 
   handleDeleteProfile(event) {
-    event.preventDefault();
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
-      method: "DELETE",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      }
-    })
-      .then(r => console.log(r))
-      .then(this.removeUserStorage)
-      .then(() => this.props.history.push("/"));
-  }
+    let formData = new FormData();
 
+    if (this.state.selectedFile) {
+    formData.append('photo', this.state.selectedFile);
+    }
+    formData.append('user', JSON.stringify(this.state.user));
+    fetch(
+    `https://delfinkitrainingapi.azurewebsites.net/api/user`,
+    {
+    method: 'PUT',
+    headers: {
+    'X-ZUMO-AUTH': this.props.authToken
+    },
+    body: formData
+    }
+    ).then(r => console.log(r)); 
+  }
   render() {
     const { classes } = this.props;
     return (
