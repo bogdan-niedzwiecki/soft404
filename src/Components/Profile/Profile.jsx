@@ -16,7 +16,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Grid
+  Grid,
+  Checkbox,
+  FormGroup,
+  FormControlLabel
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -30,7 +33,10 @@ class Profile extends React.Component {
 
   state = {
     open: false,
-    expanded: false
+    expanded: false,
+    checkbox1: false,
+    checkbox2: false,
+    checkbox3: false
   };
 
   handleExpandClick = () => {
@@ -43,6 +49,10 @@ class Profile extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
+  };
+
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
   };
 
   removeUserStorage = () => {
@@ -68,6 +78,8 @@ class Profile extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { checkbox1, checkbox2, checkbox3 } = this.state;
+
     return (
       <main className={classes.root}>
         <Card className={classes.card}>
@@ -119,11 +131,44 @@ class Profile extends React.Component {
           <DialogTitle id="alert-dialog-title">
             {"Delete Account Page"}
           </DialogTitle>
+
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               After choosing this option you will delete all your profile
               information.
             </DialogContentText>
+            <FormGroup row>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={checkbox1}
+                    onChange={this.handleChange("checkbox1")}
+                    value="checkbox1"
+                  />
+                }
+                label="My choise"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={checkbox2}
+                    onChange={this.handleChange("checkbox2")}
+                    value="checkbox2"
+                  />
+                }
+                label="2"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={checkbox3}
+                    onChange={this.handleChange("checkbox3")}
+                    value="checkbox3"
+                  />
+                }
+                label="OK"
+              />
+            </FormGroup>
           </DialogContent>
           <DialogActions>
             <Grid
@@ -145,6 +190,13 @@ class Profile extends React.Component {
                 variant="contained"
                 size="medium"
                 color="secondary"
+                disabled={
+                  !(
+                    this.state.checkbox1 &&
+                    this.state.checkbox2 &&
+                    this.state.checkbox3
+                  )
+                }
               >
                 Delete
               </Button>
