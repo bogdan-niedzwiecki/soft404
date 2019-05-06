@@ -16,7 +16,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Grid
+  Grid,
+  TextField
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -33,24 +34,19 @@ class Profile extends React.Component {
     expanded: false
   };
 
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
-  };
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
 
-  handleClose = () => {
-    this.setState({ open: false });
+  handleChange = event => {
+    this.setState({
+      user: {
+        ...this.state.user,
+        [event.target.id]: event.target.value
+      }
+    });
   };
-
-  removeUserStorage = () => {
-    sessionStorage.removeItem("azure_access_token");
-    sessionStorage.removeItem("name");
-    sessionStorage.removeItem("surname");
-    sessionStorage.removeItem("avatar");
-    sessionStorage.removeItem("email");
+  handleClickUpdateProfile = () => {
+    this.props.editProfile(this.state.user);
+    this.props.history.push("/profilePage");
   };
 
   handleDeleteProfile(event) {
@@ -77,12 +73,33 @@ class Profile extends React.Component {
             title={sessionStorage.getItem("name")}
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {sessionStorage.getItem("name")}
-            </Typography>
-            <Typography component="p">
-              {sessionStorage.getItem("email")}
-            </Typography>
+          <form  noValidate autoComplete="off">
+            <TextField id="name"
+              label="Name"
+              onChange={this.handleChange}
+              margin="normal"
+              variant="outlined"
+              value={sessionStorage.getItem("name")}
+            />
+
+            <TextField
+              id="lastName"
+              label="Last Name"
+              onChange={this.handleChange}
+              margin="normal"
+              variant="outlined"
+              value={sessionStorage.getItem("surname")}
+            />  
+
+            <TextField id="email"
+              label="E-mail"
+              onChange={this.handleChange}
+              margin="normal"
+              variant="outlined"
+              value={sessionStorage.getItem("email")}
+            />
+           </form>
+         
           </CardContent>
           <CardActions>
             <Tooltip title="Edit Profile">

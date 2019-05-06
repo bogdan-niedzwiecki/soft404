@@ -69,14 +69,9 @@ body: formData
 }
 
   render() {
-    // const { classes } = this.props;
     const {
         classes,
-        // title,
-        // thumbnailPhoto,
-        // text,
-        // publishDate,
-        // id
+      
       } = this.props;
 
     return (

@@ -6,7 +6,7 @@ import Footer from "./Components/Footer/";
 import NewPost from "./Components/NewPost/";
 import { BrowserRouter, Route } from "react-router-dom";
 import Profile from "./Components/Profile/Profile";
-import EditProfile from "./Components/Profile/EditProfile";
+import EditProfile from "./Components/Profile/EditProfile/index";
 import LoginForm from "./Components/Login/LoginForm";
 import EditPost from "./Components/PostsList/EditPost/index";
 class App extends Component {

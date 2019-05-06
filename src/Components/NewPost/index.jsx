@@ -16,6 +16,14 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import SaveIcon from "@material-ui/icons/Save";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import {
+  fetchPostToAPI,
+  fetchEditedPostToAPI
+} from "./../actions/postActions";
+
+const messagesForUser = [];
+
 
 class NewPost extends React.Component {
   constructor(props) {
@@ -44,19 +52,43 @@ class NewPost extends React.Component {
     });
   };
 
+  validateTitle = messagesArray => {
+    const { title } = this.state.post;
+    if (10 > title.length || title.length > 150) {
+      messagesArray.push("Title can contain between 10 and 150 characters.\n");
+    }
+  };
+
+  validateText = messagesArray => {
+    if (this.state.post.text.length > 1000) {
+      messagesArray.push("Post's content can contain max 1000 characters.\n");
+    }
+  };
+
+ 
+
   handleSubmit(event) {
     event.preventDefault();
     let formData = new FormData();
     formData.append("photo", this.state.selectedFile);
     formData.append("post", JSON.stringify(this.state.post));
-    fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
-      method: "POST",
-      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token") },
-      body: formData
-    })
-      .then(response => response.json())
-      .then(resp => console.log(resp))
-      .then(() => this.props.history.push("/"));
+    if (this.props.edit) {
+      this.props.fetchEditedPostToAPI(
+        this.props.postToEdit.Id,
+        formData,
+        this.props.authToken
+      );
+    }
+    else {
+      this.props.fetchPostToAPI(formData, this.props.authToken);
+      this.props.history.push("/");
+      this.validateTitle(messagesForUser);
+      this.validateText(messagesForUser);
+      if (messagesForUser.length) {
+        alert(messagesForUser);
+        return;
+      }
+    }
   }
 
   render() {
@@ -103,7 +135,6 @@ class NewPost extends React.Component {
                   rows="10"
                   rowsMax="13"
                   required={true}
-                  // inputProps={{ maxLength: 1000 }}
                   multiline
                   margin="normal"
                   variant="outlined"
@@ -163,4 +194,14 @@ class NewPost extends React.Component {
     );
   }
 }
-export default withRouter(withStyles(styles)(NewPost));
+
+const mapDispatch = dispatch => ({
+  fetchPostToAPI: (formData, authToken ) =>
+    dispatch(fetchPostToAPI(formData, authToken)),
+  fetchEditedPostToAPI: (postId, formData, authToken) =>
+    dispatch(fetchEditedPostToAPI(postId, formData, authToken))
+});
+export default withRouter(connect(
+  state => ({ authToken: state.authToken }),
+  mapDispatch
+)(withStyles(styles)(NewPost)));
