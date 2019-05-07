@@ -17,13 +17,9 @@ import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import SaveIcon from "@material-ui/icons/Save";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  fetchPostToAPI,
-  fetchEditedPostToAPI
-} from "./../actions/postActions";
+import { fetchPostToAPI, fetchEditedPostToAPI } from "./../actions/postActions";
 
 const messagesForUser = [];
-
 
 class NewPost extends React.Component {
   constructor(props) {
@@ -65,8 +61,6 @@ class NewPost extends React.Component {
     }
   };
 
- 
-
   handleSubmit(event) {
     event.preventDefault();
     let formData = new FormData();
@@ -78,8 +72,7 @@ class NewPost extends React.Component {
         formData,
         this.props.authToken
       );
-    }
-    else {
+    } else {
       this.props.fetchPostToAPI(formData, this.props.authToken);
       this.props.history.push("/");
       this.validateTitle(messagesForUser);
@@ -196,12 +189,14 @@ class NewPost extends React.Component {
 }
 
 const mapDispatch = dispatch => ({
-  fetchPostToAPI: (formData, authToken ) =>
+  fetchPostToAPI: (formData, authToken) =>
     dispatch(fetchPostToAPI(formData, authToken)),
   fetchEditedPostToAPI: (postId, formData, authToken) =>
     dispatch(fetchEditedPostToAPI(postId, formData, authToken))
 });
-export default withRouter(connect(
-  state => ({ authToken: state.authToken }),
-  mapDispatch
-)(withStyles(styles)(NewPost)));
+export default withRouter(
+  connect(
+    state => ({ authToken: state.authToken }),
+    mapDispatch
+  )(withStyles(styles)(NewPost))
+);

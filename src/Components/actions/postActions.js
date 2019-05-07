@@ -2,8 +2,6 @@ export const ADD_POST = "ADD_POST";
 export const EDIT_POST = "EDIT_POST";
 export const DELETE_POST = "DELETE_POST";
 
-
-
 export const addPost = (formData, resp) => ({
   type: ADD_POST,
   payload: {
@@ -17,8 +15,6 @@ export const addPost = (formData, resp) => ({
     }
   }
 });
-
-
 
 export const editPost = post => ({
   type: EDIT_POST,
@@ -60,21 +56,17 @@ export const deletePostFromApi = (post, authToken) => {
   };
 };
 
-export const fetchPostToAPI = (formData) => {
+export const fetchPostToAPI = formData => {
   return dispatch => {
     return fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
       method: "POST",
       headers: {
-    
-    "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
+        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
       },
       body: formData
     })
+      .then(r => console.log(r))
       .then(r => r.json())
       .then(resp => dispatch(addPost(formData, resp)));
   };
-
-
 };
-
-

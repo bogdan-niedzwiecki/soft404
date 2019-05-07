@@ -7,6 +7,7 @@ export const removeUser = () => {
     type: REMOVE_USER
   };
 };
+
 export const updateUser = data => {
   return {
     type: UPDATE_USER,
@@ -52,7 +53,7 @@ export const fetchUpdatedUser = (authToken, user, photo) => {
     return fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
       method: "PUT",
       headers: {
-        "X-ZUMO-AUTH": authToken
+        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
       },
       body: formData
     })
@@ -72,4 +73,3 @@ export const fetchRemoveUser = authToken => dispatch => {
   });
   return dispatch(removeUser());
 };
-

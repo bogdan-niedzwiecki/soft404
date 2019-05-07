@@ -1,40 +1,48 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import styles from "../ProfileStyle";
 import {
   CardContent,
   CardMedia,
-  Typography,
   CardActions,
   Card,
   withStyles,
   Tooltip,
   IconButton,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Grid,
   TextField
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
+import SaveIcon from "@material-ui/icons/Save";
 import { withRouter } from "react-router";
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
-class Profile extends React.Component {
+class EditProfile extends React.Component {
   constructor(props) {
     super(props);
-    this.handleDeleteProfile = this.handleDeleteProfile.bind(this);
+    // this.handleNameChange = this.handleNameChange.bind(this);
+    // this.handleSurnameChange = this.handleSurnameChange.bind(this);
+    this.handleEditProfile = this.handleEditProfile.bind(this);
+    this.handlePhotoChange = this.handlePhotoChange.bind(this);
   }
 
   state = {
-    open: false,
-    expanded: false
+    user: {
+      name: sessionStorage.getItem("name"),
+      lastName: sessionStorage.getItem("surname"),
+      email: sessionStorage.getItem("email"),
+      photo: null
+    }
   };
 
-
+  // handleNameChange(event) {
+  //   this.setState({
+  //     user: { ...this.state.user, name: event.target.value }
+  //   });
+  // }
+  // handleSurnameChange(event) {
+  //   this.setState({
+  //     user: { ...this.state.user, surname: event.target.value }
+  //   });
+  // }
 
   handleChange = event => {
     this.setState({
@@ -44,31 +52,32 @@ class Profile extends React.Component {
       }
     });
   };
-  handleClickUpdateProfile = () => {
-    this.props.editProfile(this.state.user);
-    this.props.history.push("/profilePage");
-  };
-
-  handleDeleteProfile(event) {
-    let formData = new FormData();
-
-    if (this.state.selectedFile) {
-    formData.append('photo', this.state.selectedFile);
-    }
-    formData.append('user', JSON.stringify(this.state.user));
-    fetch(
-    `https://delfinkitrainingapi.azurewebsites.net/api/user`,
-    {
-    method: 'PUT',
-    headers: {
-    'X-ZUMO-AUTH': this.props.authToken
-    },
-    body: formData
-    }
-    ).then(r => console.log(r)); 
+  handlePhotoChange(event) {
+    this.setState({ selectedFile: event.target.files[0] });
   }
+
+  handleEditProfile(event) {
+    let formData = new FormData();
+    if (this.state.selectedFile) {
+      formData.append("photo", this.state.selectedFile);
+    }
+
+    formData.append("user", JSON.stringify(this.state.user));
+    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
+      method: "PUT",
+      headers: {
+        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
+      },
+      body: formData
+    })
+      .then(r => console.log(r))
+      .then(() => this.props.history.push("/profile"));
+  }
+
   render() {
     const { classes } = this.props;
+    // const { name, surname, email } = this.props.user;
+
     return (
       <main className={classes.root}>
         <Card className={classes.card}>
@@ -78,44 +87,42 @@ class Profile extends React.Component {
             title={sessionStorage.getItem("name")}
           />
           <CardContent>
-          <form  noValidate autoComplete="off">
-            <TextField id="name"
+            <TextField
+              id="name"
               label="Name"
               onChange={this.handleChange}
               margin="normal"
               variant="outlined"
-              value={sessionStorage.getItem("name")}
+              value={this.state.user.name}
             />
-
             <TextField
               id="lastName"
               label="Last Name"
               onChange={this.handleChange}
               margin="normal"
+              multiline
               variant="outlined"
-              value={sessionStorage.getItem("surname")}
-            />  
+              value={this.state.user.surname}
+            />
 
-            <TextField id="email"
+            <TextField
+              id="email"
               label="E-mail"
               onChange={this.handleChange}
               margin="normal"
               variant="outlined"
-              value={sessionStorage.getItem("email")}
+              value={this.state.user.email}
             />
-           </form>
-         
           </CardContent>
           <CardActions>
-            <Tooltip title="Edit Profile">
+            <Tooltip title="Save Changes">
               <IconButton
-                aria-label="Edit profile"
+                aria-label="Save Change"
                 color="primary"
                 size="large"
-                component={NavLink}
-                to="/edit_profile"
+                onClick={this.handleEditProfile}
               >
-                <EditIcon />
+                <SaveIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="Delete Profile">
@@ -123,57 +130,37 @@ class Profile extends React.Component {
                 aria-label="Delete profile"
                 color="secondary"
                 size="large"
-                onClick={this.handleClickOpen}
+                onClick={this.handleEditProfile}
               >
                 <DeleteIcon />
               </IconButton>
             </Tooltip>
+            <input
+              component="span"
+              accept="image/*"
+              style={{ display: "none" }}
+              id="raised-button-file"
+              multiple
+              type="file"
+              onChange={this.handlePhotoChange}
+            />
+            <label htmlFor="raised-button-file">
+              <Tooltip title="Upload Avatar" placement="bottom">
+                <IconButton
+                  variant="contained"
+                  color="primary"
+                  component="span"
+                  size="medium"
+                >
+                  <PhotoCameraIcon />
+                </IconButton>
+              </Tooltip>
+            </label>
           </CardActions>
         </Card>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Delete Account Page"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              After choosing this option you will delete all your profile
-              information.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Grid
-              container
-              direction="row"
-              justify="space-around"
-              alignItems="center"
-            >
-              <Button
-                onClick={this.handleClose}
-                variant="contained"
-                size="medium"
-                color="primary"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={this.handleDeleteProfile}
-                variant="contained"
-                size="medium"
-                color="secondary"
-              >
-                Delete
-              </Button>
-            </Grid>
-          </DialogActions>
-        </Dialog>
       </main>
     );
   }
 }
 
-export default withRouter(withStyles(styles)(Profile));
+export default withRouter(withStyles(styles)(EditProfile));

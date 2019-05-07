@@ -1,12 +1,7 @@
-import { GET_USER, UPDATE_USER, REMOVE_USER } from "../actions/userActions";
-import {
-  ADD_POST,
-  DELETE_POST,
-  EDIT_POST
-} from "../actions/postActions";
+import { UPDATE_USER, REMOVE_USER } from "../actions/userActions";
+import { ADD_POST, DELETE_POST, EDIT_POST } from "../actions/postActions";
 const reducer = (state = { authToken: null, posts: [] }, action) => {
   switch (action.type) {
-
     case ADD_POST:
       return {
         ...state,
