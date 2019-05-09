@@ -17,28 +17,31 @@ import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import SaveIcon from "@material-ui/icons/Save";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchPostToAPI, fetchEditedPostToAPI } from "./../actions/postActions";
+import { fetchPostToAPI } from "./../actions/postActions";
 
 const messagesForUser = [];
 
 class NewPost extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleTitleChange = this.handleTitleChange.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.handlePhotoChange = this.handlePhotoChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { post: { title: "", text: "" } };
-  }
-  handleTitleChange(event) {
-    this.setState({ post: { ...this.state.post, title: event.target.value } });
-  }
-  handleTextChange(event) {
-    this.setState({ post: { ...this.state.post, text: event.target.value } });
-  }
-  handlePhotoChange(event) {
+  state = {
+    post: {
+      title: "",
+      text: "",
+      photo: null
+    }
+  };
+
+  handleChange = event => {
+    this.setState({
+      post: {
+        ...this.state.post,
+        [event.target.id]: event.target.value
+      }
+    });
+  };
+
+  handlePhotoChange = event => {
     this.setState({ selectedFile: event.target.files[0] });
-  }
+  };
   handleDataReset = () => {
     this.setState({
       post: {
@@ -61,31 +64,24 @@ class NewPost extends React.Component {
     }
   };
 
-  handleSubmit(event) {
+  handleSubmit = event => {
     event.preventDefault();
     let formData = new FormData();
     formData.append("photo", this.state.selectedFile);
     formData.append("post", JSON.stringify(this.state.post));
-    if (this.props.edit) {
-      this.props.fetchEditedPostToAPI(
-        this.props.postToEdit.Id,
-        formData,
-        this.props.authToken
-      );
-    } else {
-      this.props.fetchPostToAPI(formData, this.props.authToken);
-      this.props.history.push("/");
-      this.validateTitle(messagesForUser);
-      this.validateText(messagesForUser);
-      if (messagesForUser.length) {
-        alert(messagesForUser);
-        return;
-      }
+    this.props.fetchPostToAPI(formData, this.props.authToken);
+    this.props.history.push("/");
+    this.validateTitle(messagesForUser);
+    this.validateText(messagesForUser);
+    if (messagesForUser.length) {
+      alert(messagesForUser);
+      return;
     }
-  }
+  };
 
   render() {
     const { classes } = this.props;
+    const { title, text } = this.state.post;
 
     return (
       <main className={classes.root}>
@@ -110,19 +106,19 @@ class NewPost extends React.Component {
                 alignItems="stretch"
               >
                 <TextField
-                  id="outlined-required"
+                  id="title"
                   label="Title of the Post"
                   placeholder="Somewhere in the space"
                   margin="normal"
                   variant="outlined"
-                  value={this.state.post.title}
-                  onChange={this.handleTitleChange}
+                  value={title}
+                  onChange={this.handleChange}
                   required={true}
                   inputProps={{ maxLength: 150, minLength: 10 }}
                 />
 
                 <TextField
-                  id="update"
+                  id="text"
                   label="Content of the Post"
                   placeholder="It was a monday, day like any other day"
                   rows="10"
@@ -131,8 +127,8 @@ class NewPost extends React.Component {
                   multiline
                   margin="normal"
                   variant="outlined"
-                  value={this.state.post.text}
-                  onChange={this.handleTextChange}
+                  value={text}
+                  onChange={this.handleChange}
                 />
                 <CardActions className={classes.footer}>
                   <Button
@@ -161,12 +157,12 @@ class NewPost extends React.Component {
                     component="span"
                     accept="image/*"
                     style={{ display: "none" }}
-                    id="raised-button-file"
+                    id="takePhoto"
                     multiple
                     type="file"
                     onChange={this.handlePhotoChange}
                   />
-                  <label htmlFor="raised-button-file">
+                  <label htmlFor="takePhoto">
                     <Tooltip title="Upload Photo" placement="bottom">
                       <IconButton
                         variant="contained"
@@ -190,9 +186,7 @@ class NewPost extends React.Component {
 
 const mapDispatch = dispatch => ({
   fetchPostToAPI: (formData, authToken) =>
-    dispatch(fetchPostToAPI(formData, authToken)),
-  fetchEditedPostToAPI: (postId, formData, authToken) =>
-    dispatch(fetchEditedPostToAPI(postId, formData, authToken))
+    dispatch(fetchPostToAPI(formData, authToken))
 });
 export default withRouter(
   connect(

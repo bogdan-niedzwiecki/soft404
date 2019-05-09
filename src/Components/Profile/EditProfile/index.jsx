@@ -8,18 +8,17 @@ import {
   withStyles,
   Tooltip,
   IconButton,
-  TextField
+  TextField,
+  Grid,
+  Button
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import SaveIcon from "@material-ui/icons/Save";
-import { withRouter } from "react-router";
+import { withRouter, NavLink } from "react-router-dom";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);
-    // this.handleNameChange = this.handleNameChange.bind(this);
-    // this.handleSurnameChange = this.handleSurnameChange.bind(this);
     this.handleEditProfile = this.handleEditProfile.bind(this);
     this.handlePhotoChange = this.handlePhotoChange.bind(this);
   }
@@ -27,22 +26,11 @@ class EditProfile extends React.Component {
   state = {
     user: {
       name: sessionStorage.getItem("name"),
-      lastName: sessionStorage.getItem("surname"),
+      givenname: sessionStorage.getItem("surname"),
       email: sessionStorage.getItem("email"),
       photo: null
     }
   };
-
-  // handleNameChange(event) {
-  //   this.setState({
-  //     user: { ...this.state.user, name: event.target.value }
-  //   });
-  // }
-  // handleSurnameChange(event) {
-  //   this.setState({
-  //     user: { ...this.state.user, surname: event.target.value }
-  //   });
-  // }
 
   handleChange = event => {
     this.setState({
@@ -76,7 +64,7 @@ class EditProfile extends React.Component {
 
   render() {
     const { classes } = this.props;
-    // const { name, surname, email } = this.props.user;
+    const { name, givenname, email } = this.state.user;
 
     return (
       <main className={classes.root}>
@@ -93,16 +81,17 @@ class EditProfile extends React.Component {
               onChange={this.handleChange}
               margin="normal"
               variant="outlined"
-              value={this.state.user.name}
+              value={name}
+              fullWidth
             />
             <TextField
-              id="lastName"
+              id="givenname"
               label="Last Name"
               onChange={this.handleChange}
               margin="normal"
-              multiline
               variant="outlined"
-              value={this.state.user.surname}
+              value={givenname}
+              fullWidth
             />
 
             <TextField
@@ -111,51 +100,54 @@ class EditProfile extends React.Component {
               onChange={this.handleChange}
               margin="normal"
               variant="outlined"
-              value={this.state.user.email}
+              value={email}
+              fullWidth
             />
           </CardContent>
           <CardActions>
-            <Tooltip title="Save Changes">
-              <IconButton
-                aria-label="Save Change"
-                color="primary"
-                size="large"
-                onClick={this.handleEditProfile}
-              >
-                <SaveIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Delete Profile">
-              <IconButton
-                aria-label="Delete profile"
-                color="secondary"
-                size="large"
-                onClick={this.handleEditProfile}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
-            <input
-              component="span"
-              accept="image/*"
-              style={{ display: "none" }}
-              id="raised-button-file"
-              multiple
-              type="file"
-              onChange={this.handlePhotoChange}
-            />
-            <label htmlFor="raised-button-file">
-              <Tooltip title="Upload Avatar" placement="bottom">
+            <Grid
+              container
+              direction="row"
+              justify="space-around"
+              alignItems="center"
+            >
+              <Tooltip title="Save Changes">
                 <IconButton
-                  variant="contained"
+                  aria-label="Save Change"
                   color="primary"
-                  component="span"
-                  size="medium"
+                  size="large"
+                  onClick={this.handleEditProfile}
                 >
-                  <PhotoCameraIcon />
+                  <SaveIcon />
                 </IconButton>
               </Tooltip>
-            </label>
+              <Tooltip title="Cancel Change">
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  component={NavLink}
+                  to="/profile"
+                >
+                  Cancel
+                </Button>
+              </Tooltip>
+              <input
+                component="span"
+                accept="image/*"
+                style={{ display: "none" }}
+                id="raised-button-file"
+                multiple
+                type="file"
+                onChange={this.handlePhotoChange}
+              />
+              <label htmlFor="raised-button-file">
+                <Tooltip title="Upload Avatar">
+                  <IconButton color="primary" component="span" size="medium">
+                    <PhotoCameraIcon />
+                  </IconButton>
+                </Tooltip>
+              </label>
+            </Grid>
           </CardActions>
         </Card>
       </main>

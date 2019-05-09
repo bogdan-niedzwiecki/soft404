@@ -26,11 +26,6 @@ import EditIcon from "@material-ui/icons/Edit";
 import { withRouter } from "react-router";
 
 class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleDeleteProfile = this.handleDeleteProfile.bind(this);
-  }
-
   state = {
     open: false,
     expanded: false,
@@ -63,7 +58,7 @@ class Profile extends React.Component {
     sessionStorage.removeItem("email");
   };
 
-  handleDeleteProfile(event) {
+  handleDeleteProfile = event => {
     event.preventDefault();
     fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
       method: "DELETE",
@@ -74,7 +69,7 @@ class Profile extends React.Component {
       .then(r => console.log(r))
       .then(this.removeUserStorage)
       .then(() => this.props.history.push("/"));
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -99,27 +94,34 @@ class Profile extends React.Component {
             </Typography>
           </CardContent>
           <CardActions>
-            <Tooltip title="Edit Profile">
-              <IconButton
-                aria-label="Edit profile"
-                color="primary"
-                size="large"
-                component={NavLink}
-                to="/edit_profile"
-              >
-                <EditIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Delete Profile">
-              <IconButton
-                aria-label="Delete profile"
-                color="secondary"
-                size="large"
-                onClick={this.handleClickOpen}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
+            <Grid
+              container
+              direction="row"
+              justify="space-around"
+              alignItems="center"
+            >
+              <Tooltip title="Edit Profile">
+                <IconButton
+                  aria-label="Edit profile"
+                  color="primary"
+                  size="large"
+                  component={NavLink}
+                  to="/edit_profile"
+                >
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete Profile">
+                <IconButton
+                  aria-label="Delete profile"
+                  color="secondary"
+                  size="large"
+                  onClick={this.handleClickOpen}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            </Grid>
           </CardActions>
         </Card>
         <Dialog
@@ -137,37 +139,44 @@ class Profile extends React.Component {
               After choosing this option you will delete all your profile
               information.
             </DialogContentText>
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={checkbox1}
-                    onChange={this.handleChange("checkbox1")}
-                    value="checkbox1"
-                  />
-                }
-                label="My choise"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={checkbox2}
-                    onChange={this.handleChange("checkbox2")}
-                    value="checkbox2"
-                  />
-                }
-                label="2"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={checkbox3}
-                    onChange={this.handleChange("checkbox3")}
-                    value="checkbox3"
-                  />
-                }
-                label="OK"
-              />
+            <FormGroup>
+              <Grid
+                container
+                direction="column"
+                justify="flex-startd"
+                alignItems="baseline"
+              >
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={checkbox1}
+                      onChange={this.handleChange("checkbox1")}
+                      value="checkbox1"
+                    />
+                  }
+                  label="I Am sure "
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={checkbox2}
+                      onChange={this.handleChange("checkbox2")}
+                      value="checkbox2"
+                    />
+                  }
+                  label="Agree with delete my profile"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={checkbox3}
+                      onChange={this.handleChange("checkbox3")}
+                      value="checkbox3"
+                    />
+                  }
+                  label="Finaly! Just Do It!"
+                />
+              </Grid>
             </FormGroup>
           </DialogContent>
           <DialogActions>
