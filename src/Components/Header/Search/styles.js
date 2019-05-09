@@ -1,8 +1,4 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import SearchIcon from "@material-ui/icons/Search";
-import InputBase from "@material-ui/core/InputBase";
 
 const styles = theme => ({
   search: {
@@ -15,15 +11,14 @@ const styles = theme => ({
     },
     marginRight: theme.spacing.unit * 2,
     marginLeft: theme.spacing.unit * 2,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       marginLeft: theme.spacing.unit * 2,
-       display: "none",      
+      display: "none"
     },
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       display: "inline-block",
       width: "40%"
-    },
-    
+    }
   },
   searchIcon: {
     width: theme.spacing.unit * 9,
@@ -36,7 +31,7 @@ const styles = theme => ({
   },
   inputRoot: {
     color: "primary",
-    width: "100%",
+    width: "100%"
   },
   inputInput: {
     paddingTop: theme.spacing.unit,
@@ -50,25 +45,4 @@ const styles = theme => ({
     }
   }
 });
-
-class Search extends React.Component {
-  render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
-        </div>
-        <InputBase
-          placeholder="Search…"
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput
-          }}
-        />
-      </div>
-    );
-  }
-}
-
-export default withStyles(styles)(Search);
+export default styles;

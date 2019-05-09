@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./LogInFormStyle";
+import React, { Component } from "react";
+import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
 import {
@@ -15,14 +15,7 @@ import {
 import GoogleLogin from "react-google-login";
 import { withRouter } from "react-router-dom";
 
-class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      azure_token: false
-    };
-  }
-
+class LoginForm extends Component {
   responseGoogle = response => {
     fetch("https://delfinkitrainingapi.azurewebsites.net/.auth/login/google", {
       method: "POST",
@@ -44,13 +37,11 @@ class LoginForm extends React.Component {
   };
 
   noResponseGoogle = response => {
-    alert("Login has been failed");
     console.log(response);
   };
 
   render() {
     const { classes } = this.props;
-
     return (
       <MDBContainer className={classes.root}>
         <MDBRow className={classes.content}>
@@ -106,9 +97,9 @@ class LoginForm extends React.Component {
                   <div className="row my-3 d-flex justify-content-center">
                     <GoogleLogin
                       clientId="576077564511-fd1t0nbqe1av9rr70to25hnuce1j0mg7.apps.googleusercontent.com"
-                      buttonText="Sign in"
+                      buttonText="Login"
                       onSuccess={this.responseGoogle}
-                      onFailure={this.noResponseGoogle}
+                      onFailure={this.responseGoogle}
                       cookiePolicy={"single_host_origin"}
                     />
                   </div>

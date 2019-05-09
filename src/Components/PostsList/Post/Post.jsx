@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -10,7 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import EditIcon from "@material-ui/icons/Edit";
 import { NavLink } from "react-router-dom";
-import DeletePostButton from "./DeletePostButton/index";
+import DeletePostButton from "./DeletePostButton/DeletePostButton";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -21,16 +21,13 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { Tooltip } from "@material-ui/core";
 import styles from "./styles";
 
-class Post extends React.Component {
+class Post extends Component {
   state = { open: false };
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
+  handleClick = () => {
+    this.setState(state => ({ open: !state.open }));
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
   transformText = txt => {
     if (txt.length > 200) {
       return `${txt.slice(0, txt.lastIndexOf(" ", 199)).slice(0, 199)}...`;
@@ -65,7 +62,7 @@ class Post extends React.Component {
           title={title}
           subheader={this.transformDate(publishDate)}
         />
-        <CardActionArea onClick={this.handleClickOpen} style={{ outline: 0 }}>
+        <CardActionArea onClick={this.handleClick}>
           <CardMedia className={classes.media} image={thumbnailPhoto} />
           <CardContent>
             <Typography paragraph className={classes.text}>
@@ -75,7 +72,7 @@ class Post extends React.Component {
         </CardActionArea>
         <Dialog
           open={this.state.open}
-          onClose={this.handleClose}
+          onClose={this.handleClick}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -96,7 +93,7 @@ class Post extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="default">
+            <Button onClick={this.handleClick} color="default">
               Close
             </Button>
           </DialogActions>
@@ -106,7 +103,7 @@ class Post extends React.Component {
           <IconButton
             aria-label="Edit post"
             component={NavLink}
-            to="/edit_Post"
+            to="/edit_post"
           >
             <Tooltip title="Edit Post">
               <EditIcon color="primary" />

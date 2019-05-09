@@ -12,8 +12,6 @@ const styles = theme => ({
   footer: {
     margin: "auto"
   },
-
   toolbar: theme.mixins.toolbar
 });
-
 export default styles;

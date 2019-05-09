@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -9,24 +9,15 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import { Tooltip } from "@material-ui/core";
 
-class DeletePostButton extends React.Component {
+class DeletePostButton extends Component {
   state = {
     open: false
   };
-  constructor(props) {
-    super(props);
-    this.deletePost = this.deletePost.bind(this);
-  }
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
+  handleClick = () => {
+    this.setState(state => ({ open: !state.open }));
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
-  deletePost(event) {
+  deletePost = event => {
     event.preventDefault();
     fetch(
       `https://delfinkitrainingapi.azurewebsites.net/api/post/${
@@ -41,8 +32,8 @@ class DeletePostButton extends React.Component {
     )
       .then(r => console.log(r))
       .then(console.log(this.props.delete_id))
-      .then(this.handleClose);
-  }
+      .then(this.handleClick);
+  };
 
   render() {
     return (
@@ -51,7 +42,7 @@ class DeletePostButton extends React.Component {
           <IconButton
             aria-label="Delete post"
             color="secondary"
-            onClick={this.handleClickOpen}
+            onClick={this.handleClick}
           >
             <DeleteIcon />
           </IconButton>
@@ -60,7 +51,7 @@ class DeletePostButton extends React.Component {
           maxWidth="sm"
           fullWidth
           open={this.state.open}
-          onClose={this.handleClose}
+          onClose={this.handleClick}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -76,7 +67,7 @@ class DeletePostButton extends React.Component {
             <Button onClick={this.deletePost} color="secondary">
               Delete
             </Button>
-            <Button onClick={this.handleClose} color="default" autoFocus>
+            <Button onClick={this.handleClick} color="default" autoFocus>
               Cancel
             </Button>
           </DialogActions>

@@ -8,6 +8,7 @@ const styles = theme => ({
   content: {
     width: 625,
     margin: "auto"
-  },
+  }
 });
+
 export default styles;

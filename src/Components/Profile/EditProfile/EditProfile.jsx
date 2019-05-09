@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import styles from "../ProfileStyle";
+import styles from "../styles";
 import {
   CardContent,
   CardMedia,
@@ -22,27 +22,13 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { withRouter } from "react-router";
 
-class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleDeleteProfile = this.handleDeleteProfile.bind(this);
-  }
-
+class Profile extends Component {
   state = {
-    open: false,
-    expanded: false
+    open: false
   };
 
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
+  handleClick = () => {
+    this.setState(state => ({ open: !state.open }));
   };
 
   removeUserStorage = () => {
@@ -53,7 +39,7 @@ class Profile extends React.Component {
     sessionStorage.removeItem("email");
   };
 
-  handleDeleteProfile(event) {
+  handleDeleteProfile = event => {
     event.preventDefault();
     fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
       method: "DELETE",
@@ -64,7 +50,7 @@ class Profile extends React.Component {
       .then(r => console.log(r))
       .then(this.removeUserStorage)
       .then(() => this.props.history.push("/"));
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -101,7 +87,7 @@ class Profile extends React.Component {
                 aria-label="Delete profile"
                 color="secondary"
                 size="large"
-                onClick={this.handleClickOpen}
+                onClick={this.handleClick}
               >
                 <DeleteIcon />
               </IconButton>
@@ -110,7 +96,7 @@ class Profile extends React.Component {
         </Card>
         <Dialog
           open={this.state.open}
-          onClose={this.handleClose}
+          onClose={this.handleClick}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -131,7 +117,7 @@ class Profile extends React.Component {
               alignItems="center"
             >
               <Button
-                onClick={this.handleClose}
+                onClick={this.handleClick}
                 variant="contained"
                 size="medium"
                 color="primary"

@@ -1,16 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import { NavLink } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
+import styles from "./styles";
 
-const styles = () => ({
-  logo: {
-    width: 60,
-    height: 60
-  }
-});
-
-class Logo extends React.Component {
+class Logo extends Component {
   render() {
     const { classes } = this.props;
     return (

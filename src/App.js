@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
-import Header from "./Components/Header/";
-import PostsList from "./Components/PostsList/";
-import Footer from "./Components/Footer/";
-import NewPost from "./Components/NewPost/";
 import { BrowserRouter, Route } from "react-router-dom";
+import Header from "./Components/Header/Header";
+import PostsList from "./Components/PostsList/";
+import Footer from "./Components/Footer/Footer";
+import NewPost from "./Components/NewPost/NewPost";
 import Profile from "./Components/Profile/Profile";
-import EditProfile from "./Components/Profile/EditProfile";
-import LoginForm from "./Components/Login/LoginForm";
-import EditPost from "./Components/PostsList/EditPost/index";
+import EditProfile from "./Components/Profile/EditProfile/EditProfile";
+import LoginForm from "./Components/LoginForm/LoginForm";
+import EditPost from "./Components/PostsList/EditPost/EditPost";
 class App extends Component {
   render() {
     return (
@@ -26,7 +26,13 @@ class App extends Component {
         <Route
           exact
           path="/login"
-          render={() => <LoginForm onSuccessLogin={this.getToken} />}
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <Redirect to="/" />
+            ) : (
+              <LoginForm />
+            )
+          }
         />
         <Route exact path="/logout" render={() => <Redirect to="/login" />} />
         <Route
@@ -54,7 +60,7 @@ class App extends Component {
 
         <Route
           exact
-          path="/edit_Post"
+          path="/edit_post"
           render={() =>
             sessionStorage.getItem("azure_access_token") ? (
               <EditPost />

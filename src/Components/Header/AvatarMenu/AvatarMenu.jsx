@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   IconButton,
   MenuItem,
@@ -12,13 +12,9 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import LogoutIcon from "@material-ui/icons/Input";
 import { withStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
-const styles = () => ({
-  avatar: {
-    margin: -8
-  }
-});
+import styles from "./styles";
 
-class AvatarMenu extends React.Component {
+class AvatarMenu extends Component {
   state = {
     anchorEl: null
   };

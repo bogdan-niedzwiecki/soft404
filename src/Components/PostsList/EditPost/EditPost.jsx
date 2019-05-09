@@ -18,23 +18,20 @@ import SaveIcon from "@material-ui/icons/Save";
 import { withRouter } from "react-router-dom";
 
 class EditPost extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleTitleChange = this.handleTitleChange.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.handlePhotoChange = this.handlePhotoChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { post: { title: "", text: "" }, selectedFile: null };
-  }
-  handleTitleChange(event) {
+  state = { post: { title: "", text: "" }, selectedFile: null };
+
+  handleTitleChange = event => {
     this.setState({ post: { ...this.state.post, title: event.target.value } });
-  }
-  handleTextChange(event) {
+  };
+
+  handleTextChange = event => {
     this.setState({ post: { ...this.state.post, text: event.target.value } });
-  }
-  handlePhotoChange(event) {
+  };
+
+  handlePhotoChange = event => {
     this.setState({ selectedFile: event.target.files[0] });
-  }
+  };
+
   handleDataReset = () => {
     this.setState({
       post: {
@@ -45,39 +42,37 @@ class EditPost extends React.Component {
     });
   };
 
-handleSubmit(event) {
-event.preventDefault();
-let formData = new FormData();
-if (this.state.selectedFile) {
-formData.append('photo', this.state.selectedFile);
-}
-formData.append('post', JSON.stringify(this.state.post));
-fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post${this.props.postId}`, {
-method: 'PUT',
-headers: {
-'X-ZUMO-AUTH': sessionStorage.getItem("azure_access_token")
-},
-body: formData
-}).then(response => response.json())
-.then(resp =>
-  this.setState({
-    postsList: resp.sort((a, b) =>
-      a.PublishDate > b.PublishDate ? -1 : 1
+  handleSubmit = event => {
+    event.preventDefault();
+    let formData = new FormData();
+    if (this.state.selectedFile) {
+      formData.append("photo", this.state.selectedFile);
+    }
+    formData.append("post", JSON.stringify(this.state.post));
+    fetch(
+      `https://delfinkitrainingapi.azurewebsites.net/api/post${
+        this.props.postId
+      }`,
+      {
+        method: "PUT",
+        headers: {
+          "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
+        },
+        body: formData
+      }
     )
-  })
-)
-}
+      .then(response => response.json())
+      .then(resp =>
+        this.setState({
+          postsList: resp.sort((a, b) =>
+            a.PublishDate > b.PublishDate ? -1 : 1
+          )
+        })
+      );
+  };
 
   render() {
-    // const { classes } = this.props;
-    const {
-        classes,
-        // title,
-        // thumbnailPhoto,
-        // text,
-        // publishDate,
-        // id
-      } = this.props;
+    const { classes } = this.props;
 
     return (
       <Card className={classes.content}>

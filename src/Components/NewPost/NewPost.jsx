@@ -1,6 +1,6 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { Component } from "react";
 import styles from "./styles";
+import { withStyles } from "@material-ui/core/styles";
 import {
   TextField,
   Grid,
@@ -17,24 +17,18 @@ import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import SaveIcon from "@material-ui/icons/Save";
 import { withRouter } from "react-router-dom";
 
-class NewPost extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleTitleChange = this.handleTitleChange.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.handlePhotoChange = this.handlePhotoChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { post: { title: "", text: "" } };
-  }
-  handleTitleChange(event) {
+class NewPost extends Component {
+  state = { post: { title: "", text: "" } };
+
+  handleTitleChange = event => {
     this.setState({ post: { ...this.state.post, title: event.target.value } });
-  }
-  handleTextChange(event) {
+  };
+  handleTextChange = event => {
     this.setState({ post: { ...this.state.post, text: event.target.value } });
-  }
-  handlePhotoChange(event) {
+  };
+  handlePhotoChange = event => {
     this.setState({ selectedFile: event.target.files[0] });
-  }
+  };
   handleDataReset = () => {
     this.setState({
       post: {
@@ -44,7 +38,7 @@ class NewPost extends React.Component {
     });
   };
 
-  handleSubmit(event) {
+  handleSubmit = event => {
     event.preventDefault();
     let formData = new FormData();
     formData.append("photo", this.state.selectedFile);
@@ -57,7 +51,7 @@ class NewPost extends React.Component {
       .then(response => response.json())
       .then(resp => console.log(resp))
       .then(() => this.props.history.push("/"));
-  }
+  };
 
   render() {
     const { classes } = this.props;
