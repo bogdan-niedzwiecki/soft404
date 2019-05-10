@@ -7,7 +7,7 @@ import Footer from "./Components/Footer/Footer";
 import NewPost from "./Components/NewPost/NewPost";
 import Profile from "./Components/Profile/Profile";
 import EditProfile from "./Components/Profile/EditProfile/EditProfile";
-import LoginForm from "./Components/LoginForm/LoginForm";
+import LoginForm from "./Components/LoginForm/";
 import EditPost from "./Components/PostsList/EditPost/EditPost";
 class App extends Component {
   render() {

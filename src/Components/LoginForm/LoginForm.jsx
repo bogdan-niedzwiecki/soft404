@@ -16,29 +16,23 @@ import GoogleLogin from "react-google-login";
 import { withRouter } from "react-router-dom";
 
 class LoginForm extends Component {
-  responseGoogle = response => {
-    fetch("https://delfinkitrainingapi.azurewebsites.net/.auth/login/google", {
-      method: "POST",
-      headers: { "content-type": "Application/JSON" },
-      body: JSON.stringify({
-        id_token: response.tokenId
-      })
-    })
-      .then(response => response.json())
-      .then(resp => {
-        sessionStorage.setItem("azure_access_token", resp.authenticationToken);
-      })
-      .then(() => this.props.history.push("/"));
-
-    sessionStorage.setItem("name", response.w3.ofa);
-    sessionStorage.setItem("surname", response.w3.wea);
-    sessionStorage.setItem("avatar", response.w3.Paa);
-    sessionStorage.setItem("email", response.w3.U3);
+  successResponse = response => {
+    this.props.getToken(
+      "https://delfinkitrainingapi.azurewebsites.net/.auth/login/google",
+      response
+    );
   };
 
-  noResponseGoogle = response => {
+  failureResponse = response => {
     console.log(response);
   };
+
+  componentDidUpdate() {
+    this.props.user.token
+      ? sessionStorage.setItem("azure_access_token", this.props.user.token)
+      : sessionStorage.setItem("azure_access_token", null);
+    this.props.history.push("/");
+  }
 
   render() {
     const { classes } = this.props;
@@ -97,9 +91,9 @@ class LoginForm extends Component {
                   <div className="row my-3 d-flex justify-content-center">
                     <GoogleLogin
                       clientId="576077564511-fd1t0nbqe1av9rr70to25hnuce1j0mg7.apps.googleusercontent.com"
-                      buttonText="Login"
-                      onSuccess={this.responseGoogle}
-                      onFailure={this.responseGoogle}
+                      buttonText="Sign in"
+                      onSuccess={this.successResponse}
+                      onFailure={this.failureResponse}
                       cookiePolicy={"single_host_origin"}
                     />
                   </div>

@@ -46,18 +46,14 @@ class Post extends Component {
       thumbnailPhoto,
       text,
       publishDate,
-      id
+      id,
+      avatar
     } = this.props;
-
     return (
       <Card className={classes.card}>
         <CardHeader
           avatar={
-            <Avatar
-              aria-label="Post"
-              className={classes.avatar}
-              src={sessionStorage.getItem("avatar")}
-            />
+            <Avatar aria-label="Post" className={classes.avatar} src={avatar} />
           }
           title={title}
           subheader={this.transformDate(publishDate)}

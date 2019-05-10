@@ -1,13 +1,13 @@
-export const POSTS_FETCH_DATA_SUCCESS = "POSTS_FETCH_DATA_SUCCESS";
+export const GET_POSTS = "GET_POSTS";
 
-export function postsFetchDataSuccess(posts) {
+export function getPosts(posts) {
   return {
-    type: POSTS_FETCH_DATA_SUCCESS,
+    type: GET_POSTS,
     payload: posts.sort((a, b) => (a.PublishDate > b.PublishDate ? -1 : 1))
   };
 }
 
-export function postsFetchData(url, token) {
+export function getPostsMiddleware(url, token) {
   return dispatch => {
     fetch(url, {
       method: "GET",
@@ -23,6 +23,6 @@ export function postsFetchData(url, token) {
         return response;
       })
       .then(response => response.json())
-      .then(r => dispatch(postsFetchDataSuccess(r)));
+      .then(r => dispatch(getPosts(r)));
   };
 }
