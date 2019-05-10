@@ -1,5 +1,6 @@
 import { ADD_POST, DELETE_POST } from "../actions/postActions";
-const reducer = (state = { authToken: null, posts: [] }, action) => {
+import { DELETE_USER} from "../actions/userActions";
+const reducer = (state = { usertoken: null, posts: [] }, action) => {
   switch (action.type) {
     case ADD_POST:
       return {
@@ -14,6 +15,11 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
           onePost => onePost.Id !== action.payload.postToDel.Id
         )
       };
+
+    case DELETE_USER:
+      return {
+        state: null
+      }; 
 
     default:
       return state;

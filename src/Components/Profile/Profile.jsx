@@ -24,6 +24,9 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { withRouter } from "react-router";
+import { connect } from "react-redux";
+import { deleteUserFromApi } from "../actions/userActions";
+
 
 class Profile extends React.Component {
   state = {
@@ -34,6 +37,13 @@ class Profile extends React.Component {
     checkbox3: false
   };
 
+  handleDeleteProfile = event => {
+    event.preventDefault();
+    this.props.deleteUserFromApi(this.props.authToken);
+    this.removeUserStorage();
+    this.props.history.push("/");
+  };
+  
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
@@ -56,19 +66,6 @@ class Profile extends React.Component {
     sessionStorage.removeItem("surname");
     sessionStorage.removeItem("avatar");
     sessionStorage.removeItem("email");
-  };
-
-  handleDeleteProfile = event => {
-    event.preventDefault();
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
-      method: "DELETE",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      }
-    })
-      .then(r => console.log(r))
-      .then(this.removeUserStorage)
-      .then(() => this.props.history.push("/"));
   };
 
   render() {
@@ -143,7 +140,7 @@ class Profile extends React.Component {
               <Grid
                 container
                 direction="column"
-                justify="flex-startd"
+                justify="flex-start"
                 alignItems="baseline"
               >
                 <FormControlLabel
@@ -216,5 +213,14 @@ class Profile extends React.Component {
     );
   }
 }
+const mapDispatch = dispatch => ({
+  deleteUserFromApi: usertoken => dispatch(deleteUserFromApi(usertoken))
+});
 
-export default withRouter(withStyles(styles, { withTheme: true })(Profile));
+const mapState = state => ({
+  usertoken: state.usertoken
+});
+export default withRouter(connect(
+  mapState,
+  mapDispatch
+)(withStyles(styles, {withTheme: true})(Profile)));

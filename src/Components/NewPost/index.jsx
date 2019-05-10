@@ -69,7 +69,7 @@ class NewPost extends React.Component {
     let formData = new FormData();
     formData.append("photo", this.state.selectedFile);
     formData.append("post", JSON.stringify(this.state.post));
-    this.props.fetchPostToAPI(formData, this.props.authToken);
+    this.props.fetchPostToAPI(formData, this.props.usertoken);
     this.props.history.push("/");
     this.validateTitle(messagesForUser);
     this.validateText(messagesForUser);
@@ -185,12 +185,12 @@ class NewPost extends React.Component {
 }
 
 const mapDispatch = dispatch => ({
-  fetchPostToAPI: (formData, authToken) =>
-    dispatch(fetchPostToAPI(formData, authToken))
+  fetchPostToAPI: (formData, usertoken) =>
+    dispatch(fetchPostToAPI(formData, usertoken))
 });
 export default withRouter(
   connect(
-    state => ({ authToken: state.authToken }),
+    state => ({ usertoken: state.usertoken }),
     mapDispatch
   )(withStyles(styles)(NewPost))
 );

@@ -22,7 +22,7 @@ export const deletePost = post => ({
   }
 });
 
-export const deletePostFromApi = (post, authToken) => {
+export const deletePostFromApi = (post, usertoken) => {
   return dispatch => {
     fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${post.Id}`, {
       method: "DELETE",
