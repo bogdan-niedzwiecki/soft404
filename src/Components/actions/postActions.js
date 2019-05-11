@@ -64,9 +64,9 @@ export const deletePost = post => ({
   }
 });
 
-export const deletePostFromApi = (post, usertoken) => {
+export const deletePostFromApi = (post) => {
   return dispatch => {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${post.Id}`, {
+    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${this.Id}`, {
       method: "DELETE",
       headers: {
         "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")

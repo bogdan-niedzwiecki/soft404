@@ -21,7 +21,9 @@ import { fetchPostToAPI } from "./../actions/postActions";
 
 const messagesForUser = [];
 
+
 class NewPost extends React.Component {
+  
   state = {
     post: {
       title: "",
@@ -52,31 +54,32 @@ class NewPost extends React.Component {
   };
 
   validateTitle = messagesArray => {
-    const { title } = this.state.post;
-    if (10 > title.length || title.length > 150) {
-      messagesArray.push("Title can contain between 10 and 150 characters.\n");
+    if (10 > this.state.post.title.length || this.state.post.title.length > 150) {
+      messagesArray.push(" Title can contain between 10 and 150 characters. Please do what you should t do!\n ");
     }
   };
 
   validateText = messagesArray => {
     if (this.state.post.text.length > 1000) {
-      messagesArray.push("Post's content can contain max 1000 characters.\n");
+      messagesArray.push("Post's content can contain max 1000 characters. Stop It\n");
     }
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    let formData = new FormData();
-    formData.append("photo", this.state.selectedFile);
-    formData.append("post", JSON.stringify(this.state.post));
-    this.props.fetchPostToAPI(formData, this.props.usertoken);
-    this.props.history.push("/");
     this.validateTitle(messagesForUser);
     this.validateText(messagesForUser);
     if (messagesForUser.length) {
       alert(messagesForUser);
+      this.handleDataReset();
       return;
     }
+      let formData = new FormData();
+      formData.append("photo", this.state.selectedFile);
+      formData.append("post", JSON.stringify(this.state.post));
+      this.props.fetchPostToAPI(formData, this.props.usertoken);
+      this.props.history.push("/");
+    
   };
 
   render() {

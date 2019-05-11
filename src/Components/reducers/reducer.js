@@ -3,7 +3,10 @@ import { DELETE_USER, UPDATE_USER } from "../actions/userActions";
 
 const initialState = {
   posts: [],
-  user: []
+  user: {
+    Name: "James",
+    GivenName: "Bond"
+  }
 };
 
 const reducer = (state = initialState, action) => {

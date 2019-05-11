@@ -32,14 +32,14 @@ class Profile extends React.Component {
   state = {
     open: false,
     expanded: false,
-    checkbox1: false,
-    checkbox2: false,
-    checkbox3: false
+    choose1: false,
+    choose2: false,
+    choose3: false
   };
 
   handleDeleteProfile = event => {
     event.preventDefault();
-    this.props.deleteUserFromApi(this.props.authToken);
+    this.props.deleteUserFromApi(this.props.usertoken);
     this.removeUserStorage();
     this.props.history.push("/");
   };
@@ -70,7 +70,7 @@ class Profile extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { checkbox1, checkbox2, checkbox3 } = this.state;
+    const { choose1, choose2, choose3 } = this.state;
 
     return (
       <main className={classes.root}>
@@ -146,9 +146,9 @@ class Profile extends React.Component {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={checkbox1}
-                      onChange={this.handleChange("checkbox1")}
-                      value="checkbox1"
+                      checked={choose1}
+                      onChange={this.handleChange("choose1")}
+                      value="choose1"
                     />
                   }
                   label="I Am sure "
@@ -156,9 +156,9 @@ class Profile extends React.Component {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={checkbox2}
-                      onChange={this.handleChange("checkbox2")}
-                      value="checkbox2"
+                      checked={choose2}
+                      onChange={this.handleChange("choose2")}
+                      value="choose2"
                     />
                   }
                   label="Agree with delete my profile"
@@ -166,9 +166,9 @@ class Profile extends React.Component {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={checkbox3}
-                      onChange={this.handleChange("checkbox3")}
-                      value="checkbox3"
+                      checked={choose3}
+                      onChange={this.handleChange("choose3")}
+                      value="choose3"
                     />
                   }
                   label="Finaly! Just Do It!"
@@ -198,9 +198,9 @@ class Profile extends React.Component {
                 color="secondary"
                 disabled={
                   !(
-                    this.state.checkbox1 &&
-                    this.state.checkbox2 &&
-                    this.state.checkbox3
+                    this.state.choose1 &&
+                    this.state.choose2 &&
+                    this.state.choose3
                   )
                 }
               >
