@@ -49,7 +49,8 @@ class Post extends React.Component {
       thumbnailPhoto,
       text,
       publishDate,
-      id
+      id,
+      userPhoto
     } = this.props;
 
     return (
@@ -59,7 +60,7 @@ class Post extends React.Component {
             <Avatar
               aria-label="Post"
               className={classes.avatar}
-              src={sessionStorage.getItem("avatar")}
+              src={userPhoto}
             />
           }
           title={title}

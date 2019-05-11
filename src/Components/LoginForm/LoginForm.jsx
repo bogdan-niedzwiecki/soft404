@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./LogInFormStyle";
+import React, { Component } from "react";
+import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
 import {
@@ -15,42 +15,28 @@ import {
 import GoogleLogin from "react-google-login";
 import { withRouter } from "react-router-dom";
 
-class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      azure_token: false
-    };
-  }
-
-  responseGoogle = response => {
-    fetch("https://delfinkitrainingapi.azurewebsites.net/.auth/login/google", {
-      method: "POST",
-      headers: { "content-type": "Application/JSON" },
-      body: JSON.stringify({
-        id_token: response.tokenId
-      })
-    })
-      .then(response => response.json())
-      .then(resp => {
-        sessionStorage.setItem("azure_access_token", resp.authenticationToken);
-      })
-      .then(() => this.props.history.push("/"));
-
-    sessionStorage.setItem("name", response.w3.ofa);
-    sessionStorage.setItem("surname", response.w3.wea);
-    sessionStorage.setItem("avatar", response.w3.Paa);
-    sessionStorage.setItem("email", response.w3.U3);
+class LoginForm extends Component {
+  successResponse = response => {
+    console.log(response);
+    this.props.getToken(
+      "https://delfinkitrainingapi.azurewebsites.net/.auth/login/google",
+      response
+    );
   };
 
-  noResponseGoogle = response => {
-    alert("Login has been failed");
+  failureResponse = response => {
     console.log(response);
   };
 
+  componentDidUpdate() {
+    this.props.token
+      ? sessionStorage.setItem("azure_access_token", this.props.token)
+      : sessionStorage.setItem("azure_access_token", null);
+    this.props.history.push("/");
+  }
+
   render() {
     const { classes } = this.props;
-
     return (
       <MDBContainer className={classes.root}>
         <MDBRow className={classes.content}>
@@ -107,8 +93,8 @@ class LoginForm extends React.Component {
                     <GoogleLogin
                       clientId="576077564511-fd1t0nbqe1av9rr70to25hnuce1j0mg7.apps.googleusercontent.com"
                       buttonText="Sign in"
-                      onSuccess={this.responseGoogle}
-                      onFailure={this.noResponseGoogle}
+                      onSuccess={this.successResponse}
+                      onFailure={this.failureResponse}
                       cookiePolicy={"single_host_origin"}
                     />
                   </div>
