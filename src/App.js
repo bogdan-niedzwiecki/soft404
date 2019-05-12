@@ -5,8 +5,8 @@ import PostsList from "./Components/PostsList/";
 import Footer from "./Components/Footer/";
 import NewPost from "./Components/NewPost/";
 import { BrowserRouter, Route } from "react-router-dom";
-import Profile from "./Components/Profile/Profile";
-import EditProfile from "./Components/Profile/EditProfile/index";
+import Profile from "./Components/Profile";
+import EditProfile from "./Components/Profile/EditProfile";
 import LoginForm from "./Components/LoginForm/";
 import EditPost from "./Components/PostsList/EditPost/index";
 class App extends Component {

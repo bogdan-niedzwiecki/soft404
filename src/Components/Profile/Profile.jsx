@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./ProfileStyle";
+import { withRouter } from "react-router";
 import {
   CardContent,
   CardMedia,
@@ -23,10 +24,6 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import { withRouter } from "react-router";
-import { connect } from "react-redux";
-import { deleteUserFromApi } from "../actions/userActions";
-
 
 class Profile extends React.Component {
   state = {
@@ -37,13 +34,12 @@ class Profile extends React.Component {
     choose3: false
   };
 
-  handleDeleteProfile = event => {
-    event.preventDefault();
-    this.props.deleteUserFromApi(this.props.token);
-    this.removeUserStorage();
-    this.props.history.push("/");
+  handleDeleteProfile = () => {
+    this.props.deleteUserFromApi();
+    sessionStorage.removeItem("azure_access_token");
+    this.props.history.push("/login");
   };
-  
+
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
@@ -60,34 +56,20 @@ class Profile extends React.Component {
     this.setState({ [name]: event.target.checked });
   };
 
-  removeUserStorage = () => {
-    sessionStorage.removeItem("azure_access_token");
-    sessionStorage.removeItem("name");
-    sessionStorage.removeItem("surname");
-    sessionStorage.removeItem("avatar");
-    sessionStorage.removeItem("email");
-  };
-
   render() {
-    const { classes } = this.props;
+    const { classes, user } = this.props;
     const { choose1, choose2, choose3 } = this.state;
-
     return (
       <main className={classes.root}>
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
-            image={sessionStorage.getItem("avatar")}
-            title={sessionStorage.getItem("name")}
+            image={user.Photo}
+            title={user.Name}
           />
           <CardContent className={classes.content}>
             <Typography gutterBottom variant="h5" component="h2">
-              {sessionStorage.getItem("name") +
-                " " +
-                sessionStorage.getItem("surname")}
-            </Typography>
-            <Typography component="p">
-              {sessionStorage.getItem("email")}
+              {user.Name + " " + user.GivenName}
             </Typography>
           </CardContent>
           <CardActions>
@@ -213,14 +195,4 @@ class Profile extends React.Component {
     );
   }
 }
-const mapDispatch = dispatch => ({
-  deleteUserFromApi: token => dispatch(deleteUserFromApi(token))
-});
-
-const mapState = state => ({
-  token: state.token
-});
-export default withRouter(connect(
-  mapState,
-  mapDispatch
-)(withStyles(styles, {withTheme: true})(Profile)));
+export default withRouter(withStyles(styles, { withTheme: true })(Profile));

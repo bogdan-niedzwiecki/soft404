@@ -18,10 +18,7 @@ import { withRouter } from "react-router-dom";
 class LoginForm extends Component {
   successResponse = response => {
     console.log(response);
-    this.props.getToken(
-      "https://delfinkitrainingapi.azurewebsites.net/.auth/login/google",
-      response
-    );
+    this.props.addUser(response);
   };
 
   failureResponse = response => {
@@ -29,9 +26,7 @@ class LoginForm extends Component {
   };
 
   componentDidUpdate() {
-    this.props.token
-      ? sessionStorage.setItem("azure_access_token", this.props.token)
-      : sessionStorage.setItem("azure_access_token", null);
+    console.log(this.props.user);
     this.props.history.push("/");
   }
 

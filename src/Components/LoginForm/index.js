@@ -4,14 +4,13 @@ import { getTokenMiddleware } from "../actions/userActions";
 
 const mapStateToProps = state => {
   return {
-    token: state.user.Token
+    user: state.user
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getToken: (url, googleToken) =>
-      dispatch(getTokenMiddleware(url, googleToken))
+    addUser: googleToken => dispatch(getTokenMiddleware(googleToken))
   };
 };
 

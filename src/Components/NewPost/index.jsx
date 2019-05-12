@@ -21,9 +21,7 @@ import { fetchPostToAPI } from "./../actions/postActions";
 
 const messagesForUser = [];
 
-
 class NewPost extends React.Component {
-  
   state = {
     post: {
       title: "",
@@ -54,18 +52,26 @@ class NewPost extends React.Component {
   };
 
   validateTitle = messagesArray => {
-    if (10 > this.state.post.title.length || this.state.post.title.length > 150) {
-      messagesArray.push(" Title can contain between 10 and 150 characters. Please do what you should t do!\n ");
+    if (
+      10 > this.state.post.title.length ||
+      this.state.post.title.length > 150
+    ) {
+      messagesArray.push(
+        " Title can contain between 10 and 150 characters. Please do what you should t do!\n "
+      );
     }
   };
 
   validateText = messagesArray => {
     if (this.state.post.text.length > 1000) {
-      messagesArray.push("Post's content can contain max 1000 characters. Stop It\n");
+      messagesArray.push(
+        "Post's content can contain max 1000 characters. Stop It\n"
+      );
     }
   };
 
-  handleSubmit = () => {
+  handleSubmit = event => {
+    event.preventDefault();
     this.validateTitle(messagesForUser);
     this.validateText(messagesForUser);
     if (messagesForUser.length) {
@@ -73,12 +79,11 @@ class NewPost extends React.Component {
       this.handleDataReset();
       return;
     }
-      let formData = new FormData();
-      formData.append("photo", this.state.selectedFile);
-      formData.append("post", JSON.stringify(this.state.post));
-      this.props.fetchPostToAPI(formData, this.props.token);
-      this.props.history.push("/");
-    
+    let formData = new FormData();
+    formData.append("photo", this.state.selectedFile);
+    formData.append("post", JSON.stringify(this.state.post));
+    this.props.fetchPostToAPI(formData, this.props.token);
+    this.props.history.push("/");
   };
 
   render() {
@@ -187,8 +192,7 @@ class NewPost extends React.Component {
 }
 
 const mapDispatch = dispatch => ({
-  fetchPostToAPI: (formData, token) =>
-    dispatch(fetchPostToAPI(formData, token))
+  fetchPostToAPI: (formData, token) => dispatch(fetchPostToAPI(formData, token))
 });
 export default withRouter(
   connect(
