@@ -10,13 +10,9 @@ class DeletePostButton extends React.Component {
   state = {
     open: false
   };
-  // constructor(props) {
-  //   super(props);
-  //   // this.deletePost = this.deletePost.bind(this);
-  // }
-
+ 
   handleDeletePost = () => {
-    this.props.deletePostFromApi(this.props.authToken);
+    this.props.deletePostFromApi(this.props.post);
     this.props.history.push("/");
   }
 
@@ -28,7 +24,7 @@ class DeletePostButton extends React.Component {
     this.setState({ open: false });
   };
 
-  // deletePost() {
+  // deletePost=() => {
   //   fetch(
   //     `https://delfinkitrainingapi.azurewebsites.net/api/post/${
   //       this.props.delete_id
@@ -88,10 +84,10 @@ class DeletePostButton extends React.Component {
 
 
 const mapDispatch = dispatch => ({
-  deletePostFromApi: (post, usertoken) =>
-    dispatch(deletePostFromApi(post, usertoken))
+  deletePostFromApi: (post, token) =>
+    dispatch(deletePostFromApi(post, token))
 });
 export default withRouter(connect(
-  state => ({ usertoken: state.usertoken }),
+  state => ({ token: state.token }),
   mapDispatch
 )(DeletePostButton));

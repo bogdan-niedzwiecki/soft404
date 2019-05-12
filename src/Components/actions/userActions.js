@@ -62,7 +62,7 @@ export const deleteUser = () => ({
   type: DELETE_USER
 });
 
-export const deleteUserFromApi = usertoken => dispatch => {
+export const deleteUserFromApi = token => dispatch => {
   fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
     method: "DELETE",
     headers: {

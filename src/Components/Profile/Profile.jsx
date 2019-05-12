@@ -39,7 +39,7 @@ class Profile extends React.Component {
 
   handleDeleteProfile = event => {
     event.preventDefault();
-    this.props.deleteUserFromApi(this.props.usertoken);
+    this.props.deleteUserFromApi(this.props.token);
     this.removeUserStorage();
     this.props.history.push("/");
   };
@@ -214,11 +214,11 @@ class Profile extends React.Component {
   }
 }
 const mapDispatch = dispatch => ({
-  deleteUserFromApi: usertoken => dispatch(deleteUserFromApi(usertoken))
+  deleteUserFromApi: token => dispatch(deleteUserFromApi(token))
 });
 
 const mapState = state => ({
-  usertoken: state.usertoken
+  token: state.token
 });
 export default withRouter(connect(
   mapState,

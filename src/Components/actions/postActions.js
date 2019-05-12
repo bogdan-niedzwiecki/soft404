@@ -29,21 +29,21 @@ export function getPostsMiddleware(url, token) {
   };
 }
 
-export const addPost = (formData, resp) => ({
+export const addPost = (formData, response) => ({
   type: ADD_POST,
   payload: {
     post: {
       Title: JSON.parse(formData.get("post")).title,
       Text: JSON.parse(formData.get("post")).text,
-      Id: resp.Id,
-      ThumbnailPhoto: resp.ThumbnailPhoto,
-      PublishDate: resp.PublishDate,
-      UserId: resp.UserId
+      Id: response.Id,
+      ThumbnailPhoto: response.ThumbnailPhoto,
+      PublishDate: response.PublishDate,
+      UserId: response.UserId
     }
   }
 });
 
-export const fetchPostToAPI = formData => {
+export const fetchPostToAPI = (formData) => {
   return dispatch => {
     return fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
       method: "POST",
@@ -52,8 +52,8 @@ export const fetchPostToAPI = formData => {
       },
       body: formData
     })
-      .then(r => r.json())
-      .then(resp => dispatch(addPost(formData, resp)));
+      .then(response => response.json())
+      .then(response => dispatch(addPost(formData, response)));
   };
 };
 
@@ -66,13 +66,15 @@ export const deletePost = post => ({
 
 export const deletePostFromApi = (post) => {
   return dispatch => {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${this.Id}`, {
+    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${
+      post.Id
+    }`, {
       method: "DELETE",
       headers: {
         "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
       }
     })
       .then(response => response.json())
-      .then(resp => dispatch(deletePost(post)));
+      .then(() => dispatch(deletePost(post)));
   };
 };
