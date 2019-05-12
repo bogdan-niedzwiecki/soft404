@@ -8,7 +8,6 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Profile from "./Components/Profile/Profile";
 import EditProfile from "./Components/Profile/EditProfile/index";
 import LoginForm from "./Components/LoginForm/";
-import EditPost from "./Components/PostsList/EditPost/index";
 class App extends Component {
   render() {
     return (
@@ -51,18 +50,7 @@ class App extends Component {
             )
           }
         />
-
-        <Route
-          exact
-          path="/edit_Post"
-          render={() =>
-            sessionStorage.getItem("azure_access_token") ? (
-              <EditPost />
-            ) : (
-              <Redirect to="/login" />
-            )
-          }
-        />
+     
         <Route
           exact
           path="/profile"

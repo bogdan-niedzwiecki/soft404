@@ -27,7 +27,9 @@ class PostsList extends Component {
                 publishDate={item.PublishDate}
               />
             </li>
+            
           ))}
+          
         </ul>
       </main>
     );

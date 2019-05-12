@@ -1,4 +1,4 @@
-import { GET_POSTS, ADD_POST, DELETE_POST } from "../actions/postActions";
+import { GET_POSTS, ADD_POST, EDIT_POST, DELETE_POST } from "../actions/postActions";
 import { DELETE_USER, UPDATE_USER } from "../actions/userActions";
 
 const initialState = {
@@ -22,6 +22,17 @@ const reducer = (state = initialState, action) => {
         ...state,
         posts: [action.payload.post, ...state.posts]
       };
+      case EDIT_POST:
+      return {
+        ...state,
+        posts: state.posts.map(item =>
+          item.Id === action.payload.editedPost.Id
+            ? action.payload.editedPost
+            : item
+        )
+      };
+  
+  
 
     case DELETE_POST:
       return {

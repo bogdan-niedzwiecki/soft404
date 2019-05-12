@@ -16,6 +16,9 @@ import SaveIcon from "@material-ui/icons/Save";
 import { withRouter, NavLink } from "react-router-dom";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
+
+
+
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -44,7 +47,7 @@ class EditProfile extends React.Component {
     this.setState({ selectedFile: event.target.files[0] });
   }
 
-  handleEditProfile(event) {
+  handleEditProfile() {
     let formData = new FormData();
     if (this.state.selectedFile) {
       formData.append("photo", this.state.selectedFile);
@@ -59,7 +62,7 @@ class EditProfile extends React.Component {
       body: formData
     })
       .then(r => console.log(r))
-      .then(() => this.props.history.push("/profile"));
+      .then(() => this.props.history.push("/profile"))
   }
 
   render() {
