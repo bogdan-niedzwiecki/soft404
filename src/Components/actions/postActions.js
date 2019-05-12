@@ -57,24 +57,21 @@ export const fetchPostToAPI = (formData) => {
   };
 };
 
-export const deletePost = post => ({
+export const deletePost = id => ({
   type: DELETE_POST,
-  payload: {
-    postToDel: post
-  }
+  payload: id
+  
 });
 
-export const deletePostFromApi = (post) => {
+export const deletePostFromApi = (id) => {
   return dispatch => {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${
-      post.Id
+    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${id
     }`, {
       method: "DELETE",
       headers: {
         "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
       }
     })
-      .then(response => response.json())
-      .then(() => dispatch(deletePost(post)));
+      .then(() => dispatch(deletePost(id)));
   };
 };

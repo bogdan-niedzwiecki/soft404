@@ -27,7 +27,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         posts: state.posts.filter(
-          onePost => onePost.postToDel.Id !== action.payload.postToDel.Id
+          item => item.Id !== action.payload
         )
       };
 

@@ -12,7 +12,7 @@ class DeletePostButton extends React.Component {
   };
  
   handleDeletePost = () => {
-    this.props.deletePostFromApi(this.props.post);
+    this.props.deletePostFromApi(this.props.delete_id);
     this.props.history.push("/");
   }
 
@@ -24,21 +24,6 @@ class DeletePostButton extends React.Component {
     this.setState({ open: false });
   };
 
-  // deletePost=() => {
-  //   fetch(
-  //     `https://delfinkitrainingapi.azurewebsites.net/api/post/${
-  //       this.props.delete_id
-  //     }`,
-  //     {
-  //       method: "DELETE",
-  //       headers: {
-  //         "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-  //       }
-  //     }
-  //   )
-  //     .then(r => console.log(r))
-  //     .then(this.handleClose);
-  // }
 
   render() {
     return (
