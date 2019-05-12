@@ -108,7 +108,7 @@ class Post extends React.Component {
               alignItems="center"
             >
           <DeletePostButton delete_id={id} />
-          <EditPsotButton delete_id={id} />
+          <EditPsotButton delete_id={id} title={title} text={text} />
           </Grid>
         </CardActions>
       </Card>
