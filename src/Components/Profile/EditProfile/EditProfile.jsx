@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "../ProfileStyle";
+import React, { Component } from "react";
+import styles from "../styles";
 import {
   CardContent,
   CardMedia,
@@ -16,18 +16,13 @@ import SaveIcon from "@material-ui/icons/Save";
 import { withRouter, NavLink } from "react-router-dom";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
-class EditProfile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleEditProfile = this.handleEditProfile.bind(this);
-    this.handlePhotoChange = this.handlePhotoChange.bind(this);
-  }
-
+class EditProfile extends Component {
   state = {
     user: {
       name: this.props.user.Name,
       givenName: this.props.user.GivenName
-    }
+    },
+    selectedFile: this.props.user.Photo
   };
 
   handleChange = event => {
@@ -38,19 +33,19 @@ class EditProfile extends React.Component {
       }
     });
   };
-  handlePhotoChange(event) {
+  handlePhotoChange = event => {
     this.setState({ selectedFile: event.target.files[0] });
-  }
+  };
 
-  handleEditProfile() {
+  handleEditProfile = () => {
     let formData = new FormData();
     if (this.state.selectedFile) {
       formData.append("photo", this.state.selectedFile);
     }
     formData.append("user", JSON.stringify(this.state.user));
     this.props.editProfile(formData);
-    this.props.history.push("/");
-  }
+    this.props.history.push("/profile");
+  };
 
   render() {
     const { classes } = this.props;

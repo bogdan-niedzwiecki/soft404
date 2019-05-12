@@ -11,8 +11,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editProfile: (name, givenName, photo) =>
-      dispatch(addProfileMiddleware(name, givenName, photo))
+    editProfile: formData => dispatch(addProfileMiddleware(formData))
   };
 };
 

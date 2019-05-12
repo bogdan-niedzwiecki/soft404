@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./ProfileStyle";
+import styles from "./styles";
 import { withRouter } from "react-router";
 import {
   CardContent,
@@ -25,10 +25,9 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
-class Profile extends React.Component {
+class Profile extends Component {
   state = {
     open: false,
-    expanded: false,
     choose1: false,
     choose2: false,
     choose3: false
@@ -41,16 +40,8 @@ class Profile extends React.Component {
     window.location.reload(false);
   };
 
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
+  handleClick = () => {
+    this.setState({ open: !this.state.open });
   };
 
   handleChange = name => event => {
@@ -96,7 +87,7 @@ class Profile extends React.Component {
                   aria-label="Delete profile"
                   color="secondary"
                   size="large"
-                  onClick={this.handleClickOpen}
+                  onClick={this.handleClick}
                 >
                   <DeleteIcon />
                 </IconButton>
@@ -106,7 +97,7 @@ class Profile extends React.Component {
         </Card>
         <Dialog
           open={this.state.open}
-          onClose={this.handleClose}
+          onClose={this.handleClick}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -167,7 +158,7 @@ class Profile extends React.Component {
               alignItems="center"
             >
               <Button
-                onClick={this.handleClose}
+                onClick={this.handleClick}
                 variant="contained"
                 size="medium"
                 color="primary"

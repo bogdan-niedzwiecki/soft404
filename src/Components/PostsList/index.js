@@ -11,7 +11,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPosts: (url, token) => dispatch(getPostsMiddleware(url, token))
+    getPosts: () => dispatch(getPostsMiddleware())
   };
 };
 

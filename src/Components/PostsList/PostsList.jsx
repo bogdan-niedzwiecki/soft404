@@ -5,10 +5,7 @@ import styles from "./styles";
 
 class PostsList extends Component {
   componentDidMount() {
-    this.props.getPosts(
-      "https://delfinkitrainingapi.azurewebsites.net/api/post",
-      sessionStorage.getItem("azure_access_token")
-    );
+    this.props.getPosts();
   }
 
   render() {
@@ -27,9 +24,7 @@ class PostsList extends Component {
                 publishDate={item.PublishDate}
               />
             </li>
-            
           ))}
-          
         </ul>
       </main>
     );

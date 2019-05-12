@@ -10,12 +10,12 @@ export function getPosts(posts) {
   };
 }
 
-export function getPostsMiddleware(url, token) {
+export function getPostsMiddleware() {
   return dispatch => {
-    fetch(url, {
+    fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
       method: "GET",
       headers: {
-        "X-ZUMO-AUTH": token
+        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
       }
     })
       .then(response => {
@@ -44,7 +44,7 @@ export const addPost = (formData, response) => ({
   }
 });
 
-export const fetchPostToAPI = (formData) => {
+export const fetchPostToAPI = formData => {
   return dispatch => {
     return fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
       method: "POST",
@@ -84,19 +84,15 @@ export const fetchEditedPostToAPI = (id, formData) => {
 export const deletePost = id => ({
   type: DELETE_POST,
   payload: id
-  
 });
 
-export const deletePostFromApi = (id) => {
+export const deletePostFromApi = id => {
   return dispatch => {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${id
-    }`, {
+    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${id}`, {
       method: "DELETE",
       headers: {
         "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
       }
-    })
-      .then(() => dispatch(deletePost(id)));
+    }).then(() => dispatch(deletePost(id)));
   };
-  
 };
