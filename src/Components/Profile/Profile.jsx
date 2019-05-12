@@ -38,6 +38,7 @@ class Profile extends React.Component {
     this.props.deleteUserFromApi();
     sessionStorage.removeItem("azure_access_token");
     this.props.history.push("/login");
+    window.location.reload(false);
   };
 
   handleExpandClick = () => {

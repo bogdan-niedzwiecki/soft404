@@ -17,7 +17,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import styles from "./styles";
-import EditPsotButton from "./EditPost/editPsotButton";
+import EditPostButton from "./EditPostButton/editPostButton";
 
 class Post extends React.Component {
   state = { open: false };
@@ -102,13 +102,13 @@ class Post extends React.Component {
         </Dialog>
         <CardActions className={classes.actions} disableActionSpacing>
           <Grid
-              container
-              direction="row"
-              justify="space-around"
-              alignItems="center"
-            >
-          <DeletePostButton delete_id={id} />
-          <EditPsotButton delete_id={id} title={title} text={text} />
+            container
+            direction="row"
+            justify="space-around"
+            alignItems="center"
+          >
+            <DeletePostButton delete_id={id} />
+            <EditPostButton delete_id={id} title={title} text={text} />
           </Grid>
         </CardActions>
       </Card>
