@@ -193,12 +193,12 @@ class EditPostButton extends React.Component {
 
 
 const mapDispatch = dispatch => ({
-    fetchEditedPostToAPI: (formData, token) =>
-        dispatch(fetchEditedPostToAPI(formData, token))
+    fetchEditedPostToAPI: (delete_id, formData) =>
+        dispatch(fetchEditedPostToAPI(delete_id, formData))
 });
 export default
     connect(
-        state => ({ token: state.token }),
+        null,
         mapDispatch
     )(withStyles(styles)(EditPostButton)
     );
