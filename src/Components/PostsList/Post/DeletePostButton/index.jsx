@@ -1,5 +1,13 @@
 import React from "react";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton
+} from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Tooltip } from "@material-ui/core";
 import { connect } from "react-redux";
@@ -10,11 +18,11 @@ class DeletePostButton extends React.Component {
   state = {
     open: false
   };
- 
+
   handleDeletePost = () => {
     this.props.deletePostFromApi(this.props.delete_id);
     this.props.history.push("/");
-  }
+  };
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -23,7 +31,6 @@ class DeletePostButton extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
-
 
   render() {
     return (
@@ -67,12 +74,12 @@ class DeletePostButton extends React.Component {
   }
 }
 
-
 const mapDispatch = dispatch => ({
-  deletePostFromApi: (post, token) =>
-    dispatch(deletePostFromApi(post, token))
+  deletePostFromApi: delete_id => dispatch(deletePostFromApi(delete_id))
 });
-export default withRouter(connect(
-  state => ({ token: state.token }),
-  mapDispatch
-)(DeletePostButton));
+export default withRouter(
+  connect(
+    null,
+    mapDispatch
+  )(DeletePostButton)
+);

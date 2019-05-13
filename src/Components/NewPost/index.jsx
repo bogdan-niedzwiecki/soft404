@@ -192,11 +192,11 @@ class NewPost extends React.Component {
 }
 
 const mapDispatch = dispatch => ({
-  fetchPostToAPI: (formData, token) => dispatch(fetchPostToAPI(formData, token))
+  fetchPostToAPI: formData => dispatch(fetchPostToAPI(formData))
 });
 export default withRouter(
   connect(
-    state => ({ token: state.token }),
+    null,
     mapDispatch
   )(withStyles(styles)(NewPost))
 );
