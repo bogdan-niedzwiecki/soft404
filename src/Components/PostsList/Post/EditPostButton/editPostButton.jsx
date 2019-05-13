@@ -63,7 +63,7 @@ class EditPostButton extends React.Component {
         });
     };
 
-    handleChangePost = event => {
+    handleChangePost = event => {   
         event.preventDefault();
         let formData = new FormData();
         if (this.state.selectedFile) {

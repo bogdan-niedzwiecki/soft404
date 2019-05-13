@@ -22,7 +22,7 @@ const reducer = (state = initialState, action) => {
     case ADD_POST:
       return {
         ...state,
-        posts: [action.payload.post, ...state.posts]
+        posts: [action.payload.newPost, ...state.posts]
       };
     case EDIT_POST:
       return {
