@@ -24,7 +24,10 @@ import { withRouter } from "react-router";
 
 class Profile extends Component {
   state = {
-    open: false
+    user: {
+      name: this.props.user.Name,
+      givenName: this.props.user.GivenName
+    }
   };
 
   handleClick = () => {
