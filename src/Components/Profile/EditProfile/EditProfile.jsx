@@ -21,8 +21,7 @@ class EditProfile extends Component {
     user: {
       name: this.props.user.Name,
       givenName: this.props.user.GivenName
-    },
-    selectedFile: this.props.user.Photo
+    }
   };
 
   handleChange = event => {
