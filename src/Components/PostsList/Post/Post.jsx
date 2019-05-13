@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import EditIcon from "@material-ui/icons/Edit";
-import { NavLink } from "react-router-dom";
-import DeletePostButton from "./DeletePostButton/DeletePostButton";
+import DeletePostButton from "./DeletePostButton/index";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -18,8 +16,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Tooltip } from "@material-ui/core";
 import styles from "./styles";
+import EditPostButton from "./EditPostButton/editPostButton";
 
 class Post extends Component {
   state = { open: false };
@@ -46,7 +44,8 @@ class Post extends Component {
       thumbnailPhoto,
       text,
       publishDate,
-      id
+      id,
+      userPhoto
     } = this.props;
 
     return (
@@ -56,7 +55,7 @@ class Post extends Component {
             <Avatar
               aria-label="Post"
               className={classes.avatar}
-              src={sessionStorage.getItem("avatar")}
+              src={userPhoto}
             />
           }
           title={title}
@@ -99,16 +98,15 @@ class Post extends Component {
           </DialogActions>
         </Dialog>
         <CardActions className={classes.actions} disableActionSpacing>
-          <DeletePostButton delete_id={id} />
-          <IconButton
-            aria-label="Edit post"
-            component={NavLink}
-            to="/edit_post"
+          <Grid
+            container
+            direction="row"
+            justify="space-around"
+            alignItems="center"
           >
-            <Tooltip title="Edit Post">
-              <EditIcon color="primary" />
-            </Tooltip>
-          </IconButton>
+            <DeletePostButton delete_id={id} />
+            <EditPostButton delete_id={id} title={title} text={text} />
+          </Grid>
         </CardActions>
       </Card>
     );

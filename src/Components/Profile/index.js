@@ -1,21 +1,20 @@
 import { connect } from "react-redux";
-import PostsList from "./PostsList";
-import { getPostsMiddleware } from "../actions/postActions";
+import Profile from "./Profile";
+import { deleteUserFromApi } from "../actions/userActions";
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts,
-    userPhoto: state.user.Photo
+    user: state.user
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPosts: () => dispatch(getPostsMiddleware())
+    deleteUserFromApi: () => dispatch(deleteUserFromApi())
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PostsList);
+)(Profile);

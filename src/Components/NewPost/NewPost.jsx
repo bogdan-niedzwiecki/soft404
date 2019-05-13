@@ -16,16 +16,29 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import SaveIcon from "@material-ui/icons/Save";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { fetchPostToAPI } from "./../actions/postActions";
 
-class NewPost extends Component {
-  state = { post: { title: "", text: "" } };
+const messagesForUser = [];
 
-  handleTitleChange = event => {
-    this.setState({ post: { ...this.state.post, title: event.target.value } });
+class NewPost extends React.Component {
+  state = {
+    post: {
+      title: "",
+      text: "",
+      photo: null
+    }
   };
-  handleTextChange = event => {
-    this.setState({ post: { ...this.state.post, text: event.target.value } });
+
+  handleChange = event => {
+    this.setState({
+      post: {
+        ...this.state.post,
+        [event.target.id]: event.target.value
+      }
+    });
   };
+
   handlePhotoChange = event => {
     this.setState({ selectedFile: event.target.files[0] });
   };
@@ -38,23 +51,44 @@ class NewPost extends Component {
     });
   };
 
+  validateTitle = messagesArray => {
+    if (
+      10 > this.state.post.title.length ||
+      this.state.post.title.length > 150
+    ) {
+      messagesArray.push(
+        " Title can contain between 10 and 150 characters. Please do what you should t do!\n "
+      );
+    }
+  };
+
+  validateText = messagesArray => {
+    if (this.state.post.text.length > 1000) {
+      messagesArray.push(
+        "Post's content can contain max 1000 characters. Stop It\n"
+      );
+    }
+  };
+
   handleSubmit = event => {
     event.preventDefault();
+    this.validateTitle(messagesForUser);
+    this.validateText(messagesForUser);
+    if (messagesForUser.length) {
+      alert(messagesForUser);
+      this.handleDataReset();
+      return;
+    }
     let formData = new FormData();
     formData.append("photo", this.state.selectedFile);
     formData.append("post", JSON.stringify(this.state.post));
-    fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
-      method: "POST",
-      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token") },
-      body: formData
-    })
-      .then(response => response.json())
-      .then(resp => console.log(resp))
-      .then(() => this.props.history.push("/"));
+    this.props.fetchPostToAPI(formData);
+    this.props.history.push("/");
   };
 
   render() {
     const { classes } = this.props;
+    const { title, text } = this.state.post;
 
     return (
       <main className={classes.root}>
@@ -79,30 +113,29 @@ class NewPost extends Component {
                 alignItems="stretch"
               >
                 <TextField
-                  id="outlined-required"
+                  id="title"
                   label="Title of the Post"
                   placeholder="Somewhere in the space"
                   margin="normal"
                   variant="outlined"
-                  value={this.state.post.title}
-                  onChange={this.handleTitleChange}
+                  value={title}
+                  onChange={this.handleChange}
                   required={true}
                   inputProps={{ maxLength: 150, minLength: 10 }}
                 />
 
                 <TextField
-                  id="update"
+                  id="text"
                   label="Content of the Post"
                   placeholder="It was a monday, day like any other day"
                   rows="10"
                   rowsMax="13"
                   required={true}
-                  // inputProps={{ maxLength: 1000 }}
                   multiline
                   margin="normal"
                   variant="outlined"
-                  value={this.state.post.text}
-                  onChange={this.handleTextChange}
+                  value={text}
+                  onChange={this.handleChange}
                 />
                 <CardActions className={classes.footer}>
                   <Button
@@ -131,12 +164,12 @@ class NewPost extends Component {
                     component="span"
                     accept="image/*"
                     style={{ display: "none" }}
-                    id="raised-button-file"
+                    id="takePhoto"
                     multiple
                     type="file"
                     onChange={this.handlePhotoChange}
                   />
-                  <label htmlFor="raised-button-file">
+                  <label htmlFor="takePhoto">
                     <Tooltip title="Upload Photo" placement="bottom">
                       <IconButton
                         variant="contained"
@@ -157,4 +190,13 @@ class NewPost extends Component {
     );
   }
 }
-export default withRouter(withStyles(styles)(NewPost));
+
+const mapDispatch = dispatch => ({
+  fetchPostToAPI: (formData, token) => dispatch(fetchPostToAPI(formData, token))
+});
+export default withRouter(
+  connect(
+    state => ({ token: state.token }),
+    mapDispatch
+  )(withStyles(styles)(NewPost))
+);

@@ -1,21 +1,20 @@
 import { connect } from "react-redux";
-import PostsList from "./PostsList";
-import { getPostsMiddleware } from "../actions/postActions";
+import LoginForm from "./LoginForm";
+import { getTokenMiddleware } from "../actions/userActions";
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts,
-    userPhoto: state.user.Photo
+    user: state.user
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPosts: () => dispatch(getPostsMiddleware())
+    addUser: googleToken => dispatch(getTokenMiddleware(googleToken))
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PostsList);
+)(LoginForm);

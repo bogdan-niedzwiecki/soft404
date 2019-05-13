@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./styles";
+import { withRouter } from "react-router";
 import {
   CardContent,
   CardMedia,
@@ -16,84 +17,82 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Grid
+  Grid,
+  Checkbox,
+  FormGroup,
+  FormControlLabel
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import { withRouter } from "react-router";
 
 class Profile extends Component {
   state = {
-    open: false
+    open: false,
+    choose1: false,
+    choose2: false,
+    choose3: false
+  };
+
+  handleDeleteProfile = () => {
+    this.props.deleteUserFromApi();
+    sessionStorage.removeItem("azure_access_token");
+    this.props.history.push("/login");
+    window.location.reload(false);
   };
 
   handleClick = () => {
-    this.setState(state => ({ open: !state.open }));
+    this.setState({ open: !this.state.open });
   };
 
-  removeUserStorage = () => {
-    sessionStorage.removeItem("azure_access_token");
-    sessionStorage.removeItem("name");
-    sessionStorage.removeItem("surname");
-    sessionStorage.removeItem("avatar");
-    sessionStorage.removeItem("email");
-  };
-
-  handleDeleteProfile = event => {
-    event.preventDefault();
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
-      method: "DELETE",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      }
-    })
-      .then(r => console.log(r))
-      .then(this.removeUserStorage)
-      .then(() => this.props.history.push("/"));
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, user } = this.props;
+    const { choose1, choose2, choose3 } = this.state;
     return (
       <main className={classes.root}>
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
-            image={sessionStorage.getItem("avatar")}
-            title={sessionStorage.getItem("name")}
+            image={user.Photo}
+            title={user.Name}
           />
           <CardContent className={classes.content}>
             <Typography gutterBottom variant="h5" component="h2">
-              {sessionStorage.getItem("name") +
-                " " +
-                sessionStorage.getItem("surname")}
-            </Typography>
-            <Typography component="p">
-              {sessionStorage.getItem("email")}
+              {user.Name + " " + user.GivenName}
             </Typography>
           </CardContent>
           <CardActions>
-            <Tooltip title="Edit Profile">
-              <IconButton
-                aria-label="Edit profile"
-                color="primary"
-                size="large"
-                component={NavLink}
-                to="/edit_profile"
-              >
-                <EditIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Delete Profile">
-              <IconButton
-                aria-label="Delete profile"
-                color="secondary"
-                size="large"
-                onClick={this.handleClick}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
+            <Grid
+              container
+              direction="row"
+              justify="space-around"
+              alignItems="center"
+            >
+              <Tooltip title="Edit Profile">
+                <IconButton
+                  aria-label="Edit profile"
+                  color="primary"
+                  size="large"
+                  component={NavLink}
+                  to="/edit_profile"
+                >
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete Profile">
+                <IconButton
+                  aria-label="Delete profile"
+                  color="secondary"
+                  size="large"
+                  onClick={this.handleClick}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            </Grid>
           </CardActions>
         </Card>
         <Dialog
@@ -105,11 +104,51 @@ class Profile extends Component {
           <DialogTitle id="alert-dialog-title">
             {"Delete Account Page"}
           </DialogTitle>
+
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               After choosing this option you will delete all your profile
               information.
             </DialogContentText>
+            <FormGroup>
+              <Grid
+                container
+                direction="column"
+                justify="flex-start"
+                alignItems="baseline"
+              >
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={choose1}
+                      onChange={this.handleChange("choose1")}
+                      value="choose1"
+                    />
+                  }
+                  label="I Am sure "
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={choose2}
+                      onChange={this.handleChange("choose2")}
+                      value="choose2"
+                    />
+                  }
+                  label="Agree with delete my profile"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={choose3}
+                      onChange={this.handleChange("choose3")}
+                      value="choose3"
+                    />
+                  }
+                  label="Finaly! Just Do It!"
+                />
+              </Grid>
+            </FormGroup>
           </DialogContent>
           <DialogActions>
             <Grid
@@ -131,6 +170,13 @@ class Profile extends Component {
                 variant="contained"
                 size="medium"
                 color="secondary"
+                disabled={
+                  !(
+                    this.state.choose1 &&
+                    this.state.choose2 &&
+                    this.state.choose3
+                  )
+                }
               >
                 Delete
               </Button>
@@ -141,5 +187,4 @@ class Profile extends Component {
     );
   }
 }
-
 export default withRouter(withStyles(styles, { withTheme: true })(Profile));

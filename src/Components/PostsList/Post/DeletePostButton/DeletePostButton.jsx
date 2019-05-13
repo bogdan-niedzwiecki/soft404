@@ -1,38 +1,35 @@
-import React, { Component } from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import React from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton
+} from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import IconButton from "@material-ui/core/IconButton";
 import { Tooltip } from "@material-ui/core";
+import { connect } from "react-redux";
+import { deletePostFromApi } from "../../../actions/postActions";
+import { withRouter } from "react-router";
 
 class DeletePostButton extends Component {
   state = {
     open: false
   };
-  handleClick = () => {
-    this.setState(state => ({ open: !state.open }));
+
+  handleDeletePost = () => {
+    this.props.deletePostFromApi(this.props.delete_id);
+    this.props.history.push("/");
   };
 
-  deletePost = event => {
-    event.preventDefault();
-    fetch(
-      `https://delfinkitrainingapi.azurewebsites.net/api/post/${
-        this.props.delete_id
-      }`,
-      {
-        method: "DELETE",
-        headers: {
-          "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-        }
-      }
-    )
-      .then(r => console.log(r))
-      .then(console.log(this.props.delete_id))
-      .then(this.handleClick);
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
   };
 
   render() {
@@ -64,7 +61,7 @@ class DeletePostButton extends Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.deletePost} color="secondary">
+            <Button onClick={this.handleDeletePost} color="secondary">
               Delete
             </Button>
             <Button onClick={this.handleClick} color="default" autoFocus>
@@ -76,4 +73,13 @@ class DeletePostButton extends Component {
     );
   }
 }
-export default DeletePostButton;
+
+const mapDispatch = dispatch => ({
+  deletePostFromApi: (post, token) => dispatch(deletePostFromApi(post, token))
+});
+export default withRouter(
+  connect(
+    state => ({ token: state.token }),
+    mapDispatch
+  )(DeletePostButton)
+);

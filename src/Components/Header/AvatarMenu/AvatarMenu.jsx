@@ -35,10 +35,10 @@ class AvatarMenu extends Component {
   };
   render() {
     const { anchorEl } = this.state;
-    const { classes } = this.props;
+    const { classes, user } = this.props;
     return (
       <div>
-        <Tooltip title={`Hello, ${sessionStorage.getItem("name")}`}>
+        <Tooltip title={`Hello, ${user.Name}`}>
           <IconButton
             aria-haspopup="true"
             onClick={this.handleClick}
@@ -48,7 +48,7 @@ class AvatarMenu extends Component {
             <Avatar
               alt="user photo"
               className={classes.avatar}
-              src={sessionStorage.getItem("avatar")}
+              src={user.Photo}
             />
           </IconButton>
         </Tooltip>
