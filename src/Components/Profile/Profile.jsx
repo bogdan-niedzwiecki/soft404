@@ -24,6 +24,7 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import { Helmet } from "react-helmet";
 
 class Profile extends Component {
   state = {
@@ -53,6 +54,13 @@ class Profile extends Component {
     const { choose1, choose2, choose3 } = this.state;
     return (
       <main className={classes.root}>
+        <Helmet>
+          <title>Profile Page</title>
+          <meta
+            name="description"
+            content="In this page we will find a Profile information"
+          />
+        </Helmet>
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}

@@ -18,8 +18,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchPostToAPI } from "./../actions/postActions";
-
-const messagesForUser = [];
+import { Helmet } from "react-helmet";
 
 class NewPost extends React.Component {
   state = {
@@ -70,13 +69,20 @@ class NewPost extends React.Component {
     }
   };
 
+  validatePhoto = messagesArray => {
+    if (!this.state.selectedFile) {
+      messagesArray.push("Every Post must have a photo! ");
+    }
+  };
+
   handleSubmit = event => {
     event.preventDefault();
+    const messagesForUser = [];
     this.validateTitle(messagesForUser);
     this.validateText(messagesForUser);
+    this.validatePhoto(messagesForUser);
     if (messagesForUser.length) {
       alert(messagesForUser);
-      this.handleDataReset();
       return;
     }
     let formData = new FormData();
@@ -92,6 +98,13 @@ class NewPost extends React.Component {
 
     return (
       <main className={classes.root}>
+        <Helmet>
+          <title>New Post</title>
+          <meta
+            name="description"
+            content="In this page you can create a new post"
+          />
+        </Helmet>
         <Card className={classes.content}>
           <div className={classes.toolbar} />
           <form
