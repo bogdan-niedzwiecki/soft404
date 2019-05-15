@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import styles from "./styles";
+import { withRouter } from "react-router-dom";
 
 class Search extends React.Component {
   state = {
@@ -10,6 +11,7 @@ class Search extends React.Component {
   };
 
   handleChange = event => {
+    this.props.history.push("/");
     this.setState(
       {
         filterText: event.target.value
@@ -42,4 +44,4 @@ class Search extends React.Component {
   }
 }
 
-export default withStyles(styles)(Search);
+export default withRouter(withStyles(styles)(Search));
