@@ -22,11 +22,13 @@ class App extends Component {
             )
           }
         />
+
         <Route
           exact
           path="/login"
           render={() => <LoginForm onSuccessLogin={this.getToken} />}
         />
+
         <Route exact path="/logout" render={() => <Redirect to="/login" />} />
         <Route
           exact
@@ -50,7 +52,7 @@ class App extends Component {
             )
           }
         />
-     
+
         <Route
           exact
           path="/profile"

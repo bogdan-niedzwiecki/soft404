@@ -15,6 +15,7 @@ import {
 import SaveIcon from "@material-ui/icons/Save";
 import { withRouter, NavLink } from "react-router-dom";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
+import { Helmet } from "react-helmet";
 
 class EditProfile extends Component {
   state = {
@@ -52,6 +53,10 @@ class EditProfile extends Component {
 
     return (
       <main className={classes.root}>
+        <Helmet>
+          <title>Edit Profile Page</title>
+          <meta name="description" content="Editing a profile page" />
+        </Helmet>
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}

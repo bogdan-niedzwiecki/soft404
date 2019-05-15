@@ -14,19 +14,14 @@ import {
 } from "mdbreact";
 import GoogleLogin from "react-google-login";
 import { withRouter } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 class LoginForm extends Component {
   successResponse = response => {
-    console.log(response);
     this.props.addUser(response);
   };
 
-  failureResponse = response => {
-    console.log(response);
-  };
-
   componentDidUpdate() {
-    console.log(this.props.user);
     this.props.history.push("/");
   }
 
@@ -34,6 +29,13 @@ class LoginForm extends Component {
     const { classes } = this.props;
     return (
       <MDBContainer className={classes.root}>
+        <Helmet>
+          <title>Log in Form</title>
+          <meta
+            name="description"
+            content="In this page we LogIn to our page by google"
+          />
+        </Helmet>
         <MDBRow className={classes.content}>
           <MDBCol>
             <MDBCard>

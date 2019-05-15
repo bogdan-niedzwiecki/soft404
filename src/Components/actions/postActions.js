@@ -31,17 +31,9 @@ export function getPostsMiddleware() {
   };
 }
 
-export const addPost = (formData, response) => ({
+export const addPost = (newPost) => ({
   type: ADD_POST,
-  payload: {
-    post: {
-      Title: JSON.parse(formData.get("post")).title,
-      Text: JSON.parse(formData.get("post")).text,
-      Id: response.Id,
-      ThumbnailPhoto: response.ThumbnailPhoto,
-      PublishDate: response.PublishDate,
-      UserId: response.UserId
-    }
+  payload: { newPost
   }
 });
 
@@ -55,7 +47,7 @@ export const fetchPostToAPI = formData => {
       body: formData
     })
       .then(response => response.json())
-      .then(response => dispatch(addPost(formData, response)));
+      .then(response => dispatch(addPost(  response)));
   };
 };
 
