@@ -18,9 +18,10 @@ import {
   DialogTitle,
   Grid
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import { withRouter } from "react-router";
+import SaveIcon from "@material-ui/icons/Save";
+import { withRouter, NavLink } from "react-router-dom";
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
+import { Helmet } from "react-helmet";
 
 class Profile extends Component {
   state = {
@@ -59,6 +60,10 @@ class Profile extends Component {
     const { classes } = this.props;
     return (
       <main className={classes.root}>
+        <Helmet>
+          <title>Edit Profile Page</title>
+          <meta name="description" content="Editing a profile page" />
+        </Helmet>
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}

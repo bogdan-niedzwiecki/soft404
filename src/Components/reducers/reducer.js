@@ -2,17 +2,30 @@ import {
   GET_POSTS,
   ADD_POST,
   DELETE_POST,
-  EDIT_POST
+  EDIT_POST,
+  FILTER_POSTS
 } from "../actions/postActions";
 import { DELETE_USER, ADD_USER } from "../actions/userActions";
 
 const initialState = {
   posts: [],
-  user: {}
+  user: {},
+  filterText: ""
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_USER:
+      return {
+        ...state,
+        user: action.payload
+      };
+
+    case DELETE_USER:
+      return {
+        state: initialState
+      };
+
     case GET_POSTS:
       return {
         ...state,
@@ -22,8 +35,9 @@ const reducer = (state = initialState, action) => {
     case ADD_POST:
       return {
         ...state,
-        posts: [action.payload.post, ...state.posts]
+        posts: [action.payload.newPost, ...state.posts]
       };
+
     case EDIT_POST:
       return {
         ...state,
@@ -40,15 +54,10 @@ const reducer = (state = initialState, action) => {
         posts: state.posts.filter(item => item.Id !== action.payload)
       };
 
-    case ADD_USER:
+    case FILTER_POSTS:
       return {
         ...state,
-        user: action.payload
-      };
-
-    case DELETE_USER:
-      return {
-        state: initialState
+        filterText: action.payload
       };
 
     default:

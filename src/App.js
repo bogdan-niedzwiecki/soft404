@@ -18,6 +18,7 @@ class App extends Component {
             )
           }
         />
+
         <Route
           exact
           path="/login"
@@ -29,6 +30,7 @@ class App extends Component {
             )
           }
         />
+
         <Route exact path="/logout" render={() => <Redirect to="/login" />} />
         <Route
           exact

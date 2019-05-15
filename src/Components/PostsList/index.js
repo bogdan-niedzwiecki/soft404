@@ -4,7 +4,11 @@ import { getPostsMiddleware } from "../actions/postActions";
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts,
+    posts: state.posts.filter(
+      post =>
+        post.Title.toLowerCase().includes(state.filterText.toLowerCase()) ||
+        post.Text.toLowerCase().includes(state.filterText.toLowerCase())
+    ),
     userPhoto: state.user.Photo
   };
 };

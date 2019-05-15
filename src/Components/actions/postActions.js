@@ -2,6 +2,7 @@ export const GET_POSTS = "GET_POSTS";
 export const ADD_POST = "ADD_POST";
 export const EDIT_POST = "EDIT_POST";
 export const DELETE_POST = "DELETE_POST";
+export const FILTER_POSTS = "FILTER_POSTS";
 
 export function getPosts(posts) {
   return {
@@ -30,17 +31,9 @@ export function getPostsMiddleware() {
   };
 }
 
-export const addPost = (formData, response) => ({
+export const addPost = (newPost) => ({
   type: ADD_POST,
-  payload: {
-    post: {
-      Title: JSON.parse(formData.get("post")).title,
-      Text: JSON.parse(formData.get("post")).text,
-      Id: response.Id,
-      ThumbnailPhoto: response.ThumbnailPhoto,
-      PublishDate: response.PublishDate,
-      UserId: response.UserId
-    }
+  payload: { newPost
   }
 });
 
@@ -54,7 +47,7 @@ export const fetchPostToAPI = formData => {
       body: formData
     })
       .then(response => response.json())
-      .then(response => dispatch(addPost(formData, response)));
+      .then(response => dispatch(addPost(  response)));
   };
 };
 
@@ -96,3 +89,8 @@ export const deletePostFromApi = id => {
     }).then(() => dispatch(deletePost(id)));
   };
 };
+
+export const filterPosts = text => ({
+  type: FILTER_POSTS,
+  payload: text
+});

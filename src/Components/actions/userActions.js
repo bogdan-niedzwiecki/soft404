@@ -21,6 +21,13 @@ export function addProfileMiddleware(formData) {
       },
       body: formData
     })
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        return response;
+      })
       .then(response => response.json())
       .then(r => dispatch(addUser(r)));
   };
@@ -34,6 +41,13 @@ export function checkProfileMiddleware(googleResponse) {
         "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
       }
     })
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        return response;
+      })
       .then(response => response.json())
       .then(r => {
         if (!r.Name && !r.GivenName && !r.Photo) {

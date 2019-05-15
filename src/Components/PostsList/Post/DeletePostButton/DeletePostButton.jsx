@@ -75,11 +75,11 @@ class DeletePostButton extends Component {
 }
 
 const mapDispatch = dispatch => ({
-  deletePostFromApi: (post, token) => dispatch(deletePostFromApi(post, token))
+  deletePostFromApi: delete_id => dispatch(deletePostFromApi(delete_id))
 });
 export default withRouter(
   connect(
-    state => ({ token: state.token }),
+    null,
     mapDispatch
   )(DeletePostButton)
 );
