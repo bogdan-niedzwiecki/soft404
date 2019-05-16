@@ -6,11 +6,13 @@ import {
   FILTER_POSTS
 } from "../actions/postActions";
 import { DELETE_USER, ADD_USER } from "../actions/userActions";
+import { GET_FRIENDS } from "../actions/friendsAction";
 
 const initialState = {
   posts: [],
   user: {},
-  filterText: ""
+  filterText: "",
+  friends: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -58,6 +60,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         filterText: action.payload
+      };
+
+    case GET_FRIENDS:
+      return {
+        ...state,
+        friends: action.payload
       };
 
     default:

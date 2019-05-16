@@ -8,6 +8,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Profile from "./Components/Profile";
 import EditProfile from "./Components/Profile/EditProfile";
 import LoginForm from "./Components/LoginForm/";
+import FriendsList from "./Components/Friends/friendsList";
 class App extends Component {
   render() {
     return (
@@ -41,6 +42,7 @@ class App extends Component {
             )
           }
         />
+
         <Route
           exact
           path="/create_post"
@@ -82,6 +84,17 @@ class App extends Component {
               <Footer />
             ) : (
               <React.Fragment />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/friend"
+          render={() =>
+            sessionStorage.getItem("azure_access_token") ? (
+              <FriendsList />
+            ) : (
+              <Redirect to="/login" />
             )
           }
         />
