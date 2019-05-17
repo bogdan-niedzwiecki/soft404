@@ -25,10 +25,6 @@ class AvatarMenu extends React.Component {
 
   removeUserStorage = () => {
     sessionStorage.removeItem("azure_access_token");
-    sessionStorage.removeItem("name");
-    sessionStorage.removeItem("surname");
-    sessionStorage.removeItem("avatar");
-    sessionStorage.removeItem("email");
   };
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
