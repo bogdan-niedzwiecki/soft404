@@ -1,19 +1,62 @@
-export const GET_POSTS = "GET_POSTS";
+export const GET_MY_POSTS = "GET_MY_POSTS";
 export const ADD_POST = "ADD_POST";
 export const EDIT_POST = "EDIT_POST";
 export const DELETE_POST = "DELETE_POST";
 export const FILTER_POSTS = "FILTER_POSTS";
+export const GET_FRIENDS_POSTS = "GET_FRIENDS_POSTS";
 
-export function getPosts(posts) {
+export function getMyPosts(myPosts) {
   return {
-    type: GET_POSTS,
-    payload: posts.sort((a, b) => (a.PublishDate > b.PublishDate ? -1 : 1))
+    type: GET_MY_POSTS,
+    payload: myPosts.sort((a, b) => (a.PublishDate > b.PublishDate ? -1 : 1))
+  };
+}
+export function getFriendsPosts(friendsPosts) {
+  return {
+    type: GET_FRIENDS_POSTS,
+    payload: friendsPosts.sort((a, b) =>
+      a.PublishDate > b.PublishDate ? -1 : 1
+    )
   };
 }
 
-export function getPostsMiddleware() {
+export function getAllPostsFromApi() {
+  return async dispatch => {
+    let all = await Promise.all([
+      dispatch(getMyPostsFromApi()),
+      dispatch(getFriendsPostsFromApi())
+    ]);
+    dispatch(getMyPosts(all[0]));
+    console.log(all[1]);
+    dispatch(getFriendsPosts(all[1]));
+  };
+}
+
+export function getFriendsPostsFromApi() {
   return dispatch => {
-    fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
+    return fetch(
+      "https://delfinkitrainingapi.azurewebsites.net/api/post/friend/",
+      {
+        method: "GET",
+        headers: {
+          "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
+        }
+      }
+    )
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        return response;
+      })
+      .then(response => response.json());
+  };
+}
+
+export function getMyPostsFromApi() {
+  return dispatch => {
+    return fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
       method: "GET",
       headers: {
         "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
@@ -26,15 +69,13 @@ export function getPostsMiddleware() {
 
         return response;
       })
-      .then(response => response.json())
-      .then(r => dispatch(getPosts(r)));
+      .then(response => response.json());
   };
 }
 
-export const addPost = (newPost) => ({
+export const addPost = newPost => ({
   type: ADD_POST,
-  payload: { newPost
-  }
+  payload: newPost
 });
 
 export const fetchPostToAPI = formData => {
@@ -47,15 +88,13 @@ export const fetchPostToAPI = formData => {
       body: formData
     })
       .then(response => response.json())
-      .then(response => dispatch(addPost(  response)));
+      .then(response => dispatch(addPost(response)));
   };
 };
 
 export const editPost = post => ({
   type: EDIT_POST,
-  payload: {
-    editedPost: post
-  }
+  payload: post
 });
 
 export const fetchEditedPostToAPI = (id, formData) => {

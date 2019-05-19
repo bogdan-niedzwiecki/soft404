@@ -1,21 +1,21 @@
 import { connect } from "react-redux";
 import PostsList from "./PostsList";
-import { getPostsMiddleware } from "../actions/postActions";
+import { getAllPostsFromApi } from "../actions/postActions";
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts.filter(
+    posts: state.me.Posts.filter(
       post =>
         post.Title.toLowerCase().includes(state.filterText.toLowerCase()) ||
         post.Text.toLowerCase().includes(state.filterText.toLowerCase())
     ),
-    userPhoto: state.user.Photo
+    userPhoto: state.me.Friend.Photo
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPosts: () => dispatch(getPostsMiddleware())
+    getPosts: () => dispatch(getAllPostsFromApi())
   };
 };
 

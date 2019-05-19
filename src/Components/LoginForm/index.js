@@ -4,7 +4,7 @@ import { getTokenMiddleware } from "../actions/userActions";
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.me.Friend
   };
 };
 

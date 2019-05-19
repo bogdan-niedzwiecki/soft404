@@ -2,10 +2,7 @@ export const ADD_USER = "ADD_USER";
 export const DELETE_USER = "DELETE_USER";
 
 export function addUser(user) {
-  if (!user.Photo) {
-    user.Photo =
-      "https://cdn0.iconfinder.com/data/icons/shopping-197/48/bl_872_profile_avatar_anonymous_customer_user_head_human-512.png";
-  }
+  user.Show = true;
   return {
     type: ADD_USER,
     payload: user
@@ -51,13 +48,18 @@ export function checkProfileMiddleware(googleResponse) {
       .then(response => response.json())
       .then(r => {
         if (!r.Name && !r.GivenName && !r.Photo) {
-          const user = {
-            name: googleResponse.w3.ofa,
-            givenName: googleResponse.w3.wea
-          };
-          let formData = new FormData();
-          formData.append("user", JSON.stringify(user));
-          dispatch(addProfileMiddleware(formData));
+          fetch(googleResponse.w3.Paa)
+            .then(response => response.blob())
+            .then(r => {
+              let formData = new FormData();
+              const user = {
+                Name: googleResponse.w3.ofa,
+                GivenName: googleResponse.w3.wea
+              };
+              formData.append("user", JSON.stringify(user));
+              formData.append("photo", r);
+              dispatch(addProfileMiddleware(formData));
+            });
         } else {
           dispatch(addUser(r));
         }
