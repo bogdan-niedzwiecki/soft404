@@ -10,19 +10,12 @@ import { DELETE_USER, ADD_USER } from "../actions/userActions";
 import { GET_FRIENDS } from "../actions/friendsAction";
 
 const initialState = {
-<<<<<<< HEAD
-  posts: [],
-  user: {},
-  filterText: "",
-  friends: []
-=======
   me: {
     Friend: {},
     Posts: []
   },
   friends: [],
   filterText: ""
->>>>>>> 132345d9421935e8769c9bb18dc3743d261fda93
 };
 
 const reducer = (state = initialState, action) => {
