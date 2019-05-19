@@ -3,6 +3,7 @@ import Post from "./Post/index";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import { Helmet } from "react-helmet";
+import Friend from "../Friends/listOfFriends";
 class PostsList extends Component {
   componentDidMount() {
     this.props.getPosts();
@@ -28,6 +29,7 @@ class PostsList extends Component {
               />
             </li>
           ))}
+          <Friend/>
         </ul>
       </main>
     );
