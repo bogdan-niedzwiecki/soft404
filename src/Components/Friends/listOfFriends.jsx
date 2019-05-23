@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import styles from "./styles";
+import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import {
   CardContent,
@@ -14,17 +14,12 @@ import {
   ListItem,
   ListItemAvatar,
   Avatar,
-  ListItemText
+  ListItemText,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Button
 } from "@material-ui/core";
-
-import CardActionArea from "@material-ui/core/CardActionArea";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import styles from "../PostsList/Post/styles";
 
 class Friend extends Component {
   state = {
@@ -54,90 +49,69 @@ class Friend extends Component {
     ).then(response => response.json());
   };
 
+  handleDelete = () => {
+    fetch(
+      `https://delfinkitrainingapi.azurewebsites.net/api/user/${this.props.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
+        }
+      }
+    ).then(response => console.log(response));
+  };
+  handleShow = () => {
+    fetch(
+      `https://delfinkitrainingapi.azurewebsites.net/api/friend/${
+        this.props.id
+      }`,
+      {
+        method: "PUT",
+        headers: {
+          "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
+        }
+      }
+    ).then(response => console.log(response));
+  };
+
   render() {
     const { friendFilter } = this.state;
     const { classes, name, giveName, id, photo, show } = this.props;
     return (
-      // // <Card className={classes.widget}>
-      //   {/* <div className={classes.search}>
-      //     <div className={classes.searchIcon} />
-      //     <InputBase
-      //       placeholder="Search…"
-      //       classes={{
-      //         root: classes.inputRoot,
-      //         input: classes.inputInput
-      //       }}
-      //       onChange={this.handleChange}
-      //       value={filterText}
-      //     />
-      //   </div> */}
-      //   {/* <CardContent>
-      //     <List className={classes.root}>
-      //       <ListItemAvatar>
-      //         <Avatar alt="user photo" src={photo} />
-      //       </ListItemAvatar>
-      //       <ListItemText
-      //         primary="Brunch this weekend?"
-      //         secondary={
-      //           <React.Fragment>
-      //             <Typography component="span" color="textPrimary">
-      //               {name}
-      //             </Typography>
-      //             {giveName}
-      //           </React.Fragment>
-      //         }
-      //       />
-      //     </List>
-      //   </CardContent> */}
-      // {/* </Card> */}
-
-      <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="Post" className={classes.avatar} src={photo} />
-          }
-          title={name}
-        />
-        <CardActionArea onClick={this.handleClickOpen} style={{ outline: 0 }}>
-          <CardMedia className={classes.media} image={photo} />
-          <CardContent>
-            <Typography paragraph className={classes.text}>
-              {name}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {giveName}
-            <br />
-          </DialogTitle>
-          <DialogContent>
-            <img src={photo} className={classes.image} alt={name} />
-            <DialogContentText
-              id="alert-dialog-description"
-              className={classes.text}
-            >
-              {giveName}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="default">
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <CardActions className={classes.actions} disableActionSpacing>
-          <Grid
-            container
-            direction="row"
-            justify="space-around"
-            alignItems="center"
+      <Card className={classes.widget}>
+        {/* <div className={classes.search}>
+          <div className={classes.searchIcon} />
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput
+            }}
+            onChange={this.handleChange}
+            value={friendFilter}
           />
+        </div> */}
+        <CardContent>
+          <List className={classes.root}>
+            <ListItemAvatar>
+              <Avatar alt="user photo" src={photo} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={
+                <Typography component="span" color="textPrimary">
+                  {name}
+                </Typography>
+              }
+            />
+          </List>
+        </CardContent>
+        <CardActions>
+          <Button color="primary" onClick={this.handleDelete}>
+            Delete
+          </Button>
+          <Button color="primary" onClick={this.handleShow}>
+            Show
+          </Button>
         </CardActions>
       </Card>
     );

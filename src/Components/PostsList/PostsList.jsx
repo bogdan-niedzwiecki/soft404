@@ -32,19 +32,16 @@ class PostsList extends Component {
             </li>
           ))}
         </ul>
-        <ul className={classes.list}>
-          {friends.map(item => (
-            <li key={item.Name}>
-              <Friend
-                id={item.Id}
-                name={item.Name}
-                givenName={item.GivenName}
-                photo={item.Photo}
-                show={item.Show}
-              />
-            </li>
-          ))}
-        </ul>
+
+        {friends.map(item => (
+          <Friend
+            id={item.Id}
+            name={item.Name}
+            givenName={item.GivenName}
+            photo={item.Photo}
+            show={item.Show}
+          />
+        ))}
       </main>
     );
   }
