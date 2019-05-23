@@ -7,10 +7,12 @@ import Friend from "../Friends/listOfFriends";
 class PostsList extends Component {
   componentDidMount() {
     this.props.getPosts();
+    this.props.getFriends();
   }
 
   render() {
-    const { classes, posts, userPhoto } = this.props;
+    const { classes, posts, userPhoto, friends } = this.props;
+    console.log("my friend info - " + this.props.friends);
     return (
       <main className={classes.root}>
         <Helmet>
@@ -29,7 +31,19 @@ class PostsList extends Component {
               />
             </li>
           ))}
-          <Friend/>
+        </ul>
+        <ul className={classes.list}>
+          {friends.map(item => (
+            <li key={item.Name}>
+              <Friend
+                id={item.Id}
+                name={item.Name}
+                givenName={item.GivenName}
+                photo={item.Photo}
+                show={item.Show}
+              />
+            </li>
+          ))}
         </ul>
       </main>
     );
