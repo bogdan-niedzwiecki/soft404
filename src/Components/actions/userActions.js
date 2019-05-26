@@ -91,7 +91,6 @@ export function getTokenMiddleware(googleResponse) {
   };
 }
 
-/////////////////////////////////Dima//////////////////////////////////////
 export function deleteUser() {
   return {
     type: DELETE_USER

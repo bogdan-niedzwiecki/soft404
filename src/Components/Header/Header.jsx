@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Logo from "./Logo/index";
 import Search from "./Search/index";
+
 import AvatarMenu from "./AvatarMenu/index";
 import AddPostButton from "./AddPostButton/index";
 
@@ -29,7 +30,6 @@ class Header extends React.Component {
             >
               <Logo />
               <Search />
-
               <AddPostButton />
               <AvatarMenu user={user} />
             </Grid>

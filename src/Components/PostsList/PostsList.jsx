@@ -4,8 +4,10 @@ import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import { Helmet } from "react-helmet";
 class PostsList extends Component {
-  componentDidMount() {
-    this.props.getPosts();
+  constructor(props) {
+    super(props);
+    this.props.getMyPosts();
+    this.props.getFriendsPosts();
   }
 
   render() {
@@ -13,7 +15,7 @@ class PostsList extends Component {
     return (
       <main className={classes.root}>
         <Helmet>
-          <title>HomePage</title>
+          <title>Home page</title>
         </Helmet>
         <ul className={classes.list}>
           {posts.map(item => (

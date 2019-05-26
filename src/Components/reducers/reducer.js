@@ -1,12 +1,16 @@
 import {
   GET_MY_POSTS,
-  GET_FRIENDS_POSTS,
   ADD_POST,
   DELETE_POST,
   EDIT_POST,
-  FILTER_POSTS
+  SET_MAIN_SEARCH
 } from "../actions/postActions";
 import { DELETE_USER, ADD_USER } from "../actions/userActions";
+import {
+  FIND_FRIENDS,
+  REMOVE_FROM_FRIENDS,
+  GET_FRIENDS_POSTS
+} from "../actions/friendActions";
 
 const initialState = {
   me: {
@@ -14,7 +18,8 @@ const initialState = {
     Posts: []
   },
   friends: [],
-  filterText: ""
+  mainSearch: "",
+  foundFriends: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -67,10 +72,24 @@ const reducer = (state = initialState, action) => {
         }
       };
 
-    case FILTER_POSTS:
+    case SET_MAIN_SEARCH:
       return {
         ...state,
-        filterText: action.payload
+        mainSearch: action.payload
+      };
+
+    case FIND_FRIENDS:
+      return {
+        ...state,
+        foundFriends: action.payload
+      };
+
+    case REMOVE_FROM_FRIENDS:
+      return {
+        ...state,
+        friends: state.friends.filter(
+          friend => friend.Friend.Id !== action.payload
+        )
       };
 
     default:

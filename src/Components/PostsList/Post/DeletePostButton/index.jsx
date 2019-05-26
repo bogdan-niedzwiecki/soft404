@@ -11,7 +11,7 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Tooltip } from "@material-ui/core";
 import { connect } from "react-redux";
-import { deletePostFromApi } from "../../../actions/postActions";
+import { deletePostMiddleware } from "../../../actions/postActions";
 import { withRouter } from "react-router";
 
 class DeletePostButton extends React.Component {
@@ -20,7 +20,7 @@ class DeletePostButton extends React.Component {
   };
 
   handleDeletePost = () => {
-    this.props.deletePostFromApi(this.props.delete_id);
+    this.props.deletePost(this.props.delete_id);
     this.props.history.push("/");
   };
 
@@ -35,11 +35,12 @@ class DeletePostButton extends React.Component {
   render() {
     return (
       <div>
-        <Tooltip title="Delete">
+        <Tooltip title="Delete post">
           <IconButton
             aria-label="Delete post"
             color="secondary"
             onClick={this.handleClickOpen}
+            style={{ outline: "none" }}
           >
             <DeleteIcon />
           </IconButton>
@@ -75,7 +76,7 @@ class DeletePostButton extends React.Component {
 }
 
 const mapDispatch = dispatch => ({
-  deletePostFromApi: delete_id => dispatch(deletePostFromApi(delete_id))
+  deletePost: delete_id => dispatch(deletePostMiddleware(delete_id))
 });
 export default withRouter(
   connect(

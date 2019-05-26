@@ -17,7 +17,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import SaveIcon from "@material-ui/icons/Save";
-import { fetchEditedPostToAPI } from "../../../actions/postActions";
+import { editPostMiddleware } from "../../../actions/postActions";
 import { connect } from "react-redux";
 
 class EditPostButton extends React.Component {
@@ -95,7 +95,7 @@ class EditPostButton extends React.Component {
       formData.append("photo", this.state.selectedFile);
     }
     formData.append("post", JSON.stringify(this.state.post));
-    this.props.fetchEditedPostToAPI(this.props.delete_id, formData);
+    this.props.editPost(this.props.delete_id, formData);
     this.handleClose();
   };
 
@@ -104,12 +104,13 @@ class EditPostButton extends React.Component {
     const { title, text } = this.state.post;
     return (
       <div>
-        <Tooltip title="Edit Post">
+        <Tooltip title="Edit post">
           <IconButton
-            aria-label="Delete post"
+            aria-label="Edit post"
             color="primary"
             size="madium"
             onClick={this.handleClickOpen}
+            style={{ outline: "none" }}
           >
             <EditIcon color="primary" />
           </IconButton>
@@ -216,8 +217,8 @@ class EditPostButton extends React.Component {
 }
 
 const mapDispatch = dispatch => ({
-  fetchEditedPostToAPI: (delete_id, formData) =>
-    dispatch(fetchEditedPostToAPI(delete_id, formData))
+  editPost: (delete_id, formData) =>
+    dispatch(editPostMiddleware(delete_id, formData))
 });
 export default connect(
   null,

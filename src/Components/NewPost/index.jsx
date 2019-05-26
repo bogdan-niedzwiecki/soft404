@@ -17,7 +17,7 @@ import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import SaveIcon from "@material-ui/icons/Save";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchPostToAPI } from "./../actions/postActions";
+import { addPostMiddleware } from "./../actions/postActions";
 import { Helmet } from "react-helmet";
 
 class NewPost extends React.Component {
@@ -88,7 +88,7 @@ class NewPost extends React.Component {
     let formData = new FormData();
     formData.append("photo", this.state.selectedFile);
     formData.append("post", JSON.stringify(this.state.post));
-    this.props.fetchPostToAPI(formData);
+    this.props.addPost(formData);
     this.props.history.push("/");
   };
 
@@ -205,7 +205,7 @@ class NewPost extends React.Component {
 }
 
 const mapDispatch = dispatch => ({
-  fetchPostToAPI: formData => dispatch(fetchPostToAPI(formData))
+  addPost: formData => dispatch(addPostMiddleware(formData))
 });
 export default withRouter(
   connect(

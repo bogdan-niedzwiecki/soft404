@@ -1,48 +1,27 @@
-import { fade } from "@material-ui/core/styles/colorManipulator";
-
 const styles = theme => ({
-  search: {
-    position: "relative",
-    left: "7%",
-    borderRadius: 16,
-    backgroundColor: fade(theme.palette.common.white, 0.9),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.black, 0.06)
-    },
-    marginRight: theme.spacing.unit * 2,
-    marginLeft: theme.spacing.unit * 2,
-    [theme.breakpoints.down("sm")]: {
-      marginLeft: theme.spacing.unit * 2,
-      display: "none"
-    },
-    [theme.breakpoints.up("sm")]: {
-      display: "inline-block",
-      width: "40%"
-    }
+  root: {
+    width: "50%",
+    margin: "auto"
   },
-  searchIcon: {
-    width: theme.spacing.unit * 9,
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  inputRoot: {
-    color: "primary",
+  rootInput: {
     width: "100%"
   },
-  inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "100%"
-    }
+  container: {
+    flexGrow: 1,
+    position: "relative"
+  },
+  paper: {
+    position: "absolute",
+    zIndex: 1,
+    marginTop: theme.spacing.unit,
+    backgroundColor: theme.palette.background.default,
+    left: 0,
+    right: 0,
+    boxShadow: "0px 1px 5px -2px black",
+    borderRadius: "3px"
+  },
+  button: {
+    marginRight: 10
   }
 });
 
