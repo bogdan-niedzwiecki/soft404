@@ -26,9 +26,10 @@ export function getAllPostsFromApi() {
       dispatch(getMyPostsFromApi()),
       dispatch(getFriendsPostsFromApi())
     ]);
+    dispatch(getFriendsPosts(all[1]));
     dispatch(getMyPosts(all[0]));
     console.log(all[1]);
-    dispatch(getFriendsPosts(all[1]));
+    
   };
 }
 

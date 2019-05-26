@@ -8,7 +8,6 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Profile from "./Components/Profile";
 import EditProfile from "./Components/Profile/EditProfile";
 import LoginForm from "./Components/LoginForm/";
-import FriendsList1 from "./Components/Friends/listOfFriends";
 class App extends Component {
   render() {
     return (
@@ -87,17 +86,7 @@ class App extends Component {
             )
           }
         />
-        <Route
-          exact
-          path="/friend"
-          render={() =>
-            sessionStorage.getItem("azure_access_token") ? (
-              <FriendsList1 />
-            ) : (
-              <Redirect to="/login" />
-            )
-          }
-        />
+     
       </BrowserRouter>
     );
   }

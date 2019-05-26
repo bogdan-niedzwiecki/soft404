@@ -1,14 +1,23 @@
 import { fade } from "@material-ui/core/styles/colorManipulator";
 
 const styles = theme => ({
-  widget: {
+  container: {
     maxWidth: 300,
-    padding: `0 ${theme.spacing.unit * 5}px`,
-    margin: "auto"
+    padding: `0 ${theme.spacing.unit * 7}px`,
+    margin: "auto",
+   
+  },
+  media: {
+    height: 150,
+    width: 150,
+    margin: "auto",
+    marginTop: 40,
+    marginBottom: 20,
+    borderRadius: "50%"
   },
 
   search: {
-    position: "relative",
+    position: "fixed",
     left: "1%",
     borderRadius: 15,
     backgroundColor: fade(theme.palette.common.white, 0.9),
@@ -34,7 +43,7 @@ const styles = theme => ({
   //   justifyContent: "center"
   // },
   inputRoot: {
-    color: "primary"
+    color: "secondary"
   },
   inputInput: {
     paddingTop: theme.spacing.unit,
@@ -42,9 +51,9 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit,
     paddingLeft: theme.spacing.unit * 1,
     transition: theme.transitions.create("width"),
-    width: "50%",
+    width: "30%",
     [theme.breakpoints.up("sm")]: {
-      width: "70%"
+      width: "20%"
     }
   }
 });

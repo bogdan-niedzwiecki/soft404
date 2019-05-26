@@ -1,107 +1,62 @@
 import React, { Component } from "react";
+import Friend from "./friends";
+import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ListItemText from "@material-ui/core/ListItemText";
-import { TextField, Avatar } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import FolderIcon from "@material-ui/icons/Folder";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { connect } from "react-redux";
-import { getFriendsMiddleware } from "../actions/friendsAction";
+import { withRouter } from "react-router-dom";
+import {
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    maxWidth: 752
-  },
-  demo: {
-    backgroundColor: theme.palette.background.paper
-  },
-  title: {
-    margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`
-  }
-});
+  InputBase,
+ 
+} from "@material-ui/core";
 
 class FriendsList extends Component {
   state = {
-    friends: {
-      Name: ""
-    },
-    dense: false,
-    secondary: false
+    
+    friendsfilter: this.props.friendsfilter
   };
 
-  //   componentDidMount() {
-  //     this.props.getFriends();
-  //   }
-
-  handlerChange = () => {
-    this.props.getFriendsMiddleware();
+  handleChange = event => {
+    this.props.history.push("/");
+    this.setState(
+      {
+        friendsfilter: event.target.value
+      },
+      () =>
+        setTimeout(() => {
+          this.props.friendsfilter(this.state.friendsfilter);
+        }, 500)
+    );
   };
+
+  // componentDidMount() {
+  //   this.props.getFriends();
+  // }
+
   render() {
-    const { classes } = this.props;
-    const { dense, secondary } = this.state;
-
+    const { classes, friends  } = this.props;
+    const { friendsfilter } = this.state;
     return (
-      <main>
-        <ul>
-          <button onClick={this.handlerChange}> Frinds </button>
-          <TextField
-            id="text"
-            label="Content of the Post"
-            placeholder="It was a monday, day like any other day"
-            rows="10"
-            rowsMax="13"
-            required={true}
-            multiline
-            margin="normal"
-            variant="outlined"
-            value={this.state.friends.Name}
+      <div>   
+        <h4>My Friends: </h4>
+           <div className={classes.search}>
+          <div className={classes.searchIcon} />
+          <InputBase
+            placeholder="Search…"
+            classes={{  
+              root: classes.inputRoot,
+              input: classes.inputInput
+            }}
             onChange={this.handleChange}
+            value={friendsfilter}
           />
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" className={classes.title}>
-              Friends
-            </Typography>
-            <div className={classes.demo}>
-              <List dense={dense}>
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <FolderIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Single-line item"
-                    secondary={secondary ? "Secondary text" : null}
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton aria-label="Delete">
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              </List>
-            </div>
-          </Grid>
-        </ul>
-      </main>
+        </div>
+
+      
+      </div>   
     );
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    getFriendsMiddleware: () => dispatch(getFriendsMiddleware())
-  };
-};
 
-export default connect(
-  null,
-  mapDispatch
-)(withStyles(styles)(FriendsList));
+
+export default  withRouter(withStyles(styles)(FriendsList));

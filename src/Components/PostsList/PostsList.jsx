@@ -3,22 +3,32 @@ import Post from "./Post/index";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import { Helmet } from "react-helmet";
-import Friend from "../Friends/listOfFriends";
+import Friend from "../Friends/friends";
+import FriendsList from "../Friends/FriendsList";
 class PostsList extends Component {
-  componentDidMount() {
+
+  constructor(props) {
+    super(props);
     this.props.getPosts();
     this.props.getFriends();
   }
+  // componentDidUpdate() {
+  //   this.props.getFriends();
+  // }
+
+  info = () => <p>Sorry you don't have any friends...</p>;
 
   render() {
     const { classes, posts, userPhoto, friends } = this.props;
-    console.log("my friend info - " + this.props.friends);
+    // console.log("my friend info - " + this.props.friends);
     return (
+      
       <main className={classes.root}>
         <Helmet>
           <title>HomePage</title>
         </Helmet>
         <ul className={classes.list}>
+          
           {posts.map(item => (
             <li key={item.Id}>
               <Post
@@ -32,16 +42,19 @@ class PostsList extends Component {
             </li>
           ))}
         </ul>
-
-        {friends.map(item => (
-          <Friend
-            id={item.Id}
-            name={item.Name}
-            givenName={item.GivenName}
-            photo={item.Photo}
-            show={item.Show}
-          />
-        ))}
+     
+        <div className={classes.container}> 
+          {/* <FriendsList /> */}
+          {friends.map(item => (
+            <Friend
+              friend_id={item.Id}
+              name={item.Name}
+              givenName={item.GivenName}
+              photo={item.Photo}  
+              show={item.Show}
+            />
+          )) }
+          </div>
       </main>
     );
   }

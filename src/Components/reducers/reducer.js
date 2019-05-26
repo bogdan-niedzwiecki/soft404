@@ -7,7 +7,7 @@ import {
   FILTER_POSTS
 } from "../actions/postActions";
 import { DELETE_USER, ADD_USER } from "../actions/userActions";
-import { GET_FRIENDS } from "../actions/friendsAction";
+import { GET_FRIENDS, FILTER_FRIENDS, DELETE_FRIEND } from "../actions/friendsAction";
 
 const initialState = {
   me: {
@@ -15,7 +15,9 @@ const initialState = {
     Posts: []
   },
   friends: [],
+  friendsfilter: "",
   filterText: ""
+
 };
 
 const reducer = (state = initialState, action) => {
@@ -78,6 +80,23 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         friends: action.payload
+      };
+
+    case DELETE_FRIEND:
+      return {
+        ...state,
+        friends: 
+          state.friends.filter(
+            friend => friend.Friend.Id !== action.payload
+          )
+        
+
+      };
+    
+    case FILTER_FRIENDS:
+      return {
+        ...state,
+        friendsfilter: action.payload
       };
 
     default:
