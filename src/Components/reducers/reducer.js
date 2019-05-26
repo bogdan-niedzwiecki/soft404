@@ -5,7 +5,7 @@ import {
   EDIT_POST,
   SET_MAIN_SEARCH
 } from "../actions/postActions";
-import { DELETE_USER, ADD_USER } from "../actions/userActions";
+import { DELETE_USER, ADD_PROFILE } from "../actions/userActions";
 import {
   FIND_FRIENDS,
   REMOVE_FROM_FRIENDS,
@@ -24,7 +24,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_USER:
+    case ADD_PROFILE:
       return {
         ...state,
         me: { ...state.me, Friend: action.payload }
@@ -40,6 +40,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         me: { ...state.me, Posts: action.payload }
       };
+
     case GET_FRIENDS_POSTS:
       return {
         ...state,

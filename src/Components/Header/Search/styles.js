@@ -11,6 +11,8 @@ const styles = theme => ({
     position: "relative"
   },
   paper: {
+    maxHeight: 250,
+    overflow: "auto",
     position: "absolute",
     zIndex: 1,
     marginTop: theme.spacing.unit,

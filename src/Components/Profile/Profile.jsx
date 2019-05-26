@@ -35,7 +35,7 @@ class Profile extends Component {
   };
 
   handleDeleteProfile = () => {
-    this.props.deleteUserFromApi();
+    this.props.deleteUser();
     sessionStorage.removeItem("azure_access_token");
     this.props.history.push("/login");
     window.location.reload(false);

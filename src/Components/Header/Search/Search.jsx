@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -18,7 +18,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { withRouter } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
 
-class Search extends React.Component {
+class Search extends Component {
   constructor(props) {
     super(props);
     this.state = { suggestions: [], text: "", open: false };
@@ -45,7 +45,7 @@ class Search extends React.Component {
     if (this.state.text.length > 0) {
       setTimeout(() => {
         this.setState({ suggestions: this.props.foundFriends, open: true });
-      }, 500);
+      }, 1000);
     }
   };
 

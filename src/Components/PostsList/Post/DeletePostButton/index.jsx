@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Button,
   Dialog,
@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import { deletePostMiddleware } from "../../../actions/postActions";
 import { withRouter } from "react-router";
 
-class DeletePostButton extends React.Component {
+class DeletePostButton extends Component {
   state = {
     open: false
   };

@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Profile from "./Profile";
-import { deleteUserFromApi } from "../actions/userActions";
+import { deleteUserMiddleware } from "../actions/userActions";
 
 const mapStateToProps = state => {
   return {
@@ -10,7 +10,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    deleteUserFromApi: () => dispatch(deleteUserFromApi())
+    deleteUser: () => dispatch(deleteUserMiddleware())
   };
 };
 

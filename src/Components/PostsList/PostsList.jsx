@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import Post from "./Post/index";
+import Post from "./Post";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import { Helmet } from "react-helmet";
+
 class PostsList extends Component {
   constructor(props) {
     super(props);

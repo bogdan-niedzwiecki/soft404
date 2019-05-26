@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "../../../NewPost/styles";
 import {
@@ -20,7 +20,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import { editPostMiddleware } from "../../../actions/postActions";
 import { connect } from "react-redux";
 
-class EditPostButton extends React.Component {
+class EditPostButton extends Component {
   constructor(props) {
     super(props);
     this.state = {

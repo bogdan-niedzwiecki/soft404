@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import {
@@ -20,7 +20,7 @@ import { connect } from "react-redux";
 import { addPostMiddleware } from "./../actions/postActions";
 import { Helmet } from "react-helmet";
 
-class NewPost extends React.Component {
+class NewPost extends Component {
   state = {
     post: {
       title: "",

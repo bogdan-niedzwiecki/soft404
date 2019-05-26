@@ -95,7 +95,15 @@ export const removeFromFriendsMiddleware = id => {
       headers: {
         "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
       }
-    }).then(() => dispatch(removeFromFriends(id)));
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        return response;
+      })
+      .then(() => dispatch(removeFromFriends(id)));
   };
 };
 export const removeFromFriends = id => ({
