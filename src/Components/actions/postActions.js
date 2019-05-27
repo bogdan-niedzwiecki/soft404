@@ -2,60 +2,9 @@ export const GET_MY_POSTS = "GET_MY_POSTS";
 export const ADD_POST = "ADD_POST";
 export const EDIT_POST = "EDIT_POST";
 export const DELETE_POST = "DELETE_POST";
-export const FILTER_POSTS = "FILTER_POSTS";
-export const GET_FRIENDS_POSTS = "GET_FRIENDS_POSTS";
+export const SET_MAIN_SEARCH = "SET_MAIN_SEARCH";
 
-export function getMyPosts(myPosts) {
-  return {
-    type: GET_MY_POSTS,
-    payload: myPosts.sort((a, b) => (a.PublishDate > b.PublishDate ? -1 : 1))
-  };
-}
-export function getFriendsPosts(friendsPosts) {
-  return {
-    type: GET_FRIENDS_POSTS,
-    payload: friendsPosts.sort((a, b) =>
-      a.PublishDate > b.PublishDate ? -1 : 1
-    )
-  };
-}
-
-export function getAllPostsFromApi() {
-  return async dispatch => {
-    let all = await Promise.all([
-      dispatch(getMyPostsFromApi()),
-      dispatch(getFriendsPostsFromApi())
-    ]);
-    dispatch(getFriendsPosts(all[1]));
-    dispatch(getMyPosts(all[0]));
-    console.log(all[1]);
-    
-  };
-}
-
-export function getFriendsPostsFromApi() {
-  return dispatch => {
-    return fetch(
-      "https://delfinkitrainingapi.azurewebsites.net/api/post/friend/",
-      {
-        method: "GET",
-        headers: {
-          "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-        }
-      }
-    )
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
-        return response;
-      })
-      .then(response => response.json());
-  };
-}
-
-export function getMyPostsFromApi() {
+export function getMyPostsMiddleware() {
   return dispatch => {
     return fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
       method: "GET",
@@ -70,16 +19,18 @@ export function getMyPostsFromApi() {
 
         return response;
       })
-      .then(response => response.json());
+      .then(response => response.json())
+      .then(r => dispatch(getMyPosts(r)));
+  };
+}
+export function getMyPosts(myPosts) {
+  return {
+    type: GET_MY_POSTS,
+    payload: myPosts.sort((a, b) => (a.PublishDate > b.PublishDate ? -1 : 1))
   };
 }
 
-export const addPost = newPost => ({
-  type: ADD_POST,
-  payload: newPost
-});
-
-export const fetchPostToAPI = formData => {
+export const addPostMiddleware = formData => {
   return dispatch => {
     return fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
       method: "POST",
@@ -88,17 +39,23 @@ export const fetchPostToAPI = formData => {
       },
       body: formData
     })
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        return response;
+      })
       .then(response => response.json())
-      .then(response => dispatch(addPost(response)));
+      .then(r => dispatch(addPost(r)));
   };
 };
-
-export const editPost = post => ({
-  type: EDIT_POST,
-  payload: post
+export const addPost = newPost => ({
+  type: ADD_POST,
+  payload: newPost
 });
 
-export const fetchEditedPostToAPI = (id, formData) => {
+export const editPostMiddleware = (id, formData) => {
   return dispatch => {
     fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${id}`, {
       method: "PUT",
@@ -107,30 +64,48 @@ export const fetchEditedPostToAPI = (id, formData) => {
       },
       body: formData
     })
-      .then(response => response.json())
       .then(response => {
-        dispatch(editPost(response));
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        return response;
+      })
+      .then(response => response.json())
+      .then(r => {
+        dispatch(editPost(r));
       });
   };
 };
-
-export const deletePost = id => ({
-  type: DELETE_POST,
-  payload: id
+export const editPost = post => ({
+  type: EDIT_POST,
+  payload: post
 });
 
-export const deletePostFromApi = id => {
+export const deletePostMiddleware = id => {
   return dispatch => {
     fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${id}`, {
       method: "DELETE",
       headers: {
         "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
       }
-    }).then(() => dispatch(deletePost(id)));
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        return response;
+      })
+      .then(() => dispatch(deletePost(id)));
   };
 };
+export const deletePost = id => ({
+  type: DELETE_POST,
+  payload: id
+});
 
-export const filterPosts = text => ({
-  type: FILTER_POSTS,
+export const setMainSearch = text => ({
+  type: SET_MAIN_SEARCH,
   payload: text
 });

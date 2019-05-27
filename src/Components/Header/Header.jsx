@@ -1,20 +1,15 @@
-import React from "react";
+import React, { Component } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Logo from "./Logo/index";
 import Search from "./Search/index";
+import styles from "./styles";
 import AvatarMenu from "./AvatarMenu/index";
 import AddPostButton from "./AddPostButton/index";
 
-const styles = theme => ({
-  root: {
-    marginBottom: theme.spacing.unit * 12
-  }
-});
-
-class Header extends React.Component {
+class Header extends Component {
   render() {
     const { classes, user } = this.props;
     return (
@@ -29,7 +24,6 @@ class Header extends React.Component {
             >
               <Logo />
               <Search />
-
               <AddPostButton />
               <AvatarMenu user={user} />
             </Grid>

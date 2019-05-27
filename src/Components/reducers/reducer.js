@@ -1,13 +1,16 @@
 import {
   GET_MY_POSTS,
-  GET_FRIENDS_POSTS,
   ADD_POST,
   DELETE_POST,
   EDIT_POST,
-  FILTER_POSTS
+  SET_MAIN_SEARCH
 } from "../actions/postActions";
-import { DELETE_USER, ADD_USER } from "../actions/userActions";
-import { GET_FRIENDS, FILTER_FRIENDS, DELETE_FRIEND, SHOW_POST, HIDE_POST } from "../actions/friendsAction";
+import { DELETE_USER, ADD_PROFILE } from "../actions/userActions";
+import {
+  FIND_FRIENDS,
+  REMOVE_FROM_FRIENDS,
+  GET_FRIENDS_POSTS
+} from "../actions/friendActions";
 
 const initialState = {
   me: {
@@ -15,14 +18,13 @@ const initialState = {
     Posts: []
   },
   friends: [],
-  friendsfilter: "",
-  filterText: ""
-
+  mainSearch: "",
+  foundFriends: []
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_USER:
+    case ADD_PROFILE:
       return {
         ...state,
         me: { ...state.me, Friend: action.payload }
@@ -38,6 +40,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         me: { ...state.me, Posts: action.payload }
       };
+
     case GET_FRIENDS_POSTS:
       return {
         ...state,
@@ -70,10 +73,24 @@ const reducer = (state = initialState, action) => {
         }
       };
 
-    case FILTER_POSTS:
+    case SET_MAIN_SEARCH:
       return {
         ...state,
-        filterText: action.payload
+        mainSearch: action.payload
+      };
+
+    case FIND_FRIENDS:
+      return {
+        ...state,
+        foundFriends: action.payload
+      };
+
+    case REMOVE_FROM_FRIENDS:
+      return {
+        ...state,
+        friends: state.friends.filter(
+          friend => friend.Friend.Id !== action.payload
+        )
       };
 
     case GET_FRIENDS:

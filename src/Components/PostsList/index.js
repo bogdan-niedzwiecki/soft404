@@ -1,14 +1,14 @@
 import { connect } from "react-redux";
 import PostsList from "./PostsList";
-import { getAllPostsFromApi } from "../actions/postActions";
-import { getFriendsMiddleware } from "../actions/friendsAction";
+import { getMyPostsMiddleware } from "../actions/postActions";
+import { getFriendsPostsMiddleware } from "../actions/friendActions";
 
 const mapStateToProps = state => {
   return {
     posts: state.me.Posts.filter(
       post =>
-        post.Title.toLowerCase().includes(state.filterText.toLowerCase()) ||
-        post.Text.toLowerCase().includes(state.filterText.toLowerCase())
+        post.Title.toLowerCase().includes(state.mainSearch.toLowerCase()) ||
+        post.Text.toLowerCase().includes(state.mainSearch.toLowerCase())
     ),
 
     friends: state.friends,
@@ -19,8 +19,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPosts: () => dispatch(getAllPostsFromApi()),
-    getFriends: () => dispatch(getFriendsMiddleware())
+    getMyPosts: () => dispatch(getMyPostsMiddleware()),
+    getFriendsPosts: () => dispatch(getFriendsPostsMiddleware())
   };
 };
 

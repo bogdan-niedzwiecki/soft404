@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import Post from "./Post/index";
+import Post from "./Post";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import { Helmet } from "react-helmet";
+<<<<<<< HEAD
 import Friend from "../Friends/friends";
 
 class PostsList extends Component {
@@ -10,6 +11,14 @@ class PostsList extends Component {
   constructor(props) {
     super(props);
     this.props.getPosts();
+=======
+
+class PostsList extends Component {
+  constructor(props) {
+    super(props);
+    this.props.getMyPosts();
+    this.props.getFriendsPosts();
+>>>>>>> ourRedux
   }
 
 
@@ -21,7 +30,7 @@ class PostsList extends Component {
 
       <main className={classes.root}>
         <Helmet>
-          <title>HomePage</title>
+          <title>Home page</title>
         </Helmet>
         <ul className={classes.list}>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -19,7 +19,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import styles from "./styles";
 import EditPostButton from "./EditPostButton/editPostButton";
 
-class Post extends React.Component {
+class Post extends Component {
   state = { open: false };
 
   handleClickOpen = () => {
