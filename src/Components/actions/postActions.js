@@ -1,3 +1,4 @@
+import { getFriendsPostsMiddleware } from "./friendActions";
 export const GET_MY_POSTS = "GET_MY_POSTS";
 export const ADD_POST = "ADD_POST";
 export const EDIT_POST = "EDIT_POST";
@@ -20,7 +21,8 @@ export function getMyPostsMiddleware() {
         return response;
       })
       .then(response => response.json())
-      .then(r => dispatch(getMyPosts(r)));
+      .then(r => dispatch(getMyPosts(r)))
+      .then(() => dispatch(getFriendsPostsMiddleware()));
   };
 }
 export function getMyPosts(myPosts) {

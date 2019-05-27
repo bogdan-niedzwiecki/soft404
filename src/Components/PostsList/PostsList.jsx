@@ -8,8 +8,7 @@ import Friend from "../Friends/friends";
 class PostsList extends Component {
   constructor(props) {
     super(props);
-    this.props.getMyPosts();
-    this.props.getFriendsPosts();
+    this.props.getAllPosts();
   }
 
 
@@ -21,7 +20,7 @@ class PostsList extends Component {
 
       <main className={classes.root}>
         <Helmet>
-          <title>Home page</title>
+          <title>Home Page</title>
         </Helmet>
         <ul className={classes.list}>
 

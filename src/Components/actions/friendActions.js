@@ -60,9 +60,7 @@ export function getFriendsPostsMiddleware() {
 export function getFriendsPosts(friendsPosts) {
   return {
     type: GET_FRIENDS_POSTS,
-    payload: friendsPosts.sort((a, b) =>
-      a.PublishDate > b.PublishDate ? -1 : 1
-    )
+    payload: friendsPosts
   };
 }
 
