@@ -1,6 +1,9 @@
 export const FIND_FRIENDS = "FIND_FRIENDS";
 export const GET_FRIENDS_POSTS = "GET_FRIENDS_POSTS";
 export const REMOVE_FROM_FRIENDS = "REMOVE_FROM_FRIENDS";
+export const SHOW_POST = "SHOW_POST";
+export const HIDE_POST = "HIDE_POST";
+export const FILTER_FRIENDS = "FILTER_FRIENDS";
 
 export function findFriendsMiddleware(name) {
   return dispatch => {
@@ -106,7 +109,68 @@ export const removeFromFriendsMiddleware = id => {
       .then(() => dispatch(removeFromFriends(id)));
   };
 };
+
+export function changeShow(id){
+  return{
+    type: SHOW_POST,
+    payload: id
+  }
+}
+export function showingMiddleware(id) {
+  return dispatch => {
+    fetch(
+      `https://delfinkitrainingapi.azurewebsites.net/api/friend/${
+      id
+      }`,
+      {
+        method: "PUT",
+        headers: {
+          "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
+        },
+        body: JSON.stringify({
+          Show:  true
+        })
+      }
+    ).then(response => console.log(response))
+      
+      .then(r => dispatch(changeShow(id)));
+  };
+}
+
+export function changeHide(id){
+  return{
+    type: HIDE_POST,
+    payload: id
+  }
+}
+
+export function hidingMiddleware(id) {
+  return dispatch => {
+    fetch(
+      `https://delfinkitrainingapi.azurewebsites.net/api/friend/${
+      id
+      }`,
+      {
+        method: "PUT",
+        headers: {
+          "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
+        },
+        body: JSON.stringify({
+          Show:  false
+        })
+      }
+    ).then(response => console.log(response))
+      
+      .then(r => dispatch(changeHide(id)));
+  };
+}
+
 export const removeFromFriends = id => ({
   type: REMOVE_FROM_FRIENDS,
   payload: id
+});
+
+export const friendsfilter = text => ({
+  type: FILTER_FRIENDS,
+  payload: text
 });

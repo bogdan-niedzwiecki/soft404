@@ -53,7 +53,12 @@ const styles = theme => ({
     width: "30%",
     [theme.breakpoints.up("sm")]: {
       width: "20%"
-    }
+    },
+    card: {
+      maxWidth: 150,
+      margin: "auto",
+      marginBottom: 40
+    },
   }
 });
 

@@ -9,7 +9,10 @@ import { DELETE_USER, ADD_PROFILE } from "../actions/userActions";
 import {
   FIND_FRIENDS,
   REMOVE_FROM_FRIENDS,
-  GET_FRIENDS_POSTS
+  GET_FRIENDS_POSTS,
+  HIDE_POST,
+  SHOW_POST,
+  FILTER_FRIENDS
 } from "../actions/friendActions";
 
 const initialState = {
@@ -93,22 +96,13 @@ const reducer = (state = initialState, action) => {
         )
       };
 
-    case GET_FRIENDS:
-      return {
-        ...state,
-        friends: action.payload
-      };
+    // case GET_FRIENDS:
+    //   return {
+    //     ...state,
+    //     friends: action.payload
+    //   };
 
-    case DELETE_FRIEND:
-      return {
-        ...state,
-        friends:
-          state.friends.filter(
-            friend => friend.Friend.Id !== action.payload
-          )
-
-
-      };
+    
     case SHOW_POST:
       return {
         ...state,
