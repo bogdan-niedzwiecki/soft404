@@ -3,11 +3,7 @@ import Friend from "./friends";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
-import {
-
-  InputBase,
- 
-} from "@material-ui/core";
+import {InputBase} from "@material-ui/core";
 
 class FriendsList extends Component {
   state = {
@@ -37,7 +33,6 @@ class FriendsList extends Component {
     const { friendsfilter } = this.state;
     return (
       <div>   
-        <h4>My Friends: </h4>
            <div className={classes.search}>
           <div className={classes.searchIcon} />
           <InputBase

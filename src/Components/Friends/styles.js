@@ -1,12 +1,11 @@
 import { fade } from "@material-ui/core/styles/colorManipulator";
 
 const styles = theme => ({
-  container: {
-    maxWidth: 300,
-    padding: `0 ${theme.spacing.unit * 7}px`,
-    margin: "auto",
-   
-  },
+  // container: {
+  //   // maxWidth: 300,
+  //   // padding: `0 ${theme.spacing.unit * 7}px`,
+  //   // margin: "auto",
+  // },
   media: {
     height: 150,
     width: 150,

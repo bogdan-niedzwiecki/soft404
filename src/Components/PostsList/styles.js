@@ -4,13 +4,20 @@ const styles = theme => ({
   },
   list: { listStyleType: "none", marginLeft: "-40px" },
  container: {
-  maxWidth: 300,
-  // display: "flex",
+  maxHeight: 300,
+  overflow: "auto",
+  borderRadius:10,
+  borderWidth: 1,
+  width: 300,
   position: "fixed",
   zIndex: 1,
   top: '13%',
-  right: 20
- }
+  right: 20,
+ },
+search: {
+  position: "fixed",
+  top: '13  %',
+}
 });
 
 export default styles;

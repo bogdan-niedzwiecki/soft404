@@ -7,7 +7,7 @@ import {
   FILTER_POSTS
 } from "../actions/postActions";
 import { DELETE_USER, ADD_USER } from "../actions/userActions";
-import { GET_FRIENDS, FILTER_FRIENDS, DELETE_FRIEND } from "../actions/friendsAction";
+import { GET_FRIENDS, FILTER_FRIENDS, DELETE_FRIEND, SHOW_POST, HIDE_POST } from "../actions/friendsAction";
 
 const initialState = {
   me: {
@@ -85,14 +85,25 @@ const reducer = (state = initialState, action) => {
     case DELETE_FRIEND:
       return {
         ...state,
-        friends: 
+        friends:
           state.friends.filter(
             friend => friend.Friend.Id !== action.payload
           )
-        
+
 
       };
-    
+    case SHOW_POST:
+      return {
+        ...state,
+        show: action.payload
+      };
+
+    case HIDE_POST:
+      return {
+        ...state,
+        show: action.payload
+      };
+
     case FILTER_FRIENDS:
       return {
         ...state,
