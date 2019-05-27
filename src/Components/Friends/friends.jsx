@@ -108,20 +108,21 @@ class Friend extends Component {
               >
                 <DeleteIcon />
               </IconButton>
+              
             </Tooltip>
               {this.isVisibility(show) ? (
-                        <Tooltip title="Show posts" color="inherit">
-                        <IconButton aria-label="Show" size="small" color="primary" onClick={this.handleShow}>
-                          <VisibilityIcon />
-                        </IconButton>
-                      </Tooltip>
-                        ) : (
-                          <Tooltip title="Hide posts"color="primary">
-                          <IconButton aria-label="Hide" size="small" color="secondary" onClick={this.handleHide}>
-                            <VisibilityOffIcon />
-                          </IconButton>
-                        </Tooltip>
-                        )}
+                  <Tooltip title="Show posts" >
+                  <IconButton aria-label="Show" size="small" color="primary" onClick={this.handleShow}>
+                    <VisibilityIcon />
+                  </IconButton>
+                </Tooltip>
+                  ) : (
+                    <Tooltip title="Hide posts">
+                    <IconButton aria-label="Hide" size="small" color="secondary" onClick={this.handleHide}>
+                      <VisibilityOffIcon />
+                    </IconButton>
+                  </Tooltip>
+                )}
 
           </ListItemSecondaryAction>
         </Grid>
