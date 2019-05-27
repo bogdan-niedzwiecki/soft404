@@ -18,8 +18,9 @@ const initialState = {
     Posts: []
   },
   friends: [],
-  mainSearch: "",
-  foundFriends: []
+  allPosts: [],
+  foundFriends: [],
+  mainSearch: ""
 };
 
 const reducer = (state = initialState, action) => {
@@ -38,19 +39,29 @@ const reducer = (state = initialState, action) => {
     case GET_MY_POSTS:
       return {
         ...state,
-        me: { ...state.me, Posts: action.payload }
+        me: { ...state.me, Posts: action.payload },
+        allPosts: [...action.payload]
       };
 
     case GET_FRIENDS_POSTS:
       return {
         ...state,
-        friends: action.payload
+        friends: action.payload,
+        allPosts: [
+          ...state.allPosts,
+          ...[].concat(
+            ...action.payload
+              .filter(item => item.Friend.Show)
+              .map(item => item.Posts)
+          )
+        ]
       };
 
     case ADD_POST:
       return {
         ...state,
-        me: { ...state.me, Posts: [action.payload, ...state.me.Posts] }
+        me: { ...state.me, Posts: [action.payload, ...state.me.Posts] },
+        allPosts: [...state.allPosts, action.payload]
       };
 
     case EDIT_POST:
@@ -70,7 +81,8 @@ const reducer = (state = initialState, action) => {
         me: {
           ...state.me,
           Posts: state.me.Posts.filter(post => post.Id !== action.payload)
-        }
+        },
+        allPosts: state.allPosts.filter(post => post.Id !== action.payload)
       };
 
     case SET_MAIN_SEARCH:
@@ -90,7 +102,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         friends: state.friends.filter(
           friend => friend.Friend.Id !== action.payload
-        )
+        ),
+        allPosts: state.allPosts.filter(post => post.UserId !== action.payload)
       };
 
     default:

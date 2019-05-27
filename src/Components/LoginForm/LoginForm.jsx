@@ -18,7 +18,6 @@ import { Helmet } from "react-helmet";
 
 class LoginForm extends Component {
   successResponse = response => {
-    console.log(response);
     this.props.addUser(response);
   };
 

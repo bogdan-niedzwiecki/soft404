@@ -72,7 +72,7 @@ class Search extends Component {
         <ClickAwayListener onClickAway={this.handleClickAway}>
           <div>
             {open ? (
-              <List dense className={classes.paper}>
+              <List className={classes.paper}>
                 {suggestions.map(item => (
                   <ListItem key={item.Id}>
                     <ListItemAvatar>

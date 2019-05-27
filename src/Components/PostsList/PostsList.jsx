@@ -7,8 +7,7 @@ import { Helmet } from "react-helmet";
 class PostsList extends Component {
   constructor(props) {
     super(props);
-    this.props.getMyPosts();
-    this.props.getFriendsPosts();
+    this.props.getAllPosts();
   }
 
   render() {
@@ -16,7 +15,7 @@ class PostsList extends Component {
     return (
       <main className={classes.root}>
         <Helmet>
-          <title>Home page</title>
+          <title>Home Page</title>
         </Helmet>
         <ul className={classes.list}>
           {posts.map(item => (
