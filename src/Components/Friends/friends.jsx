@@ -71,7 +71,7 @@ class Friend extends Component {
   }
 
   render() {
-    const { classes, name, givenName, photo, show } = this.props;
+    const { classes, name, givenName, photo} = this.props;
     return (
 
       <List className={classes.container} >
@@ -104,19 +104,17 @@ class Friend extends Component {
 
             </Tooltip>
 
-            {this.isVisibility(show) ? (
-              <Tooltip title="Hide posts">
+           
+               <Tooltip title="Hide posts">
                 <IconButton aria-label="Hide" size="small" color="secondary" onClick={this.handleHide}>
                   <VisibilityOffIcon />
                 </IconButton>
               </Tooltip>
-            ) : (
-                <Tooltip title="Show posts" >
+              <Tooltip title="Show posts" >
                   <IconButton aria-label="Show" size="small" color="primary" onClick={this.handleShow}>
                     <VisibilityIcon />
                   </IconButton>
                 </Tooltip>
-              )}
 
        
           </ListItemSecondaryAction>

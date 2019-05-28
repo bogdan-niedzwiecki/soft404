@@ -5,11 +5,11 @@ const styles = theme => ({
   list: { listStyleType: "none", marginLeft: "-40px" },
 
  container: {
-  maxHeight: 300,
+  maxHeight: 350,
   overflow: "auto",
-  borderRadius:10,
+  borderRadius:5,
   borderWidth: 1,
-  maxWidth: 300,
+  width: 350,
   position: "fixed",
   zIndex: 1,
   top: '13%',
