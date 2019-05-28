@@ -140,11 +140,7 @@ class Friend extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    friends: state.friends
-  };
-};
+
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -157,7 +153,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default withRouter(connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(withStyles(styles)(Friend)));
 

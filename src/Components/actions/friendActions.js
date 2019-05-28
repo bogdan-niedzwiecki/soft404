@@ -161,8 +161,7 @@ export function hidingMiddleware(id) {
       }
     ).then(response => console.log(response))
       
-      .then(r => dispatch(changeHide(id)))
-      .then(() => dispatch(getFriendsPostsMiddleware()));
+      .then(r => dispatch(changeHide(id)));
 
   };
 }

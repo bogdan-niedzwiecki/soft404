@@ -119,13 +119,15 @@ const reducer = (state = initialState, action) => {
     case SHOW_POST:
       return {
         ...state,
-        friends: state.friends.map(Friend => Friend.Id === action.payload ? {...Friend, Show:true} : Friend)
+        friends: state.friends.map(Friend => Friend.Id === action.payload ? {...Friend, Show:true} : Friend),
+        allPosts: state.allPosts.filter(post => post.UserId !== action.payload)
       };
 
     case HIDE_POST:
       return {
         ...state,
-        friends: state.friends.map(Friend => Friend.Id === action.payload ? {...Friend, Show:false} : Friend)
+        friends: state.friends.map(Friend => Friend.Id === action.payload ? {...Friend, Show:false} : Friend),
+        allPosts: state.allPosts.filter(post => post.UserId !== action.payload)
       };
 
     case FILTER_FRIENDS:
