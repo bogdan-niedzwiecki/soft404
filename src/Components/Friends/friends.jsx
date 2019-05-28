@@ -34,11 +34,7 @@ class Friend extends Component {
     show: "true",
   };
 
-  mapStateToProps = state => {
-    return {
-      friends: state.friends,
-    };
-  };
+
 
 
   handleClickOpen = () => {
@@ -49,9 +45,6 @@ class Friend extends Component {
     this.setState({ open: false });
   };
 
-
-
-
   handleDelete = () => {
     this.props.removeFromFriendsMiddleware(this.props.friend_id);
     this.props.history.push("/");
@@ -59,7 +52,6 @@ class Friend extends Component {
 
   handleShow = () => {
     this.props.showingMiddleware(this.props.friend_id);
-    this.props.history.push("/");
 
   };
   handleHide = () => {

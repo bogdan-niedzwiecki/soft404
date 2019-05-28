@@ -31,8 +31,6 @@ class PostsList extends Component {
   };
 
 
-
-
   info = () => <p>Sorry you don't have any friends...</p>;
 
   render() {
