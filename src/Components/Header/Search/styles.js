@@ -2,7 +2,6 @@ const styles = theme => ({
   root: {
     width: "50%",
     margin: "auto",
-    position: "fixed"
   },
   rootInput: {
     width: "100%"
