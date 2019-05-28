@@ -23,7 +23,9 @@ const initialState = {
   friends: [],
   allPosts: [],
   foundFriends: [],
-  mainSearch: ""
+  mainSearch: "",
+  friendsfilter: ""
+
 };
 
 const reducer = (state = initialState, action) => {
@@ -109,23 +111,18 @@ const reducer = (state = initialState, action) => {
         allPosts: state.allPosts.filter(post => post.UserId !== action.payload)
       };
 
-    // case GET_FRIENDS:
-    //   return {
-    //     ...state,
-    //     friends: action.payload
-    //   };
-
+   
     
     case SHOW_POST:
       return {
         ...state,
-        show: action.payload
+        friends: state.friends.map(Friend => Friend.Id === action.payload ? {...Friend, Show:true} : Friend)
       };
 
     case HIDE_POST:
       return {
         ...state,
-        show: action.payload
+        friends: state.friends.map(Friend => Friend.Id === action.payload ? {...Friend, Show:false} : Friend)
       };
 
     case FILTER_FRIENDS:

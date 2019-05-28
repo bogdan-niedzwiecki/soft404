@@ -17,7 +17,11 @@ const styles = theme => ({
 search: {
   position: "fixed",
   top: '13  %',
-}
+},
+
+rootInput: {
+  width: 300
+},
 });
 
 export default styles;

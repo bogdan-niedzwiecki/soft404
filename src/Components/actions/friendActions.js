@@ -105,6 +105,7 @@ export const removeFromFriendsMiddleware = id => {
         return response;
       })
       .then(() => dispatch(removeFromFriends(id)));
+
   };
 };
 
@@ -160,6 +161,7 @@ export function hidingMiddleware(id) {
     ).then(response => console.log(response))
       
       .then(r => dispatch(changeHide(id)));
+
   };
 }
 

@@ -23,6 +23,7 @@ class Search extends Component {
     super(props);
     this.state = { suggestions: [], text: "", open: false };
   }
+  
 
   onTextChange = e => {
     const value = e.target.value;
@@ -64,6 +65,7 @@ class Search extends Component {
   renderSuggestions = () => {
     const { classes } = this.props;
     const { suggestions, open } = this.state;
+    
     if (suggestions.length === 0) {
       return null;
     }

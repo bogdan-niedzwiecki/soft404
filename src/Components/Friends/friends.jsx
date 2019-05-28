@@ -11,9 +11,6 @@ import {
   ListItemText,
   Grid,
   CardMedia,
-  Card,
-  CardHeader,
-  CardContent,
   Tooltip,
   IconButton,
   DialogTitle,
@@ -35,8 +32,14 @@ class Friend extends Component {
     friends: [],
     open: false,
     show: "true",
-    friendsfilter: this.props.friendsfilter
   };
+
+  mapStateToProps = state => {
+    return {
+      friends: state.friends,
+    };
+  };
+
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -47,18 +50,7 @@ class Friend extends Component {
   };
 
 
-  handleChange = event => {
-    this.props.history.push("/");
-    this.setState(
-      {
-        friendsfilter: event.target.value
-      },
-      () =>
-        setTimeout(() => {
-          this.props.friendsfilter(this.state.friendsfilter);
-        }, 500)
-    );
-  };
+
 
   handleDelete = () => {
     this.props.removeFromFriendsMiddleware(this.props.friend_id);
@@ -72,17 +64,14 @@ class Friend extends Component {
   };
   handleHide = () => {
     this.props.hidingMiddleware(this.props.friend_id);
-    this.props.history.push("/");
   };
 
-  isVisibility = show =>{
-     console.log("my freinds "+ this.props);
-    return this.props.show;
+  isVisibility = show => {
+    return this.props.friends.some(item => item.Friend.Show === show)
   }
 
   render() {
-    console.log("friend element " + this.props.posts);
-    const { classes, name, givenName, photo, show, friend_post_id, friend_post_userId, friend_post_photo, friend_post_title, friend_post_text,friend_post_publishDate } = this.props;
+    const { classes, name, givenName, photo, show } = this.props;
     return (
 
       <List className={classes.container} >
@@ -114,20 +103,22 @@ class Friend extends Component {
               </IconButton>
 
             </Tooltip>
-              {this.isVisibility(show)  ? (
-                  <Tooltip title="Show posts" >
+
+            {this.isVisibility(show) ? (
+              <Tooltip title="Hide posts">
+                <IconButton aria-label="Hide" size="small" color="secondary" onClick={this.handleHide}>
+                  <VisibilityOffIcon />
+                </IconButton>
+              </Tooltip>
+            ) : (
+                <Tooltip title="Show posts" >
                   <IconButton aria-label="Show" size="small" color="primary" onClick={this.handleShow}>
                     <VisibilityIcon />
                   </IconButton>
                 </Tooltip>
-                  ) : (
-                    <Tooltip title="Hide posts">
-                    <IconButton aria-label="Hide" size="small" color="secondary" onClick={this.handleHide}>
-                      <VisibilityOffIcon />
-                    </IconButton>
-                  </Tooltip>
-                )}
+              )}
 
+       
           </ListItemSecondaryAction>
         </Grid>
         <Dialog
@@ -141,7 +132,6 @@ class Friend extends Component {
           <DialogTitle style={{ textAlign: "center", marginTop: "3%" }}>
             {"Personal information"}
           </DialogTitle>
-
           <DialogContent>
             <CardMedia
               className={classes.media}
@@ -151,27 +141,6 @@ class Friend extends Component {
             <Typography gutterBottom variant="h5" component="h2">
               {name + " " + givenName}
             </Typography>
-            <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <Avatar
-              aria-label="Post"
-              className={classes.avatar}
-              src={friend_post_photo}
-            />
-          }
-          title={friend_post_title}
-          subheader={friend_post_publishDate}
-        />
-          <CardMedia className={classes.media} image={friend_post_photo} />
-          <CardContent>
-            <Typography paragraph className={classes.text}>
-              {friend_post_text}
-            </Typography>
-          </CardContent>
-      
-      
-      </Card>
 
           </DialogContent>
         </Dialog>
@@ -180,6 +149,12 @@ class Friend extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    friends: state.friends
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -192,8 +167,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default withRouter(connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(Friend)));
 
-  // export default withRouter(withStyles(styles)(Friend));

@@ -4,12 +4,34 @@ import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import { Helmet } from "react-helmet";
 import Friend from "../Friends/friends";
+import TextField from "@material-ui/core/TextField";
 
 class PostsList extends Component {
   constructor(props) {
     super(props);
     this.props.getAllPosts();
+    this.state = {
+    friendsfilter: this.props.filterText,
+    text: ""
+  };
   }
+
+  handleChange = event => {
+    
+    this.setState(
+      {
+        friendsfilter: event.target.value
+      },
+      () =>
+        setTimeout(() => {
+          this.props.friendsfilter(this.state.filterText);
+        }, 500)
+        
+    );
+    console.log(this.state.friendsfilter);
+  };
+
+
 
 
   info = () => <p>Sorry you don't have any friends...</p>;
@@ -37,9 +59,15 @@ class PostsList extends Component {
             </li>
           ))}
         </ul>
-        <p className={classes.search}>My friends:</p>
+       
         <div className={classes.container} >
-          
+        <TextField
+          className={classes.rootInput}
+          value={this.state.filterText}
+          onChange={this.handleChange}
+          id="search-field"
+          placeholder="Find your friends "
+        />
           {friends.length !== 0
             ?
             friends.map(item => (
@@ -50,16 +78,12 @@ class PostsList extends Component {
                 photo={item.Friend.Photo}
                 show={item.Friend.Show}
 
-                friend_post_id={item.Posts.Id}
-                friend_post_userId={item.Posts.UserId}
-                friend_post_photo={item.Posts.ThumbnailPhoto}
-                friend_post_title={item.Posts.Title}
-                friend_post_text={item.Posts.Text}
-                friend_post_publishDate={item.Posts.PublishDate}
-              />
+               />
             ))
           : this.info()} 
+         
           </div>
+        
       </main >
     );
   }
