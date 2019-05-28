@@ -29,6 +29,7 @@ class Post extends Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
   transformText = txt => {
     if (txt.length > 200) {
       return `${txt.slice(0, txt.lastIndexOf(" ", 199)).slice(0, 199)}...`;
@@ -36,8 +37,19 @@ class Post extends Component {
       return txt;
     }
   };
+
   transformDate = date => {
     return date.slice(0, 10) + " at " + date.slice(11, 19);
+  };
+
+  getUserProfile = id => {
+    if (id !== this.props.me.Friend.Id) {
+      let name = this.props.friends.filter(item => item.Friend.Id === id);
+      let obj = { ...name[0] };
+      return obj.Friend;
+    } else {
+      return this.props.me.Friend;
+    }
   };
 
   render() {
@@ -48,7 +60,7 @@ class Post extends Component {
       text,
       publishDate,
       id,
-      userPhoto
+      userId
     } = this.props;
 
     return (
@@ -58,11 +70,14 @@ class Post extends Component {
             <Avatar
               aria-label="Post"
               className={classes.avatar}
-              src={userPhoto}
+              src={this.getUserProfile(userId).Photo}
             />
           }
           title={title}
-          subheader={this.transformDate(publishDate)}
+          header="asdsad"
+          subheader={`${this.transformDate(publishDate)} by ${
+            this.getUserProfile(userId).Name
+          } ${this.getUserProfile(userId).GivenName}`}
         />
         <CardActionArea onClick={this.handleClickOpen} style={{ outline: 0 }}>
           <CardMedia className={classes.media} image={thumbnailPhoto} />
@@ -107,8 +122,12 @@ class Post extends Component {
             justify="space-around"
             alignItems="center"
           >
-            <DeletePostButton delete_id={id} />
-            <EditPostButton delete_id={id} title={title} text={text} />
+            {userId === this.props.me.Friend.Id ? (
+              <React.Fragment>
+                <DeletePostButton delete_id={id} />
+                <EditPostButton delete_id={id} title={title} text={text} />
+              </React.Fragment>
+            ) : null}
           </Grid>
         </CardActions>
       </Card>

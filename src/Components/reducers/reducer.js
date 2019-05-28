@@ -48,7 +48,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         friends: action.payload,
         allPosts: [
-          ...state.allPosts,
+          ...state.me.Posts,
           ...[].concat(
             ...action.payload
               .filter(item => item.Friend.Show)
@@ -72,7 +72,10 @@ const reducer = (state = initialState, action) => {
           Posts: state.me.Posts.map(post =>
             post.Id === action.payload.Id ? action.payload : post
           )
-        }
+        },
+        allPosts: state.allPosts.map(post =>
+          post.Id === action.payload.Id ? action.payload : post
+        )
       };
 
     case DELETE_POST:

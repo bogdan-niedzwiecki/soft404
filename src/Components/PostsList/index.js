@@ -11,6 +11,8 @@ const mapStateToProps = state => {
           post.Title.toLowerCase().includes(state.mainSearch.toLowerCase()) ||
           post.Text.toLowerCase().includes(state.mainSearch.toLowerCase())
       ),
+    me: state.me.Friend,
+    friends: state.friends,
     userPhoto: state.me.Friend.Photo
   };
 };

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Post from "./Post";
+import Post from "./Post/";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import { Helmet } from "react-helmet";
@@ -11,7 +11,7 @@ class PostsList extends Component {
   }
 
   render() {
-    const { classes, posts, userPhoto } = this.props;
+    const { classes, posts } = this.props;
     return (
       <main className={classes.root}>
         <Helmet>
@@ -21,7 +21,7 @@ class PostsList extends Component {
           {posts.map(item => (
             <li key={item.Id}>
               <Post
-                userPhoto={userPhoto}
+                userId={item.UserId}
                 id={item.Id}
                 title={item.Title}
                 thumbnailPhoto={item.ThumbnailPhoto}
