@@ -21,6 +21,7 @@ const mapStateToProps = state => {
     //     item.Friend.GivenName.includes(state.filterText)
     // ),
     filterText: state.filterText,
+    me: state.me.Friend,
   };
 };
 

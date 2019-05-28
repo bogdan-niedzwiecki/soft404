@@ -10,6 +10,10 @@ import AvatarMenu from "./AvatarMenu/index";
 import AddPostButton from "./AddPostButton/index";
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.props.addProfile();
+  }
   render() {
     const { classes, user } = this.props;
     return (

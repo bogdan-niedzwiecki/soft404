@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import Header from "./Header";
+import { checkProfileMiddleware } from "../actions/userActions";
 
 const mapStateToProps = state => {
   return {
@@ -7,7 +8,13 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    addProfile: () => dispatch(checkProfileMiddleware())
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Header);
