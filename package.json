@@ -10,7 +10,7 @@
     "material-icons-react": "^1.0.4",
     "material-ui-icons": "^1.0.0-beta.36",
     "mdbreact": "^4.12.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-google-login": "^5.0.4",
