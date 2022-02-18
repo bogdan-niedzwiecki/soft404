@@ -20,7 +20,8 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
-import { withRouter } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
+import styles from "./styles";
 
 class Friends extends Component {
   state = { open: false };
@@ -50,6 +51,7 @@ class Friends extends Component {
 
   render() {
     const { classes, name, givenName, photo, show } = this.props;
+
     return (
       <List className={classes.container}>
         <Grid
@@ -129,4 +131,4 @@ class Friends extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(Friends));
+export default withStyles(styles, { withTheme: true })(Friends);
