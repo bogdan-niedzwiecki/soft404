@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Friends from "./Friends";
+import Friends from "./Friends.jsx";
 import { setAsideSearch, removeFromFriendsMiddleware, toggleVisibilityMiddleware } from "../actions/friendActions";
 
 const mapDispatchToProps = dispatch => {

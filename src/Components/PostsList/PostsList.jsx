@@ -3,7 +3,7 @@ import Post from "./Post/";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import { Helmet } from "react-helmet";
-import Friends from "../Friends/";
+import Friends from "../Friends/index.js";
 import TextField from "@material-ui/core/TextField";
 
 class PostsList extends Component {
