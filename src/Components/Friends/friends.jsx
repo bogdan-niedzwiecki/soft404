@@ -20,8 +20,6 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
-import { withStyles } from "@material-ui/core/styles";
-import styles from "./styles";
 
 class Friends extends Component {
   state = { open: false };
