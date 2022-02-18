@@ -1,11 +1,6 @@
 import { fade } from "@material-ui/core/styles/colorManipulator";
 
 const styles = theme => ({
-  // container: {
-  //   // maxWidth: 300,
-  //   // padding: `0 ${theme.spacing.unit * 7}px`,
-  //   // margin: "auto",
-  // },
   media: {
     height: 150,
     width: 150,
@@ -34,16 +29,11 @@ const styles = theme => ({
       width: "40%"
     }
   },
-  // searchIcon: {
-  //   width: theme.spacing.unit * 0.01,
-  //   height: "80%",
-  //   position: "absolute",
-  //   display: "flex",
-  //   justifyContent: "center"
-  // },
+
   inputRoot: {
     color: "secondary"
   },
+
   inputInput: {
     paddingTop: theme.spacing.unit,
     paddingRight: theme.spacing.unit,

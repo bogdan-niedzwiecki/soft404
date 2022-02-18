@@ -16,30 +16,14 @@ import {
   DialogTitle,
   Dialog,
   DialogContent,
-
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-
-import { connect } from "react-redux";
-import { friendsfilter, removeFromFriendsMiddleware, showingMiddleware, hidingMiddleware } from "../actions/friendActions";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import { withRouter } from "react-router-dom";
 
-class Friend extends Component {
-
-  state = {
-    friends: [],
-    open: false,
-    show: "true",
-  };
-
-  mapStateToProps = state => {
-    return {
-      friends: state.friends,
-    };
-  };
-
+class Friends extends Component {
+  state = { open: false };
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -49,37 +33,31 @@ class Friend extends Component {
     this.setState({ open: false });
   };
 
-
-
-
   handleDelete = () => {
-    this.props.removeFromFriendsMiddleware(this.props.friend_id);
+    this.props.removeFromFriends(this.props.friend_id);
     this.props.history.push("/");
   };
 
   handleShow = () => {
-    this.props.showingMiddleware(this.props.friend_id);
+    this.props.toggleVisibility(this.props.friend_id);
     this.props.history.push("/");
-
   };
+
   handleHide = () => {
-    this.props.hidingMiddleware(this.props.friend_id);
+    this.props.toggleVisibility(this.props.friend_id, this.props.show);
+    this.props.history.push("/");
   };
-
-  isVisibility = show => {
-    return this.props.friends.some(item => item.Friend.Show === show)
-  }
 
   render() {
     const { classes, name, givenName, photo, show } = this.props;
     return (
-
-      <List className={classes.container} >
+      <List className={classes.container}>
         <Grid
           container
           direction="row"
           justify="space-around"
-          alignItems="center">
+          alignItems="center"
+        >
           <ListItem button onClick={this.handleClickOpen}>
             <ListItemAvatar>
               <Avatar alt="user photo" src={photo} />
@@ -101,24 +79,31 @@ class Friend extends Component {
               >
                 <DeleteIcon />
               </IconButton>
-
             </Tooltip>
 
-            {this.isVisibility(show) ? (
+            {show ? (
               <Tooltip title="Hide posts">
-                <IconButton aria-label="Hide" size="small" color="secondary" onClick={this.handleHide}>
+                <IconButton
+                  aria-label="Hide"
+                  size="small"
+                  color="secondary"
+                  onClick={this.handleHide}
+                >
                   <VisibilityOffIcon />
                 </IconButton>
               </Tooltip>
             ) : (
-                <Tooltip title="Show posts" >
-                  <IconButton aria-label="Show" size="small" color="primary" onClick={this.handleShow}>
-                    <VisibilityIcon />
-                  </IconButton>
-                </Tooltip>
-              )}
-
-       
+              <Tooltip title="Show posts">
+                <IconButton
+                  aria-label="Show"
+                  size="small"
+                  color="primary"
+                  onClick={this.handleShow}
+                >
+                  <VisibilityIcon />
+                </IconButton>
+              </Tooltip>
+            )}
           </ListItemSecondaryAction>
         </Grid>
         <Dialog
@@ -133,41 +118,15 @@ class Friend extends Component {
             {"Personal information"}
           </DialogTitle>
           <DialogContent>
-            <CardMedia
-              className={classes.media}
-              image={photo}
-              titile={name}
-            />
+            <CardMedia className={classes.media} image={photo} titile={name} />
             <Typography gutterBottom variant="h5" component="h2">
-              {name + " " + givenName}
+              {`${name} ${givenName}`}
             </Typography>
-
           </DialogContent>
         </Dialog>
       </List>
-
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    friends: state.friends
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    friendsfilter: text => dispatch(friendsfilter(text)),
-    removeFromFriendsMiddleware: friend_id => dispatch(removeFromFriendsMiddleware(friend_id)),
-    showingMiddleware: friend_id => dispatch(showingMiddleware(friend_id)),
-    hidingMiddleware: friend_id => dispatch(hidingMiddleware(friend_id))
-
-  }
-};
-
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(Friend)));
-
+export default withRouter(withStyles(styles)(Friends));

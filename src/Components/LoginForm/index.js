@@ -1,20 +1,13 @@
 import { connect } from "react-redux";
 import LoginForm from "./LoginForm";
-import { getTokenMiddleware } from "../actions/userActions";
+import { validateTokenMiddleware } from "../actions/userActions";
 
 const mapStateToProps = state => {
-  return {
-    user: state.me.Friend
-  };
+  return { user: state.user };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    addUser: googleToken => dispatch(getTokenMiddleware(googleToken))
-  };
+  return { addUser: googleToken => dispatch(validateTokenMiddleware(googleToken)) };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

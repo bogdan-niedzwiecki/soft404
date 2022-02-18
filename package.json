@@ -3,36 +3,46 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.9.2",
+    "@material-ui/core": "^3.9.4",
     "@material-ui/icons": "^3.0.2",
     "@material/drawer": "^1.0.1",
+    "busboy": "^1.4.0",
     "downshift": "^3.2.10",
+    "google-auth-library": "^7.11.0",
+    "lambda-multipart-parser": "^1.0.1",
     "material-icons-react": "^1.0.4",
     "material-ui-icons": "^1.0.0-beta.36",
     "mdbreact": "^4.12.0",
-    "node-sass": "^4.11.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
+    "moment": "^2.29.1",
+    "mongodb": "~3.6.0",
+    "mongoose": "~5.4.0",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
     "react-google-login": "^5.0.4",
     "react-helmet": "^5.2.1",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
     "react-router-redux": "^4.0.8",
-    "react-scripts": "2.1.8",
+    "react-scripts": "5.0.0",
     "react-swipeable-views": "^0.13.1",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
+    "sass": "^1.49.0",
     "typeface-roboto": "0.0.54"
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "netlify dev",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": [
     ">0.2%",

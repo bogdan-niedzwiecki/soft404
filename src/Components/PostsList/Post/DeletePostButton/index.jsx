@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Tooltip } from "@material-ui/core";
@@ -16,11 +16,13 @@ import { withRouter } from "react-router";
 
 class DeletePostButton extends Component {
   state = {
-    open: false
+    open: false,
   };
 
   handleDeletePost = () => {
-    this.props.deletePost(this.props.delete_id);
+    let formData = new FormData();
+    formData.append("post", JSON.stringify({ _id: this.props.delete_id }));
+    this.props.deletePost(formData);
     this.props.history.push("/");
   };
 
@@ -75,12 +77,7 @@ class DeletePostButton extends Component {
   }
 }
 
-const mapDispatch = dispatch => ({
-  deletePost: delete_id => dispatch(deletePostMiddleware(delete_id))
+const mapDispatch = (dispatch) => ({
+  deletePost: (delete_id) => dispatch(deletePostMiddleware(delete_id)),
 });
-export default withRouter(
-  connect(
-    null,
-    mapDispatch
-  )(DeletePostButton)
-);
+export default withRouter(connect(null, mapDispatch)(DeletePostButton));

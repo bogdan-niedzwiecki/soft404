@@ -3,87 +3,69 @@ import Post from "./Post/";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import { Helmet } from "react-helmet";
-import Friend from "../Friends/friends";
+import Friends from "../Friends/";
 import TextField from "@material-ui/core/TextField";
 
 class PostsList extends Component {
-  constructor(props) {
-    super(props);
-    this.props.getAllPosts();
-    this.state = {
-    friendsfilter: this.props.filterText,
-  };
+  componentDidMount() {
+    this.props.getFriends();
   }
 
-  handleChange = event => {
-    
-    this.setState(
-      {
-        friendsfilter: event.target.value
-      },
-      () =>
-        setTimeout(() => {
-          this.props.friendsfilter(this.state.filterText);
-        }, 500)
-        
-    );
-    console.log(this.state.friendsfilter);
+  handleChange = (e) => {
+    this.props.setAsideSearch(e.target.value);
   };
 
-
-
-
-  info = () => <p>Sorry you don't have any friends...</p>;
+  info = () => <p>No matches meeting your criteria</p>;
 
   render() {
     const { classes, posts, friends } = this.props;
     return (
-
       <main className={classes.root}>
         <Helmet>
           <title>Home Page</title>
         </Helmet>
         <ul className={classes.list}>
-
-          {posts.map(item => (
-            <li key={item.Id}>
-              <Post
-                userId={item.UserId}
-                id={item.Id}
-                title={item.Title}
-                thumbnailPhoto={item.ThumbnailPhoto}
-                text={item.Text}
-                publishDate={item.PublishDate}
-              />
-            </li>
-          ))}
+          {posts?.length
+            ? posts.map((post) => (
+                <li key={post._id}>
+                  <Post
+                    _id={post._id}
+                    userid={post.userid}
+                    given_name={post.given_name}
+                    family_name={post.family_name}
+                    picture={post.picture}
+                    title={post.title}
+                    thumbnail={post.thumbnail}
+                    text={post.text}
+                    publish_date={post.publish_date}
+                  />
+                </li>
+              ))
+            : null}
         </ul>
-       
-        <div className={classes.container} >
-        <TextField
-          className={classes.rootInput}
-          value={this.state.filterText}
-          onChange={this.handleChange}
-          id="search-field"
-          placeholder="Find your friends "
-        />
-          {friends.length !== 0
-            ?
-            friends.map(item => (
-              <Friend
-                friend_id={item.Friend.Id}
-                name={item.Friend.Name}
-                givenName={item.Friend.GivenName}
-                photo={item.Friend.Photo}
-                show={item.Friend.Show}
 
-               />
-            ))
-          : this.info()} 
-         
-          </div>
-        
-      </main >
+        <div className={classes.container}>
+          <TextField
+            className={classes.rootInput}
+            value={this.props.asideSearch}
+            onChange={this.handleChange}
+            id="search-field"
+            placeholder="Find your friends"
+          />
+          {friends?.length
+            ? friends.map((friend) => (
+                <Friends
+                  key={friend._id}
+                  friend_id={friend._id}
+                  name={friend.given_name}
+                  givenName={friend.family_name}
+                  photo={friend.picture}
+                  show={friend.visible}
+                />
+              ))
+            : this.info()}
+        </div>
+      </main>
     );
   }
 }

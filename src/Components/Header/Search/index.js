@@ -1,28 +1,24 @@
 import { connect } from "react-redux";
 import Search from "./Search";
-import { setMainSearch } from "../../actions/postActions";
-import { findFriendsMiddleware } from "../../actions/friendActions";
-import { addToFriendsMiddleware } from "../../actions/friendActions";
-import { removeFromFriendsMiddleware } from "../../actions/friendActions";
+import { setHeaderSearch } from "../../actions/postActions";
+import { searchUserMiddleware, removeFromFriendsMiddleware, addToFriendsMiddleware, clearUser } from "../../actions/friendActions";
 
 const mapStateToProps = state => {
   return {
-    mainSearch: state.mainSearch,
-    foundFriends: state.foundFriends,
-    friends: state.friends
+    headerSearch: state.headerSearch,
+    foundUser: state.foundUser,
+    friends: state.user.friends
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setMainSearch: text => dispatch(setMainSearch(text)),
-    findFriends: name => dispatch(findFriendsMiddleware(name)),
-    addToFriends: id => dispatch(addToFriendsMiddleware(id)),
-    removeFromFriends: id => dispatch(removeFromFriendsMiddleware(id))
+    setHeaderSearch: value => dispatch(setHeaderSearch(value)),
+    searchUser: name => dispatch(searchUserMiddleware(name)),
+    clearUser: () => dispatch(clearUser()),
+    addToFriends: _id => dispatch(addToFriendsMiddleware(_id)),
+    removeFromFriends: _id => dispatch(removeFromFriendsMiddleware(_id))
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

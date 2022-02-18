@@ -1,16 +1,15 @@
 import { connect } from "react-redux";
-import Friend from "./friends";
-
-
-
+import Friends from "./Friends";
+import { setAsideSearch, removeFromFriendsMiddleware, toggleVisibilityMiddleware } from "../actions/friendActions";
 
 const mapDispatchToProps = dispatch => {
   return {
-    getFriends: () => dispatch(getFriendsMiddleware()),
+    setAsideSearch: (text) => dispatch(setAsideSearch(text)),
+    removeFromFriends: (friend_id) =>
+      dispatch(removeFromFriendsMiddleware(friend_id)),
+    toggleVisibility: (friend_id, show) => dispatch(toggleVisibilityMiddleware(friend_id, show)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Friend);
+export default connect(null, mapDispatchToProps)(Friends);
+

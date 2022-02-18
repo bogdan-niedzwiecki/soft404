@@ -12,8 +12,9 @@ import AddPostButton from "./AddPostButton/index";
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.props.addProfile();
+    this.props.addUser();
   }
+  
   render() {
     const { classes, user } = this.props;
     return (

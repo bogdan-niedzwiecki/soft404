@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import styles from "./styles";
 import {
   TextField,
   Grid,
@@ -10,14 +8,11 @@ import {
   CardContent,
   Button,
   Tooltip,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import SaveIcon from "@material-ui/icons/Save";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { addPostMiddleware } from "./../actions/postActions";
 import { Helmet } from "react-helmet";
 
 class NewPost extends Component {
@@ -25,32 +20,33 @@ class NewPost extends Component {
     post: {
       title: "",
       text: "",
-      photo: null
-    }
+    },
+    thumbnail: null,
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
       post: {
         ...this.state.post,
-        [event.target.id]: event.target.value
-      }
+        [event.target.id]: event.target.value,
+      },
     });
   };
 
-  handlePhotoChange = event => {
-    this.setState({ selectedFile: event.target.files[0] });
+  handlePhotoChange = (event) => {
+    this.setState({ thumbnail: event.target.files[0] });
   };
+
   handleDataReset = () => {
     this.setState({
       post: {
         title: "",
-        text: ""
-      }
+        text: "",
+      },
     });
   };
 
-  validateTitle = messagesArray => {
+  validateTitle = (messagesArray) => {
     if (
       10 > this.state.post.title.length ||
       this.state.post.title.length > 150
@@ -61,7 +57,7 @@ class NewPost extends Component {
     }
   };
 
-  validateText = messagesArray => {
+  validateText = (messagesArray) => {
     if (this.state.post.text.length > 1000) {
       messagesArray.push(
         "Post's content can contain max 1000 characters. Stop It\n"
@@ -69,24 +65,26 @@ class NewPost extends Component {
     }
   };
 
-  validatePhoto = messagesArray => {
-    if (!this.state.selectedFile) {
+  validatePhoto = (messagesArray) => {
+    if (!this.state.thumbnail) {
       messagesArray.push("Every Post must have a photo! ");
     }
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     const messagesForUser = [];
     this.validateTitle(messagesForUser);
     this.validateText(messagesForUser);
     this.validatePhoto(messagesForUser);
+
     if (messagesForUser.length) {
       alert(messagesForUser);
       return;
     }
+
     let formData = new FormData();
-    formData.append("photo", this.state.selectedFile);
+    formData.append("photo", this.state.thumbnail);
     formData.append("post", JSON.stringify(this.state.post));
     this.props.addPost(formData);
     this.props.history.push("/");
@@ -204,12 +202,4 @@ class NewPost extends Component {
   }
 }
 
-const mapDispatch = dispatch => ({
-  addPost: formData => dispatch(addPostMiddleware(formData))
-});
-export default withRouter(
-  connect(
-    null,
-    mapDispatch
-  )(withStyles(styles)(NewPost))
-);
+export default NewPost;

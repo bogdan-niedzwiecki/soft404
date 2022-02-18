@@ -6,7 +6,7 @@ import {
   ListItemIcon,
   Menu,
   Avatar,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import LogoutIcon from "@material-ui/icons/Input";
@@ -16,25 +16,27 @@ import styles from "./styles";
 
 class AvatarMenu extends Component {
   state = {
-    anchorEl: null
+    targetElement: null,
   };
 
   removeUserStorage = () => {
-    sessionStorage.removeItem("azure_access_token");
+    sessionStorage.removeItem("soft404_access_token");
   };
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
+
+  handleClick = (event) => {
+    this.setState({ targetElement: event.currentTarget });
   };
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
+    this.setState({ targetElement: null });
   };
+
   render() {
-    const { anchorEl } = this.state;
+    const { targetElement } = this.state;
     const { classes, user } = this.props;
     return (
       <div>
-        <Tooltip title={`Hello, ${user.Name}`}>
+        <Tooltip title={`Hello, ${user.given_name}`}>
           <IconButton
             aria-haspopup="true"
             onClick={this.handleClick}
@@ -44,14 +46,14 @@ class AvatarMenu extends Component {
             <Avatar
               alt="user photo"
               className={classes.avatar}
-              src={user.Photo}
+              src={user.picture}
             />
           </IconButton>
         </Tooltip>
         <Menu
           id="menu-appbar"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
+          anchorEl={targetElement}
+          open={Boolean(targetElement)}
           onClick={this.handleClose}
           onClose={this.handleClose}
         >

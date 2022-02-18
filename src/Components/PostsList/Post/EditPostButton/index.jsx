@@ -11,7 +11,7 @@ import {
   Grid,
   CardActions,
   Tooltip,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -25,11 +25,11 @@ class EditPostButton extends Component {
     super(props);
     this.state = {
       open: false,
+      thumbnail: null,
       post: {
         title: this.props.title,
         text: this.props.text,
-        photo: null
-      }
+      },
     };
   }
 
@@ -41,28 +41,29 @@ class EditPostButton extends Component {
     this.setState({ open: false });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
       post: {
         ...this.state.post,
-        [event.target.id]: event.target.value
-      }
+        [event.target.id]: event.target.value,
+      },
     });
   };
 
-  handlePhotoChange = event => {
-    this.setState({ selectedFile: event.target.files[0] });
+  handlePhotoChange = (event) => {
+    this.setState({ thumbnail: event.target.files[0] });
   };
+
   handleDataReset = () => {
     this.setState({
       post: {
         title: "",
-        text: ""
-      }
+        text: "",
+      },
     });
   };
 
-  validateTitle = messagesArray => {
+  validateTitle = (messagesArray) => {
     if (
       10 > this.state.post.title.length ||
       this.state.post.title.length > 150
@@ -73,7 +74,7 @@ class EditPostButton extends Component {
     }
   };
 
-  validateText = messagesArray => {
+  validateText = (messagesArray) => {
     if (this.state.post.text.length > 1000) {
       messagesArray.push(
         "Post's content can contain max 1000 characters. Stop It\n"
@@ -81,21 +82,24 @@ class EditPostButton extends Component {
     }
   };
 
-  handleChangePost = event => {
+  handleChangePost = (event) => {
     event.preventDefault();
     const messagesForUser = [];
     this.validateTitle(messagesForUser);
     this.validateText(messagesForUser);
     if (messagesForUser.length) {
-      alert(messagesForUser);
-      return;
+      // alert(messagesForUser);
+      // return;
     }
     let formData = new FormData();
-    if (this.state.selectedFile) {
-      formData.append("photo", this.state.selectedFile);
+    if (this.state.thumbnail) {
+      formData.append("photo", this.state.thumbnail);
     }
-    formData.append("post", JSON.stringify(this.state.post));
-    this.props.editPost(this.props.delete_id, formData);
+    formData.append(
+      "post",
+      JSON.stringify({ ...this.state.post, _id: this.props.delete_id })
+    );
+    this.props.editPost(formData);
     this.handleClose();
   };
 
@@ -216,11 +220,9 @@ class EditPostButton extends Component {
   }
 }
 
-const mapDispatch = dispatch => ({
+const mapDispatch = (dispatch) => ({
   editPost: (delete_id, formData) =>
-    dispatch(editPostMiddleware(delete_id, formData))
+    dispatch(editPostMiddleware(delete_id, formData)),
 });
-export default connect(
-  null,
-  mapDispatch
-)(withStyles(styles)(EditPostButton));
+
+export default connect(null, mapDispatch)(withStyles(styles)(EditPostButton));

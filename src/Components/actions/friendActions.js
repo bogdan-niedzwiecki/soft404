@@ -1,176 +1,103 @@
-export const FIND_FRIENDS = "FIND_FRIENDS";
-export const GET_FRIENDS_POSTS = "GET_FRIENDS_POSTS";
-export const REMOVE_FROM_FRIENDS = "REMOVE_FROM_FRIENDS";
-export const SHOW_POST = "SHOW_POST";
-export const HIDE_POST = "HIDE_POST";
-export const FILTER_FRIENDS = "FILTER_FRIENDS";
+export const FOUND_USER = "FOUND_USER";
+export const CLEAR_USER = "CLEAR_USER";
+export const GET_FRIENDS = "GET_FRIENDS";
+export const SET_ASIDE_SEARCH = "SET_ASIDE_SEARCH";
 
-export function findFriendsMiddleware(name) {
+export function searchUserMiddleware(name) {
   return dispatch => {
     if (name) {
-      fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user/${name}`, {
+      fetch(`/.netlify/functions/user?friend_name=${name}`, {
         method: "GET",
-        headers: {
-          "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-        }
+        headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") },
       })
         .then(response => {
-          if (!response.ok) {
-            throw Error(response.statusText);
-          }
-
+          if (!response.ok) { throw Error(response.statusText); }
           return response;
         })
         .then(response => response.json())
-        .then(r => dispatch(findFriends(r)));
+        .then(r => dispatch(foundUser(r)));
     } else {
-      dispatch(findFriends([]));
+      dispatch(foundUser([]));
     }
   };
 }
-export function findFriends(name) {
-  return {
-    type: FIND_FRIENDS,
-    payload: name
-  };
+
+export function foundUser(payload) {
+  return { type: FOUND_USER, payload };
 }
 
-export function getFriendsPostsMiddleware() {
+export function clearUser() {
+  return { type: CLEAR_USER };
+}
+
+export function getFriendsMiddleware() {
   return dispatch => {
-    return fetch(
-      "https://delfinkitrainingapi.azurewebsites.net/api/post/friend/",
+    return fetch("/.netlify/functions/friends",
       {
         method: "GET",
-        headers: {
-          "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-        }
+        headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") }
       }
     )
       .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
+        if (!response.ok) { throw Error(response.statusText); }
         return response;
       })
       .then(response => response.json())
-      .then(r => dispatch(getFriendsPosts(r)));
-  };
-}
-export function getFriendsPosts(friendsPosts) {
-  return {
-    type: GET_FRIENDS_POSTS,
-    payload: friendsPosts
+      .then(r => dispatch(getFriends(r)));
   };
 }
 
-export const addToFriendsMiddleware = id => {
+export function getFriends(payload) {
+  return { type: GET_FRIENDS, payload };
+}
+
+export const addToFriendsMiddleware = _id => {
   return dispatch => {
-    return fetch("https://delfinkitrainingapi.azurewebsites.net/api/friend", {
+    return fetch("/.netlify/functions/friends", {
       method: "POST",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token"),
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        FriendId: id,
-        Show: true
-      })
+      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") },
+      body: JSON.stringify({ _id })
     })
       .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
+        if (!response.ok) { throw Error(response.statusText); }
         return response;
       })
       .then(response => response.json())
-      .then(() => dispatch(getFriendsPostsMiddleware()));
+      .then(() => dispatch(getFriendsMiddleware()));
   };
 };
 
-export const removeFromFriendsMiddleware = id => {
+export const removeFromFriendsMiddleware = _id => {
   return dispatch => {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/friend/${id}`, {
+    fetch("/.netlify/functions/friends", {
       method: "DELETE",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      }
+      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") },
+      body: JSON.stringify({ _id })
     })
       .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
+        if (!response.ok) { throw Error(response.statusText); }
         return response;
       })
-      .then(() => dispatch(removeFromFriends(id)));
-
+      .then(response => response.json())
+      .then(() => dispatch(getFriendsMiddleware()));
   };
 };
 
-export function changeShow(id){
-  return{
-    type: SHOW_POST,
-    payload: id
-  }
-}
-export function showingMiddleware(id) {
+export function toggleVisibilityMiddleware(_id, visibility) {
   return dispatch => {
     fetch(
-      `https://delfinkitrainingapi.azurewebsites.net/api/friend/${
-      id
-      }`,
+      "/.netlify/functions/friends",
       {
         method: "PUT",
-        headers: {
-          "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-        },
-        body: JSON.stringify({
-          Show:  true
-        })
+        headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") },
+        body: JSON.stringify({ _id, visibility })
       }
-    ).then(response => console.log(response))
-      
-      .then(r => dispatch(changeShow(id)));
+    )
+      .then(response => response.json())
+      .then(() => dispatch(getFriendsMiddleware()));
   };
 }
 
-export function changeHide(id){
-  return{
-    type: HIDE_POST,
-    payload: id
-  }
+export function setAsideSearch(payload) {
+  return { type: SET_ASIDE_SEARCH, payload }
 }
-
-export function hidingMiddleware(id) {
-  return dispatch => {
-    fetch(
-      `https://delfinkitrainingapi.azurewebsites.net/api/friend/${
-      id
-      }`,
-      {
-        method: "PUT",
-        headers: {
-          "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-        },
-        body: JSON.stringify({
-          Show:  false
-        })
-      }
-    ).then(response => console.log(response))
-      
-      .then(r => dispatch(changeHide(id)));
-
-  };
-}
-
-export const removeFromFriends = id => ({
-  type: REMOVE_FROM_FRIENDS,
-  payload: id
-});
-
-export const friendsfilter = text => ({
-  type: FILTER_FRIENDS,
-  payload: text
-});

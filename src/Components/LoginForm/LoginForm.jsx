@@ -10,14 +10,14 @@ import {
   MDBCardBody,
   MDBModalFooter,
   MDBBtn,
-  MDBInput
+  MDBInput,
 } from "mdbreact";
 import GoogleLogin from "react-google-login";
 import { withRouter } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 class LoginForm extends Component {
-  successResponse = response => {
+  successResponse = (response) => {
     this.props.addUser(response);
   };
 
@@ -88,7 +88,7 @@ class LoginForm extends Component {
                   </p>
                   <div className="row my-3 d-flex justify-content-center">
                     <GoogleLogin
-                      clientId="576077564511-fd1t0nbqe1av9rr70to25hnuce1j0mg7.apps.googleusercontent.com"
+                      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                       buttonText="Sign in"
                       onSuccess={this.successResponse}
                       onFailure={this.failureResponse}

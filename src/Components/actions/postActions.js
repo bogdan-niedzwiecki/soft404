@@ -1,115 +1,70 @@
-import { getFriendsPostsMiddleware } from "./friendActions";
-export const GET_MY_POSTS = "GET_MY_POSTS";
 export const ADD_POST = "ADD_POST";
 export const EDIT_POST = "EDIT_POST";
 export const DELETE_POST = "DELETE_POST";
-export const SET_MAIN_SEARCH = "SET_MAIN_SEARCH";
-
-export function getMyPostsMiddleware() {
-  return dispatch => {
-    return fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
-      method: "GET",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
-        return response;
-      })
-      .then(response => response.json())
-      .then(r => dispatch(getMyPosts(r)))
-      .then(() => dispatch(getFriendsPostsMiddleware()));
-  };
-}
-export function getMyPosts(myPosts) {
-  return {
-    type: GET_MY_POSTS,
-    payload: myPosts.sort((a, b) => (a.PublishDate > b.PublishDate ? -1 : 1))
-  };
-}
+export const SET_HEADER_SEARCH = "SET_HEADER_SEARCH";
 
 export const addPostMiddleware = formData => {
   return dispatch => {
-    return fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
+    return fetch("/.netlify/functions/post", {
       method: "POST",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      },
+      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") },
       body: formData
     })
       .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
+        if (!response.ok) { throw Error(response.statusText); }
         return response;
       })
       .then(response => response.json())
-      .then(r => dispatch(addPost(r)));
+      .then(posts => dispatch(addPost(posts)));
   };
 };
-export const addPost = newPost => ({
-  type: ADD_POST,
-  payload: newPost
-});
 
-export const editPostMiddleware = (id, formData) => {
+export function addPost(payload) {
+  return { type: ADD_POST, payload }
+};
+
+export const editPostMiddleware = (formData) => {
   return dispatch => {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${id}`, {
+    fetch("/.netlify/functions/post", {
       method: "PUT",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      },
+      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") },
       body: formData
     })
       .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
+        if (!response.ok) { throw Error(response.statusText) }
         return response;
       })
       .then(response => response.json())
-      .then(r => {
-        dispatch(editPost(r));
-      });
+      .then(posts => { dispatch(editPost(posts)) });
   };
 };
-export const editPost = post => ({
-  type: EDIT_POST,
-  payload: post
-});
 
-export const deletePostMiddleware = id => {
+export const editPost = payload => {
+  return { type: EDIT_POST, payload }
+};
+
+export const deletePostMiddleware = formData => {
   return dispatch => {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${id}`, {
+    fetch("/.netlify/functions/post", {
       method: "DELETE",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      }
+      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") },
+      body: formData
     })
       .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
+        if (!response.ok) { throw Error(response.statusText); }
         return response;
       })
-      .then(() => dispatch(deletePost(id)));
+      .then(response => response.json())
+      .then(posts => { dispatch(deletePost(posts)) });
   };
 };
-export const deletePost = id => ({
-  type: DELETE_POST,
-  payload: id
-});
 
-export const setMainSearch = text => ({
-  type: SET_MAIN_SEARCH,
-  payload: text
-});
+export const deletePost = payload => {
+  return { type: DELETE_POST, payload }
+};
+
+export const setHeaderSearch = payload => {
+  return { type: SET_HEADER_SEARCH, payload }
+};
 
 

@@ -1,104 +1,76 @@
-export const ADD_PROFILE = "ADD_PROFILE";
+export const ADD_USER = "ADD_USER";
+export const EDIT_USER = "EDIT_USER";
 export const DELETE_USER = "DELETE_USER";
 
-export function getTokenMiddleware(googleResponse) {
+export function validateTokenMiddleware(googleResponse) {
   return dispatch => {
-    fetch("https://delfinkitrainingapi.azurewebsites.net/.auth/login/google", {
+    fetch("/.netlify/functions/auth", {
       method: "POST",
-      headers: { "content-type": "Application/JSON" },
+      headers: { "content-type": "application/json" },
       body: JSON.stringify({
         id_token: googleResponse.tokenId
       })
     })
       .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
+        if (!response.ok) { throw Error(response.statusText); }
         return response;
       })
       .then(response => response.json())
       .then(r => {
-        sessionStorage.setItem("azure_access_token", r.authenticationToken);
-        dispatch(checkProfileMiddleware(googleResponse));
+        sessionStorage.setItem("soft404_access_token", r.authenticationToken);
+        dispatch(addUserMiddleware());
       });
   };
 }
 
-export function checkProfileMiddleware(googleResponse) {
+export function addUserMiddleware() {
   return dispatch => {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
-      method: "GET",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      }
+    fetch("/.netlify/functions/user", {
+      method: "POST",
+      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") },
     })
       .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
+        if (!response.ok) { sessionStorage.removeItem("soft404_access_token"); throw Error(response.statusText); }
         return response;
       })
       .then(response => response.json())
-      .then(r => {
-        if (!r.Name && !r.GivenName && !r.Photo) {
-          fetch(googleResponse.w3.Paa)
-            .then(response => response.blob())
-            .then(r => {
-              let formData = new FormData();
-              const user = {
-                Name: googleResponse.w3.ofa,
-                GivenName: googleResponse.w3.wea
-              };
-              formData.append("user", JSON.stringify(user));
-              formData.append("photo", r);
-              dispatch(addProfileMiddleware(formData));
-            });
-        } else {
-          dispatch(addProfile(r));
-        }
-      });
+      .then(user => dispatch(addUser(user)));
   };
 }
 
-export function addProfileMiddleware(formData) {
+export function addUser(payload) {
+  return { type: ADD_USER, payload };
+}
+
+export function editUserMiddleware(formData) {
   return dispatch => {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
+    fetch("/.netlify/functions/user", {
       method: "PUT",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      },
+      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") },
       body: formData
     })
       .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
+        if (!response.ok) { throw Error(response.statusText); }
         return response;
       })
       .then(response => response.json())
-      .then(r => dispatch(addProfile(r)));
+      .then(updatedUser => dispatch(editUser(updatedUser)));
   };
 }
-export function addProfile(user) {
-  user.Show = true;
-  return {
-    type: ADD_PROFILE,
-    payload: user
-  };
+
+export function editUser(payload) {
+  return { type: EDIT_USER, payload };
 }
 
 export function deleteUserMiddleware() {
   return dispatch => {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
+    fetch("/.netlify/functions/user", {
       method: "DELETE",
-      headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem("azure_access_token")
-      }
+      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") }
     }).then(() => dispatch(deleteUser()));
   };
 }
+
 export function deleteUser() {
   return {
     type: DELETE_USER

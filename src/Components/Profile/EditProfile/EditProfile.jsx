@@ -10,7 +10,7 @@ import {
   IconButton,
   TextField,
   Grid,
-  Button
+  Button,
 } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import { withRouter, NavLink } from "react-router-dom";
@@ -20,30 +20,32 @@ import { Helmet } from "react-helmet";
 class EditProfile extends Component {
   state = {
     user: {
-      name: this.props.user.Name,
-      givenName: this.props.user.GivenName
-    }
+      name: this.props.user.given_name,
+      givenName: this.props.user.family_name,
+    },
+    picture: null,
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
       user: {
         ...this.state.user,
-        [event.target.id]: event.target.value
-      }
+        [event.target.id]: event.target.value,
+      },
     });
   };
-  handlePhotoChange = event => {
-    this.setState({ selectedFile: event.target.files[0] });
+
+  handlePhotoChange = (event) => {
+    this.setState({ picture: event.target.files[0] });
   };
 
   handleEditProfile = () => {
     let formData = new FormData();
-    if (this.state.selectedFile) {
-      formData.append("photo", this.state.selectedFile);
+    if (this.state.picture) {
+      formData.append("photo", this.state.picture);
     }
     formData.append("user", JSON.stringify(this.state.user));
-    this.props.editProfile(formData);
+    this.props.editUser(formData);
     this.props.history.push("/profile");
   };
 
@@ -58,11 +60,13 @@ class EditProfile extends Component {
           <meta name="description" content="Editing a profile page" />
         </Helmet>
         <Card className={classes.card}>
-          <CardMedia
-            className={classes.media}
-            image={this.props.user.Photo}
-            title={name}
-          />
+          {this.props.user.picture && name && (
+            <CardMedia
+              className={classes.media}
+              image={this.props.user.picture}
+              title={name}
+            />
+          )}
           <CardContent>
             <TextField
               id="name"

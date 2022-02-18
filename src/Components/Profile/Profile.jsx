@@ -20,7 +20,7 @@ import {
   Grid,
   Checkbox,
   FormGroup,
-  FormControlLabel
+  FormControlLabel,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -31,12 +31,12 @@ class Profile extends Component {
     open: false,
     choose1: false,
     choose2: false,
-    choose3: false
+    choose3: false,
   };
 
   handleDeleteProfile = () => {
     this.props.deleteUser();
-    sessionStorage.removeItem("azure_access_token");
+    sessionStorage.removeItem("soft404_access_token");
     this.props.history.push("/login");
     window.location.reload(false);
   };
@@ -45,7 +45,7 @@ class Profile extends Component {
     this.setState({ open: !this.state.open });
   };
 
-  handleChange = name => event => {
+  handleChange = (name) => (event) => {
     this.setState({ [name]: event.target.checked });
   };
 
@@ -58,18 +58,20 @@ class Profile extends Component {
           <title>Profile Page</title>
           <meta
             name="description"
-            content="In this page we will find a Profile information"
+            content="In this page you will find a Profile information"
           />
         </Helmet>
         <Card className={classes.card}>
-          <CardMedia
-            className={classes.media}
-            image={user.Photo}
-            title={user.Name}
-          />
+          {user.picture && user.given_name && (
+            <CardMedia
+              className={classes.media}
+              image={user.picture}
+              title={user.given_name}
+            />
+          )}
           <CardContent className={classes.content}>
             <Typography gutterBottom variant="h5" component="h2">
-              {user.Name + " " + user.GivenName}
+              {`${user.given_name} ${user.family_name}`}
             </Typography>
           </CardContent>
           <CardActions>

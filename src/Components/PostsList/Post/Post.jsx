@@ -17,7 +17,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import styles from "./styles";
-import EditPostButton from "./EditPostButton/editPostButton";
+import EditPostButton from "./EditPostButton";
 
 class Post extends Component {
   state = { open: false };
@@ -30,7 +30,7 @@ class Post extends Component {
     this.setState({ open: false });
   };
 
-  transformText = txt => {
+  transformText = (txt) => {
     if (txt.length > 200) {
       return `${txt.slice(0, txt.lastIndexOf(" ", 199)).slice(0, 199)}...`;
     } else {
@@ -38,29 +38,32 @@ class Post extends Component {
     }
   };
 
-  transformDate = date => {
-    return date.slice(0, 10) + " at " + date.slice(11, 19);
-  };
-
-  getUserProfile = id => {
-    if (id !== this.props.me.Friend.Id) {
-      let name = this.props.friends.filter(item => item.Friend.Id === id);
-      let obj = { ...name[0] };
-      return obj.Friend;
-    } else {
-      return this.props.me.Friend;
-    }
+  transformDate = (publish_date) => {
+    const date = new Date(publish_date);
+    const DMY = date.toLocaleString("default", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    const HM = date.toLocaleString("default", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+    return `${DMY} at ${HM}`;
   };
 
   render() {
     const {
       classes,
+      _id,
+      given_name,
+      family_name,
+      picture,
       title,
-      thumbnailPhoto,
+      thumbnail,
       text,
-      publishDate,
-      id,
-      userId
+      publish_date,
     } = this.props;
 
     return (
@@ -70,17 +73,15 @@ class Post extends Component {
             <Avatar
               aria-label="Post"
               className={classes.avatar}
-              src={this.getUserProfile(userId).Photo}
+              src={picture}
             />
           }
           title={title}
-          header="asdsad"
-          subheader={`${this.transformDate(publishDate)} by ${
-            this.getUserProfile(userId).Name
-          } ${this.getUserProfile(userId).GivenName}`}
+          subheader={`${this.transformDate(publish_date)} 
+            by ${given_name} ${family_name}`}
         />
         <CardActionArea onClick={this.handleClickOpen} style={{ outline: 0 }}>
-          <CardMedia className={classes.media} image={thumbnailPhoto} />
+          <CardMedia className={classes.media} image={thumbnail} />
           <CardContent>
             <Typography paragraph className={classes.text}>
               {this.transformText(text)}
@@ -97,11 +98,11 @@ class Post extends Component {
             {title}
             <br />
             <span className={classes.date}>
-              {this.transformDate(publishDate)}
+              {this.transformDate(publish_date)}
             </span>
           </DialogTitle>
           <DialogContent>
-            <img src={thumbnailPhoto} className={classes.image} alt={title} />
+            <img src={thumbnail} className={classes.image} alt={title} />
             <DialogContentText
               id="alert-dialog-description"
               className={classes.text}
@@ -115,21 +116,22 @@ class Post extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <CardActions className={classes.actions} disableActionSpacing>
-          <Grid
-            container
-            direction="row"
-            justify="space-around"
-            alignItems="center"
-          >
-            {userId === this.props.me.Friend.Id ? (
+
+        {this.props.posts.filter((post) => post._id === _id).length ? (
+          <CardActions className={classes.actions} disableActionSpacing>
+            <Grid
+              container
+              direction="row"
+              justify="space-around"
+              alignItems="center"
+            >
               <React.Fragment>
-                <DeletePostButton delete_id={id} />
-                <EditPostButton delete_id={id} title={title} text={text} />
+                <DeletePostButton delete_id={_id} />
+                <EditPostButton delete_id={_id} title={title} text={text} />
               </React.Fragment>
-            ) : null}
-          </Grid>
-        </CardActions>
+            </Grid>
+          </CardActions>
+        ) : null}
       </Card>
     );
   }
