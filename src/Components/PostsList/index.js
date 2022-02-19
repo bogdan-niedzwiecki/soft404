@@ -25,17 +25,17 @@ const mapStateToProps = state => {
   return {
     posts: [...userPosts, ...friendPosts]
       .filter(post =>
-        post.family_name?.includes(state.headerSearch) ||
-        post.given_name?.includes(state.headerSearch) ||
-        post.title?.includes(state.headerSearch) ||
-        post.text?.includes(state.headerSearch)
+        post?.family_name?.includes(state.headerSearch) ||
+        post?.given_name?.includes(state.headerSearch) ||
+        post?.title?.includes(state.headerSearch) ||
+        post?.text?.includes(state.headerSearch)
       )
       .sort((a, b) => {
         return new Date(b.publish_date) - new Date(a.publish_date);
       }),
     friends: state.user.friends?.filter(friend =>
-      friend.family_name.includes(state.asideSearch) ||
-      friend.given_name.includes(state.asideSearch)
+      friend?.family_name?.includes(state.asideSearch) ||
+      friend?.given_name?.includes(state.asideSearch)
     ),
     asideSearch: state.asideSearch,
   };
