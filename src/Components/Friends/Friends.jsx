@@ -120,7 +120,7 @@ class Friends extends Component {
           <DialogContent>
             <CardMedia className={classes.media} image={photo} titile={name} />
             <Typography gutterBottom variant="h5" component="h2">
-              {`${name} ${givenName}`}
+              {name} {givenName}
             </Typography>
           </DialogContent>
         </Dialog>
