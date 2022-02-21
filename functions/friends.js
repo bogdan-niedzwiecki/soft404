@@ -17,7 +17,6 @@ exports.handler = async function (event) {
 
     // GET REQUEST : GET FRIENDS
     if (event.httpMethod === "GET") {
-      console.log(event);
 
       async function getUser() {
         return await User.findOne({ userid })
@@ -38,7 +37,7 @@ exports.handler = async function (event) {
 
       return {
         statusCode: 200,
-        body: JSON.stringify(event)
+        body: JSON.stringify(await getFriends())
       }
     }
 
