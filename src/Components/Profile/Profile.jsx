@@ -36,7 +36,7 @@ class Profile extends Component {
 
   handleDeleteProfile = () => {
     this.props.deleteUser();
-    sessionStorage.removeItem("soft404_access_token");
+    localStorage.removeItem("access_token");
     this.props.history.push("/login");
     window.location.reload(false);
   };

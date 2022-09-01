@@ -1,7 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { UnstyledButton, Group, Avatar, Text, createStyles } from '@mantine/core';
 import { ChevronRightIcon, ChevronLeftIcon } from '@radix-ui/react-icons';
-import { Link } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   user: {

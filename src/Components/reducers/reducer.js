@@ -17,6 +17,7 @@ const initialState = {
     family_name: "",
     given_name: "",
     picture: "",
+    email: "",
     google_user_data: false,
     posts: [],
     friends: [],
@@ -37,7 +38,7 @@ const reducer = (state = initialState, action) => {
       return { ...state, user: { ...action.payload, friends: state.user.friends } };
 
     case DELETE_USER:
-      return { state: initialState };
+      return { ...initialState };
 
     case GET_FRIENDS:
       return { ...state, user: { ...state.user, friends: action.payload } };

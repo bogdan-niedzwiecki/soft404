@@ -20,7 +20,7 @@ class AvatarMenu extends Component {
   };
 
   removeUserStorage = () => {
-    sessionStorage.removeItem("soft404_access_token");
+    localStorage.removeItem("access_token");
   };
 
   handleClick = (event) => {

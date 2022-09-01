@@ -21,13 +21,21 @@ exports.handler = async function (event) {
 
     // POST REQUEST : CREATE POST
     if (event.httpMethod === "POST") {
-      const { contentType, content } = result.files[0];
+      let thumbnail = {
+        src: "",
+        alt: ""
+      };
+
       const { title, text } = JSON.parse(result.post);
+      if (result.files[0]) {
+        const { contentType, content, filename } = result.files[0];
+        thumbnail = { src: `data:${contentType};base64,${content.toString('base64')}`, alt: filename }
+      }
 
       const post = {
         title,
         text,
-        thumbnail: `data:${contentType};base64,${content.toString('base64')}`,
+        thumbnail,
         publish_date: new Date()
       };
 
@@ -41,11 +49,15 @@ exports.handler = async function (event) {
     if (event.httpMethod === "PUT") {
       const { _id, title, text } = JSON.parse(result.post);
 
+      const deleteThumbnail = result.photo && JSON.parse(result.photo).delete;
 
       let thumbnail = {};
+
       if (result.files.length) {
-        const { contentType, content } = result.files[0];
-        thumbnail = { "posts.$.thumbnail": `data:${contentType};base64,${content.toString('base64')}` };
+        const { contentType, content, filename } = result.files[0];
+        thumbnail = { "posts.$.thumbnail": { src: `data:${contentType};base64,${content.toString('base64')}`, alt: filename } };
+      } else if (deleteThumbnail) {
+        thumbnail = { "posts.$.thumbnail": { src: "", alt: "" } };
       }
 
       const post = {

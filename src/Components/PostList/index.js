@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
-import PostsList from "./PostsList";
-import { getFriendsMiddleware, setAsideSearch } from "../actions/friendActions";
+import PostList from "./PostList";
+import { setAsideSearch } from "../actions/friendActions";
 
 const mapStateToProps = state => {
 
@@ -19,7 +19,7 @@ const mapStateToProps = state => {
 
   const userPosts = state.user.posts.map(post => {
     const { family_name, given_name, picture } = state.user;
-    return { ...post, family_name, given_name, picture }
+    return { ...post, family_name, given_name, picture, isUserPost: true }
   })
 
   return {
@@ -44,9 +44,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setAsideSearch: text => dispatch(setAsideSearch(text)),
-    getFriends: () => dispatch(getFriendsMiddleware())
+    // getFriends: () => dispatch(getFriendsMiddleware())
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostsList);
+export default connect(mapStateToProps, mapDispatchToProps)(PostList);
 

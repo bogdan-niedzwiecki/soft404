@@ -38,11 +38,11 @@ exports.handler = async function (event) {
 
     // POST REQUEST : CREATE USER
     if (event.httpMethod === "POST") {
-      const { given_name, family_name, picture } = payload;
+      const { given_name, family_name, picture, email } = payload;
 
       async function updateGoogleData(user) {
         if (!user || user.google_user_data) {
-          return await User.findOneAndUpdate({ userid }, { given_name, family_name, picture, google_user_data: true }, { new: true, upsert: true }).select({ _id: 0, __v: 0, userid: 0, friends: 0 })
+          return await User.findOneAndUpdate({ userid }, { given_name, family_name, picture, email, google_user_data: true }, { new: true, upsert: true }).select({ _id: 0, __v: 0, userid: 0, friends: 0 })
         } else {
           return user;
         }

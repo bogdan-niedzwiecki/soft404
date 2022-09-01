@@ -1,121 +1,78 @@
-import React, { Component } from "react";
-import styles from "./styles";
-import { withStyles } from "@material-ui/core/styles";
-import { NavLink } from "react-router-dom";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBModalFooter,
-  MDBBtn,
-  MDBInput,
-} from "mdbreact";
-import GoogleLogin from "react-google-login";
-import { withRouter } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { GoogleLogin } from "react-google-login";
+import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { Button, createStyles, keyframes, Center } from "@mantine/core";
+import { IconBrandGoogle } from "@tabler/icons";
 
-class LoginForm extends Component {
-  successResponse = (response) => {
-    this.props.addUser(response);
+const bounce = keyframes({
+  to: {
+    boxShadow: "0px 0px 0px 30px transparent",
+  },
+});
+
+const useStyles = createStyles(() => ({
+  container: {
+    background: "linear-gradient(to right, #0f2027, #203a43, #2c5364)",
+    height: "100vh",
+  },
+
+  button: {
+    height: 42,
+    paddingLeft: 20,
+    paddingRight: 20,
+    animation: `${bounce} 3s infinite cubic-bezier(0.66, 0, 0, 1);`,
+    boxShadow: "0px 0px 0px 0px rgb(44, 83, 100)",
+  },
+}));
+
+export default function LoginForm({ addUser }) {
+  const { classes } = useStyles();
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
+
+  useEffect(() => {
+    localStorage.getItem("access_token") && history.push("/feed");
+  });
+
+  const successResponse = (response) => {
+    setLoading(true);
+    addUser(response);
   };
 
-  failureResponse = (response) => {
-    console.error(response);
-  };
+  const failureResponse = (response) => console.error(response);
 
-  componentDidUpdate() {
-    this.props.history.push("/");
-  }
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <MDBContainer className={classes.root}>
-        <Helmet>
-          <title>Log in Form</title>
-          <meta
-            name="description"
-            content="In this page we LogIn to our page by google"
-          />
-        </Helmet>
-        <MDBRow className={classes.content}>
-          <MDBCol>
-            <MDBCard>
-              <MDBCardBody className="mx-4">
-                <div className="text-center">
-                  <h3 className="dark-grey-text mb-5">
-                    <strong>Sign in</strong>
-                  </h3>
-                </div>
-                <form>
-                  <MDBInput
-                    label="Your email"
-                    group
-                    type="email"
-                    validate
-                    error="wrong"
-                    success="right"
-                    autoComplete="current-email"
-                  />
-                  <MDBInput
-                    label="Your password"
-                    group
-                    type="password"
-                    validate
-                    containerClass="mb-0"
-                    autoComplete="current-password"
-                  />
-                  <p className="font-small blue-text d-flex justify-content-end pb-3">
-                    Forgot
-                    <a href="#!" className="blue-text ml-1">
-                      Password?
-                    </a>
-                  </p>
-
-                  <div className="text-center  mb-3">
-                    <NavLink to="/">
-                      <MDBBtn
-                        type="button"
-                        color="deep-orange"
-                        active
-                        outline
-                        className="btn-block z-depth-1a"
-                      >
-                        Sign in
-                      </MDBBtn>
-                    </NavLink>
-                  </div>
-                  <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
-                    or Sign in with:
-                  </p>
-                  <div className="row my-3 d-flex justify-content-center">
-                    <GoogleLogin
-                      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                      buttonText="Sign in"
-                      onSuccess={this.successResponse}
-                      onFailure={this.failureResponse}
-                      cookiePolicy={"single_host_origin"}
-                    />
-                  </div>
-                </form>
-              </MDBCardBody>
-
-              <MDBModalFooter className="mx-5 pt-3 mb-1">
-                <p className="font-small grey-text d-flex justify-content-end">
-                  Not a member?
-                  <a href="#!" className="blue-text ml-1">
-                    Sign Up
-                  </a>
-                </p>
-              </MDBModalFooter>
-            </MDBCard>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
-    );
-  }
+  return (
+    <>
+      <Helmet>
+        <title>Welcome! | Facepook</title>
+        <meta
+          name="description"
+          content="Facepook is the largest European social network with more than 1 active user. Our goal is to keep old friends, ex-classmates, neighbors and colleagues in touch."
+        />
+      </Helmet>
+      <Center className={classes.container}>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          buttonText="Sign in"
+          onSuccess={successResponse}
+          onFailure={failureResponse}
+          cookiePolicy={"single_host_origin"}
+          isSignedIn={true}
+          render={(googleLogin) => (
+            <Button
+              className={classes.button}
+              onClick={googleLogin.onClick}
+              leftIcon={<IconBrandGoogle size={18} />}
+              loading={loading}
+              variant="gradient"
+              gradient={{ from: "teal", to: "blue", deg: 60 }}
+            >
+              Sign In With Google
+            </Button>
+          )}
+        />
+      </Center>
+    </>
+  );
 }
-
-export default withRouter(withStyles(styles, { withTheme: true })(LoginForm));
