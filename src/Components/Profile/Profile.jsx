@@ -36,7 +36,7 @@ class Profile extends Component {
 
   handleDeleteProfile = () => {
     this.props.deleteUser();
-    localStorage.removeItem("access_token");
+    localStorage.removeItem("token_id");
     this.props.history.push("/login");
     window.location.reload(false);
   };

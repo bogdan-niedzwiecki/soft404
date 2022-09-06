@@ -8,7 +8,7 @@ export function searchUserMiddleware(name) {
     if (name) {
       fetch(`/.netlify/functions/user?friend_name=${name}`, {
         method: "GET",
-        headers: { "X-ZUMO-AUTH": localStorage.getItem("access_token") },
+        headers: { "X-ZUMO-AUTH": localStorage.getItem("token_id") },
       })
         .then(response => {
           if (!response.ok) { throw Error(response.statusText); }
@@ -35,7 +35,7 @@ export function getFriendsMiddleware() {
     return fetch("/.netlify/functions/friends",
       {
         method: "GET",
-        headers: { "X-ZUMO-AUTH": localStorage.getItem("access_token") }
+        headers: { "X-ZUMO-AUTH": localStorage.getItem("token_id") }
       }
     )
       .then(response => {
@@ -55,7 +55,7 @@ export const addToFriendsMiddleware = _id => {
   return dispatch => {
     return fetch("/.netlify/functions/friends", {
       method: "POST",
-      headers: { "X-ZUMO-AUTH": localStorage.getItem("access_token") },
+      headers: { "X-ZUMO-AUTH": localStorage.getItem("token_id") },
       body: JSON.stringify({ _id })
     })
       .then(response => {
@@ -71,7 +71,7 @@ export const removeFromFriendsMiddleware = _id => {
   return dispatch => {
     fetch("/.netlify/functions/friends", {
       method: "DELETE",
-      headers: { "X-ZUMO-AUTH": localStorage.getItem("access_token") },
+      headers: { "X-ZUMO-AUTH": localStorage.getItem("token_id") },
       body: JSON.stringify({ _id })
     })
       .then(response => {
@@ -89,7 +89,7 @@ export function toggleVisibilityMiddleware(_id, visibility) {
       "/.netlify/functions/friends",
       {
         method: "PUT",
-        headers: { "X-ZUMO-AUTH": localStorage.getItem("access_token") },
+        headers: { "X-ZUMO-AUTH": localStorage.getItem("token_id") },
         body: JSON.stringify({ _id, visibility })
       }
     )

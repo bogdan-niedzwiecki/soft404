@@ -26,14 +26,16 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-export default function LoginForm({ addUser }) {
+export default function LoginForm({ token_id, addUser }) {
   const { classes } = useStyles();
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
-    localStorage.getItem("access_token") && history.push("/feed");
-  });
+    if (token_id && localStorage.getItem("token_id")) {
+      history.push("/feed");
+    }
+  }, [token_id, history]);
 
   const successResponse = (response) => {
     setLoading(true);
@@ -59,6 +61,7 @@ export default function LoginForm({ addUser }) {
           onFailure={failureResponse}
           cookiePolicy={"single_host_origin"}
           isSignedIn={true}
+          prompt="consent"
           render={(googleLogin) => (
             <Button
               className={classes.button}

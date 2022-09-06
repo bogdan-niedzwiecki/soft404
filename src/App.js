@@ -15,14 +15,14 @@
 //   render() {
 //     return (
 //       <BrowserRouter>
-//         <Route path="/" render={() => sessionStorage.getItem("access_token") ? (<Header />) : (<React.Fragment />)} />
+//         <Route path="/" render={() => sessionStorage.getItem("token_id") ? (<Header />) : (<React.Fragment />)} />
 //         <Route exact path="/login" render={() => <LoginForm onSuccessLogin={this.getToken} />} />
 //         <Route exact path="/logout" render={() => <Redirect to="/login" />} />
-//         <Route exact path="/" render={() => sessionStorage.getItem("access_token") ? (<PostsList />) : (<Redirect to="/login" />)} />
-//         <Route exact path="/create_post" render={() => sessionStorage.getItem("access_token") ? (<NewPost />) : (<Redirect to="/login" />)} />
-//         <Route exact path="/profile" render={() => sessionStorage.getItem("access_token") ? (<Profile />) : (<Redirect to="/login" />)} />
-//         <Route exact path="/edit_profile" render={() => sessionStorage.getItem("access_token") ? (<EditProfile />) : (<Redirect to="/login" />)} />
-//         <Route path="/" render={() => sessionStorage.getItem("access_token") ? (<Footer />) : (<React.Fragment />)} />
+//         <Route exact path="/" render={() => sessionStorage.getItem("token_id") ? (<PostsList />) : (<Redirect to="/login" />)} />
+//         <Route exact path="/create_post" render={() => sessionStorage.getItem("token_id") ? (<NewPost />) : (<Redirect to="/login" />)} />
+//         <Route exact path="/profile" render={() => sessionStorage.getItem("token_id") ? (<Profile />) : (<Redirect to="/login" />)} />
+//         <Route exact path="/edit_profile" render={() => sessionStorage.getItem("token_id") ? (<EditProfile />) : (<Redirect to="/login" />)} />
+//         <Route path="/" render={() => sessionStorage.getItem("token_id") ? (<Footer />) : (<React.Fragment />)} />
 //       </BrowserRouter>
 //     );
 //   }
@@ -44,7 +44,7 @@ class App extends Component {
           exact
           path="/"
           render={() =>
-            localStorage.getItem("access_token") ? (
+            localStorage.getItem("token_id") ? (
               <Redirect to="/feed" />
             ) : (
               <LoginForm />
@@ -55,7 +55,7 @@ class App extends Component {
           exact
           path="/login"
           render={() =>
-            localStorage.getItem("access_token") ? (
+            localStorage.getItem("token_id") ? (
               <Redirect to="/feed" />
             ) : (
               <LoginForm />
@@ -66,14 +66,14 @@ class App extends Component {
           exact
           path="/logout"
           render={() => {
-            localStorage.removeItem("access_token");
+            localStorage.removeItem("token_id");
             <Redirect to="/login" />;
           }}
         />
         <Route
           path="/"
           render={() =>
-            localStorage.getItem("access_token") ? (
+            localStorage.getItem("token_id") ? (
               <Layout />
             ) : (
               <Redirect to="/login" />

@@ -29,7 +29,7 @@ export default function MenuDropdown({ deleteUser }) {
 
   const successResponse = ({ deleteAccount = false } = {}) => {
     deleteAccount && deleteUser();
-    localStorage.removeItem("access_token");
+    localStorage.removeItem("token_id");
     history.push("/login");
   };
 

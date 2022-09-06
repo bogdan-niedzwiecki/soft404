@@ -7,7 +7,7 @@ export const addPostMiddleware = formData => {
   return dispatch => {
     return fetch("/.netlify/functions/post", {
       method: "POST",
-      headers: { "X-ZUMO-AUTH": localStorage.getItem("access_token") },
+      headers: { "X-ZUMO-AUTH": localStorage.getItem("token_id") },
       body: formData
     })
       .then(response => {
@@ -27,7 +27,7 @@ export const editPostMiddleware = (formData) => {
   return dispatch => {
     fetch("/.netlify/functions/post", {
       method: "PUT",
-      headers: { "X-ZUMO-AUTH": localStorage.getItem("access_token") },
+      headers: { "X-ZUMO-AUTH": localStorage.getItem("token_id") },
       body: formData
     })
       .then(response => {
@@ -47,7 +47,7 @@ export const deletePostMiddleware = formData => {
   return dispatch => {
     fetch("/.netlify/functions/post", {
       method: "DELETE",
-      headers: { "X-ZUMO-AUTH": localStorage.getItem("access_token") },
+      headers: { "X-ZUMO-AUTH": localStorage.getItem("token_id") },
       body: formData
     })
       .then(response => {
