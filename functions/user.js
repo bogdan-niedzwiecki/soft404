@@ -7,32 +7,20 @@ exports.handler = async function (event) {
   const id_token = event.headers['x-zumo-auth'];
 
   async function verify() {
-    const ticket = await client.verifyIdToken({
-      idToken: id_token,
-      audience: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-    });
-    const payload = ticket.getPayload();
-    const userid = payload['sub'];
+    let userid;
+    let payload;
 
-    if (!userid) { return }
-
-    // GET REQUEST : GET USERS BY NAME OR SURNAME
-    if (event.httpMethod === "GET") {
-      const name = event.queryStringParameters.friend_name
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken: id_token,
+        audience: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+      });
+      payload = ticket.getPayload();
+      userid = payload['sub'];
+    } catch (e) {
       return {
-        statusCode: 200,
-        body: JSON.stringify(
-          await User.find({
-            $and: [
-              { userid: { $ne: userid } },
-              {
-                $or: [
-                  { family_name: { $regex: name, $options: "i" } },
-                  { given_name: { $regex: name, $options: "i" } }
-                ]
-              }]
-          }).select({ given_name: 1, family_name: 1, picture: 1 })
-        )
+        statusCode: 400,
+        body: "Token used too late"
       }
     }
 
@@ -52,6 +40,26 @@ exports.handler = async function (event) {
         statusCode: 200,
         body: JSON.stringify(
           await updateGoogleData(await User.findOne({ userid }).select({ _id: 0, __v: 0, userid: 0, friends: 0 }))
+        )
+      }
+    }
+
+    // GET REQUEST : GET USERS BY NAME OR SURNAME
+    if (event.httpMethod === "GET") {
+      const name = event.queryStringParameters.friend_name
+      return {
+        statusCode: 200,
+        body: JSON.stringify(
+          await User.find({
+            $and: [
+              { userid: { $ne: userid } },
+              {
+                $or: [
+                  { family_name: { $regex: name, $options: "i" } },
+                  { given_name: { $regex: name, $options: "i" } }
+                ]
+              }]
+          }).select({ given_name: 1, family_name: 1, picture: 1 })
         )
       }
     }

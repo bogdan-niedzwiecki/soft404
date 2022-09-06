@@ -60,7 +60,6 @@ export default function LoginForm({ token_id, addUser }) {
           onSuccess={successResponse}
           onFailure={failureResponse}
           cookiePolicy={"single_host_origin"}
-          isSignedIn={true}
           prompt="consent"
           render={(googleLogin) => (
             <Button

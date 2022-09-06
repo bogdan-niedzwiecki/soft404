@@ -33,7 +33,7 @@ export function addUserMiddleware() {
       headers: { "X-ZUMO-AUTH": localStorage.getItem("token_id") },
     })
       .then(response => {
-        if (!response.ok) { localStorage.removeItem("token_id"); throw Error(response.statusText); }
+        if (!response.ok) { localStorage.removeItem("token_id"); window.location.replace("/login"); throw Error(response.statusText); }
         return response;
       })
       .then(response => response.json())

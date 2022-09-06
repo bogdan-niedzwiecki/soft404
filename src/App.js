@@ -63,14 +63,6 @@ class App extends Component {
           }
         />
         <Route
-          exact
-          path="/logout"
-          render={() => {
-            localStorage.removeItem("token_id");
-            <Redirect to="/login" />;
-          }}
-        />
-        <Route
           path="/"
           render={() =>
             localStorage.getItem("token_id") ? (
