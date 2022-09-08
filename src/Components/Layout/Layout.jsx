@@ -14,13 +14,9 @@ import {
   createStyles,
   Container,
 } from "@mantine/core";
-import { useHotkeys, useLocalStorageValue } from "@mantine/hooks";
+import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 import { NotificationsProvider } from "@mantine/notifications";
-import {
-  ReaderIcon,
-  PersonIcon,
-  EnvelopeClosedIcon,
-} from "@radix-ui/react-icons";
+import { IconNews, IconFriends, IconMessage } from "@tabler/icons";
 import User from "../User";
 import NavLink from "../NavLink";
 import PostList from "../PostList";
@@ -51,7 +47,7 @@ export default function Main({ user, addUser }) {
 
   const [opened, setOpened] = useState(false);
 
-  const [colorScheme, setColorScheme] = useLocalStorageValue({
+  const [colorScheme, setColorScheme] = useLocalStorage({
     key: "mantine-color-scheme",
     defaultValue: "light",
   });
@@ -94,21 +90,21 @@ export default function Main({ user, addUser }) {
                   </Navbar.Section>
                   <Navbar.Section grow mt="md" component={ScrollArea}>
                     <NavLink
-                      icon={<ReaderIcon />}
+                      icon={<IconNews size={16} />}
                       color="blue"
                       label="Feed"
                       to="/feed"
                       onClick={() => setOpened(false)}
                     />
                     <NavLink
-                      icon={<PersonIcon />}
+                      icon={<IconFriends size={16} />}
                       color="violet"
                       label="Friends"
                       to="/friends"
                       onClick={() => setOpened(false)}
                     />
                     <NavLink
-                      icon={<EnvelopeClosedIcon />}
+                      icon={<IconMessage size={16} />}
                       color="lime"
                       label="Messenger"
                       to="/messages"
@@ -118,7 +114,7 @@ export default function Main({ user, addUser }) {
                 </Navbar>
               }
               header={
-                <Header height={70} p="md">
+                <Header height={60} px="md">
                   <div className={classes.headerContainer}>
                     <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                       <Burger
@@ -132,6 +128,8 @@ export default function Main({ user, addUser }) {
                       gradient={{ from: "indigo", to: "cyan", deg: 45 }}
                       size="xl"
                       weight={700}
+                      component="a"
+                      href="/feed"
                     >
                       Facepook
                     </Text>

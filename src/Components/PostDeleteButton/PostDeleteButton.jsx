@@ -1,25 +1,8 @@
 import React, { useState } from "react";
-import {
-  Text,
-  Group,
-  createStyles,
-  Tooltip,
-  ActionIcon,
-  Modal,
-  Button,
-} from "@mantine/core";
-import { TrashIcon } from "@radix-ui/react-icons";
-
-const useStyles = createStyles(() => ({
-  icon: {
-    width: 18,
-    height: 18,
-  },
-}));
+import { Text, Group, Tooltip, ActionIcon, Modal, Button } from "@mantine/core";
+import { IconTrashX } from "@tabler/icons";
 
 export default function PostDeleteButton({ _id, deletePost }) {
-  const { classes } = useStyles();
-
   const [opened, setOpened] = useState(false);
 
   const handleDelete = (_id, deletePost) => {
@@ -32,9 +15,10 @@ export default function PostDeleteButton({ _id, deletePost }) {
     <>
       <Tooltip label="Delete" position="bottom" gutter={10} withArrow>
         <ActionIcon color="red" onClick={() => setOpened(true)}>
-          <TrashIcon className={classes.icon} />
+          <IconTrashX size={20} />
         </ActionIcon>
       </Tooltip>
+
       <Modal
         opened={opened}
         onClose={() => setOpened(false)}
@@ -49,7 +33,7 @@ export default function PostDeleteButton({ _id, deletePost }) {
         </Text>
         <Group position="right" mt="xl" pt="md">
           <Button
-            leftIcon={<TrashIcon />}
+            leftIcon={<IconTrashX size={16} />}
             variant="filled"
             color="red"
             onClick={() => handleDelete(_id, deletePost)}

@@ -9,10 +9,11 @@ import {
   Paper,
   ActionIcon,
   Image,
+  FileButton,
 } from "@mantine/core";
 import { useClickOutside } from "@mantine/hooks";
-import { useNotifications } from "@mantine/notifications";
-import { CameraIcon, FileTextIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { showNotification } from "@mantine/notifications";
+import { IconArticle, IconX, IconPhotoPlus } from "@tabler/icons";
 import Rte from "../Rte";
 
 const useStyles = createStyles((theme) => ({
@@ -26,15 +27,6 @@ const useStyles = createStyles((theme) => ({
     }, 16px 0px 0px 16px ${
       theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white
     } `,
-  },
-
-  label: {
-    display: "none",
-  },
-
-  icon: {
-    width: 18,
-    height: 18,
   },
 
   grow: {
@@ -56,35 +48,33 @@ const useStyles = createStyles((theme) => ({
 
 export default function PostBox({ user, addPost }) {
   const { classes } = useStyles();
-  const postbox = useClickOutside(() => !rteOpened && setOpened(false));
-  const notifications = useNotifications();
-
-  const fileInput = useRef();
+  const postbox = useClickOutside(
+    () => !text && !cover.src && setOpened(false)
+  );
 
   const [opened, setOpened] = useState(false);
   const [rteOpened, setRteOpened] = useState(false);
 
   const [text, setText] = useState("");
   const [cover, setCover] = useState({ file: "", src: "", alt: "" });
+  const resetRef = useRef(null);
 
-  const handleCoverChange = (e) => {
-    const [file] = e.target.files;
-    if (file) {
-      setCover({ file, src: URL.createObjectURL(file), alt: file.name });
-      setOpened(true);
-    }
+  const handleCoverChange = (file) => {
+    setCover({ file, src: URL.createObjectURL(file), alt: file.name });
+    setOpened(true);
   };
 
   const clearCover = () => {
-    fileInput.current.value = "";
     setCover({});
+    resetRef.current?.();
+    setOpened(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!text.trim() && !cover.file) {
-      notifications.showNotification({
+      showNotification({
         title: `If you wish to be a writer,`,
         message: "Write",
         color: "red",
@@ -135,24 +125,76 @@ export default function PostBox({ user, addPost }) {
           />
           {!opened && (
             <>
+              <FileButton
+                mt={8}
+                resetRef={resetRef}
+                onChange={handleCoverChange}
+                accept="image/png,image/jpeg"
+              >
+                {(props) => (
+                  <Tooltip
+                    label="Cover"
+                    position="bottom"
+                    gutter={10}
+                    withArrow
+                    mt={8}
+                  >
+                    <ActionIcon {...props}>
+                      <IconPhotoPlus size={20} />
+                    </ActionIcon>
+                  </Tooltip>
+                )}
+              </FileButton>
               <Tooltip
-                label="Cover"
+                label="Article"
                 position="bottom"
                 gutter={10}
                 withArrow
                 mt={8}
               >
-                <ActionIcon onClick={() => fileInput.current.click()}>
-                  <CameraIcon className={classes.icon} />
+                <ActionIcon onClick={() => setRteOpened(true)} mt={8}>
+                  <IconArticle size={20} />
                 </ActionIcon>
-                <label className={classes.label} ref={fileInput}>
-                  <input
-                    accept="image/*"
-                    type="file"
-                    onChange={handleCoverChange}
-                  />
-                </label>
               </Tooltip>
+            </>
+          )}
+        </Group>
+        {opened && (
+          <>
+            {cover.file && (
+              <div className={classes.cover}>
+                <ActionIcon
+                  size="sm"
+                  variant="filled"
+                  radius="xs"
+                  onClick={clearCover}
+                  className={classes.clearCover}
+                >
+                  <IconX size={16} />
+                </ActionIcon>
+                <Image radius="sm" src={cover.src} alt={cover.alt} />
+              </div>
+            )}
+            <Group mt="md">
+              <FileButton
+                resetRef={resetRef}
+                onChange={handleCoverChange}
+                accept="image/png,image/jpeg"
+              >
+                {(props) => (
+                  <Tooltip
+                    label="Cover"
+                    position="bottom"
+                    gutter={10}
+                    withArrow
+                    mt={8}
+                  >
+                    <ActionIcon {...props}>
+                      <IconPhotoPlus size={20} />
+                    </ActionIcon>
+                  </Tooltip>
+                )}
+              </FileButton>
               <Tooltip
                 label="Article"
                 position="bottom"
@@ -161,52 +203,7 @@ export default function PostBox({ user, addPost }) {
                 mt={8}
               >
                 <ActionIcon onClick={() => setRteOpened(true)}>
-                  <FileTextIcon className={classes.icon} />
-                </ActionIcon>
-              </Tooltip>
-            </>
-          )}
-        </Group>
-        {opened && (
-          <>
-            {/* <Textarea
-              mt="md"
-              placeholder="Tell us more..."
-              required
-              autosize
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            /> */}
-            {cover.file && (
-              <div className={classes.cover}>
-                <ActionIcon
-                  radius="xs"
-                  variant="filled"
-                  onClick={clearCover}
-                  className={classes.clearCover}
-                >
-                  <Cross2Icon className={classes.icon} />
-                </ActionIcon>
-                <Image radius="sm" src={cover.src} alt={cover.alt} />
-              </div>
-            )}
-            <Group mt="md">
-              <Tooltip label="Cover" position="bottom" gutter={10} withArrow>
-                <ActionIcon onClick={() => fileInput.current.click()}>
-                  <CameraIcon className={classes.icon} />
-                </ActionIcon>
-                <label className={classes.label}>
-                  <input
-                    ref={fileInput}
-                    accept="image/*"
-                    type="file"
-                    onChange={handleCoverChange}
-                  />
-                </label>
-              </Tooltip>
-              <Tooltip label="Article" position="bottom" gutter={10} withArrow>
-                <ActionIcon onClick={() => setRteOpened(true)}>
-                  <FileTextIcon className={classes.icon} />
+                  <IconArticle size={20} />
                 </ActionIcon>
               </Tooltip>
               <Button

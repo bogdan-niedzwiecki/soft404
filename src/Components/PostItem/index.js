@@ -87,13 +87,13 @@ export default function PostItem({
           onClick={() => setPostOpened(true)}
         >
           {title && (
-            <Text size="xl" weight={600} lineClamp={3} pb="md">
+            <Text size="xl" weight={600} lineClamp={3} mb="md">
               {title}
             </Text>
           )}
           {text && (
-            <Text lineClamp={5} pb="md">
-              <div dangerouslySetInnerHTML={{ __html: text }} />
+            <Text lineClamp={5} >
+              <div dangerouslySetInnerHTML={{ __html: text }} mb="md" />
             </Text>
           )}
           {thumbnail.src && (
@@ -101,7 +101,7 @@ export default function PostItem({
               src={thumbnail.src}
               height={360}
               alt={thumbnail.alt}
-              pb="md"
+              mb="md"
             />
           )}
         </Card.Section>
@@ -143,17 +143,17 @@ export default function PostItem({
         }
       >
         {title && (
-          <Text size="xl" weight={600} lineClamp={3} pb="md">
+          <Text size="xl" weight={600} lineClamp={3} mb="md">
             {title}
           </Text>
         )}
         {text && (
-          <Text lineClamp={5} pb="md">
+          <Text lineClamp={5} mb="md">
             <div dangerouslySetInnerHTML={{ __html: text }} />
           </Text>
         )}
         {thumbnail.src && (
-          <Image src={thumbnail.src} height={360} alt={thumbnail.alt} pb="md" />
+          <Image src={thumbnail.src} height={360} alt={thumbnail.alt} mb="md" />
         )}
       </Modal>
     </>

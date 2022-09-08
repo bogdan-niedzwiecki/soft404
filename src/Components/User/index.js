@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { UnstyledButton, Group, Avatar, Text, createStyles } from '@mantine/core';
-import { ChevronRightIcon, ChevronLeftIcon } from '@radix-ui/react-icons';
+import { IconChevronRight, IconChevronLeft } from "@tabler/icons";
 
 const useStyles = createStyles((theme) => ({
   user: {
@@ -45,9 +45,9 @@ export default function User({ avatar, name, email, to }) {
           </div>
 
           {theme.dir === 'ltr' ? (
-            <ChevronRightIcon width={18} height={18} />
+            <IconChevronRight size={16} color="grey" />
           ) : (
-            <ChevronLeftIcon width={18} height={18} />
+            <IconChevronLeft size={16} color="grey" />
           )}
         </Group>
       </UnstyledButton>

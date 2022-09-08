@@ -5,27 +5,58 @@ import {
   Menu,
   Text,
   useMantineColorScheme,
-  ThemeIcon,
   Group,
   Modal,
   Button,
+  Avatar,
+  UnstyledButton,
+  createStyles,
 } from "@mantine/core";
 import {
   IconSettings,
   IconSearch,
   IconMessageCircle,
-  IconTrash,
+  IconTrashX,
   IconLogout,
+  IconChevronDown,
+  IconSunLow,
+  IconMoon,
 } from "@tabler/icons";
-import { SunIcon, MoonIcon, TrashIcon } from "@radix-ui/react-icons";
 
-export default function MenuDropdown({ deleteUser }) {
+const useStyles = createStyles((theme) => ({
+  menu: {
+    alignSelf: "stretch",
+
+    "&:hover": {
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[6]
+          : theme.colors.gray[0],
+    },
+  },
+
+  menuOpened: {
+    backgroundColor:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[6]
+        : theme.colors.gray[0],
+  },
+}));
+
+export default function MenuDropdown({
+  picture,
+  family_name,
+  given_name,
+  deleteUser,
+}) {
+  const { classes, cx } = useStyles();
   const history = useHistory();
 
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const dark = colorScheme === "dark";
 
-  const [opened, setOpened] = useState(false);
+  const [menuOpened, setMenuOpened] = useState(false);
+  const [modalOpened, setModalOpened] = useState(false);
 
   const successResponse = ({ deleteAccount = false } = {}) => {
     deleteAccount && deleteUser();
@@ -37,64 +68,86 @@ export default function MenuDropdown({ deleteUser }) {
 
   return (
     <>
-      <Menu shadow="md" width={200} closeOnItemClick={false}>
-        <Menu.Item icon={<IconSettings size={14} />} disabled>
-          Settings
-        </Menu.Item>
-        <Menu.Item icon={<IconMessageCircle size={14} />} disabled>
-          Messages
-        </Menu.Item>
-        <Menu.Item disabled icon={<IconSearch size={14} />}>
-          Search
-        </Menu.Item>
-        <Menu.Item
-          onClick={() => toggleColorScheme()}
-          icon={
-            <ThemeIcon
-              variant="outline"
-              size={14}
-              color={dark ? "yellow" : "blue"}
-            >
-              {dark ? (
-                <SunIcon style={{ width: 10, height: 10 }} />
+      <Menu
+        shadow="md"
+        position="bottom-end"
+        offset={0}
+        width={200}
+        closeOnItemClick={false}
+        opened={menuOpened}
+        onOpen={() => setMenuOpened(true)}
+        onClose={() => setMenuOpened(false)}
+      >
+        <Menu.Target>
+          <UnstyledButton
+            className={cx(classes.menu, { [classes.menuOpened]: menuOpened })}
+            p="sm"
+          >
+            <Group>
+              <Avatar
+                size="sm"
+                radius="xl"
+                src={picture}
+                alt={`${given_name} ${family_name}`}
+              />
+              <IconChevronDown size={16} color="grey" />
+            </Group>
+          </UnstyledButton>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item icon={<IconSettings size={16} />} disabled>
+            Settings
+          </Menu.Item>
+          <Menu.Item icon={<IconMessageCircle size={16} />} disabled>
+            Messages
+          </Menu.Item>
+          <Menu.Item disabled icon={<IconSearch size={16} />}>
+            Search
+          </Menu.Item>
+          <Menu.Item
+            onClick={() => toggleColorScheme()}
+            icon={
+              dark ? (
+                <IconSunLow size={16} color="yellow" />
               ) : (
-                <MoonIcon style={{ width: 10, height: 10 }} />
-              )}
-            </ThemeIcon>
-          }
-          rightSection={
-            <Text size="xs" color="dimmed">
-              ⌘J
-            </Text>
-          }
-        >
-          {dark ? "Light" : "Dark"} Mode
-        </Menu.Item>
-        <GoogleLogout
-          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-          onLogoutSuccess={successResponse}
-          onFailure={failureResponse}
-          render={(googleLogout) => (
-            <Menu.Item
-              onClick={googleLogout.onClick}
-              icon={<IconLogout size={14} />}
-            >
-              Sign out
-            </Menu.Item>
-          )}
-        ></GoogleLogout>
-        <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item
-          onClick={() => setOpened(true)}
-          color="red"
-          icon={<IconTrash size={14} />}
-        >
-          Delete my account
-        </Menu.Item>
+                <IconMoon size={16} color="dodgerblue" />
+              )
+            }
+            rightSection={
+              <Text size="xs" color="dimmed">
+                ⌘J
+              </Text>
+            }
+          >
+            {dark ? "Light" : "Dark"} Mode
+          </Menu.Item>
+          <GoogleLogout
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            onLogoutSuccess={successResponse}
+            onFailure={failureResponse}
+            render={(googleLogout) => (
+              <Menu.Item
+                onClick={googleLogout.onClick}
+                icon={<IconLogout size={16} color="grey" />}
+              >
+                Sign out
+              </Menu.Item>
+            )}
+          ></GoogleLogout>
+          <Menu.Label>Danger zone</Menu.Label>
+          <Menu.Item
+            onClick={() => setModalOpened(true)}
+            color="red"
+            icon={<IconTrashX size={16} />}
+          >
+            Delete my account
+          </Menu.Item>
+        </Menu.Dropdown>
       </Menu>
+
       <Modal
-        opened={opened}
-        onClose={() => setOpened(false)}
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
         size="md"
         title="Delete confirmation"
         centered
@@ -111,7 +164,7 @@ export default function MenuDropdown({ deleteUser }) {
             onFailure={failureResponse}
             render={(googleLogout) => (
               <Button
-                leftIcon={<TrashIcon />}
+                leftIcon={<IconTrashX size={16} />}
                 variant="filled"
                 color="red"
                 onClick={googleLogout.onClick}
@@ -120,7 +173,7 @@ export default function MenuDropdown({ deleteUser }) {
               </Button>
             )}
           ></GoogleLogout>
-          <Button variant="outline" onClick={() => setOpened(false)}>
+          <Button variant="outline" onClick={() => setModalOpened(false)}>
             Cancel
           </Button>
         </Group>

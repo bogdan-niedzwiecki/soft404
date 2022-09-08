@@ -10,22 +10,14 @@ import {
   Image,
   Text,
   Popover,
+  FileButton
 } from "@mantine/core";
-import { useNotifications } from "@mantine/notifications";
+import { showNotification } from "@mantine/notifications";
 import { RichTextEditor } from "@mantine/rte";
-import { CameraIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { IconX, IconPhotoPlus } from "@tabler/icons";
 import "./rte.scss";
 
 const useStyles = createStyles(() => ({
-  label: {
-    display: "none",
-  },
-
-  icon: {
-    width: 18,
-    height: 18,
-  },
-
   formRTE: {
     display: "flex",
     flexDirection: "column",
@@ -42,17 +34,14 @@ export default function Rte({
   text,
   cover,
 }) {
-  const notifications = useNotifications();
 
   const { classes } = useStyles();
 
-  const fileInputRTE = useRef();
-
   const [titleRTE, setTitleRTE] = useState("");
   const [textRTE, setTextRTE] = useState("");
-  const [coverRTE, setCoverRTE] = useState({ file: "", src: "", alt: "" });
-
   const [popover, setPopover] = useState(false);
+  const [coverRTE, setCoverRTE] = useState({ file: "", src: "", alt: "" });
+  const resetRef = useRef(null);
 
   useEffect(() => {
     if (opened) {
@@ -63,16 +52,13 @@ export default function Rte({
     }
   }, [opened, onOpen, title, text, cover]);
 
-  const handleCoverRTEChange = (e) => {
-    const [file] = e.target.files;
-    if (file) {
-      setCoverRTE({ file, src: URL.createObjectURL(file), alt: file.name });
-    }
+  const handleCoverRTEChange = (file) => {
+    setCoverRTE({ file, src: URL.createObjectURL(file), alt: file.name });
   };
 
   const clearCoverRTE = () => {
-    fileInputRTE.current.value = "";
     setCoverRTE({});
+    resetRef.current?.();
   };
 
   const handleSubmitRTE = (e) => {
@@ -83,7 +69,7 @@ export default function Rte({
       !textRTE.replace(/<[^>]*>?/gm, "").trim() &&
       !coverRTE.src
     ) {
-      notifications.showNotification({
+      showNotification({
         title: `If you wish to be a writer,`,
         message: "Write",
         color: "red",
@@ -143,24 +129,25 @@ export default function Rte({
           classNames={{ root: "rte" }}
         />
         <Group mt="sm" noWrap>
-          <Tooltip
-            label={cover ? "Change cover" : "Cover"}
-            position="bottom"
-            gutter={10}
-            withArrow
+          <FileButton
+
+            resetRef={resetRef}
+            onChange={handleCoverRTEChange}
+            accept="image/png,image/jpeg"
           >
-            <ActionIcon onClick={() => fileInputRTE.current.click()}>
-              <CameraIcon className={classes.icon} />
-            </ActionIcon>
-            <label className={classes.label}>
-              <input
-                ref={fileInputRTE}
-                accept="image/*"
-                type="file"
-                onChange={handleCoverRTEChange}
-              />
-            </label>
-          </Tooltip>
+            {(props) => (
+              <Tooltip
+                label={cover ? "Change cover" : "Cover"}
+                position="bottom"
+                gutter={10}
+                withArrow
+              >
+                <ActionIcon {...props}>
+                  <IconPhotoPlus size={20} />
+                </ActionIcon>
+              </Tooltip>
+            )}
+          </FileButton>
           {coverRTE.src && (
             <>
               <Popover
@@ -170,7 +157,8 @@ export default function Rte({
                 width={320}
                 opened={popover}
                 onClose={() => setPopover(false)}
-                target={
+              >
+                <Popover.Target>
                   <Image
                     onMouseEnter={() => setPopover(true)}
                     onMouseLeave={() => setPopover(false)}
@@ -180,18 +168,17 @@ export default function Rte({
                     src={coverRTE.src}
                     alt={coverRTE.alt}
                   />
-                }
-              >
-                <Image radius="sm" src={coverRTE.src} alt={coverRTE.alt} />
+                </Popover.Target>
+                <Popover.Dropdown sx={{ pointerEvents: 'none' }}>
+                  <Image radius="sm" src={coverRTE.src} alt={coverRTE.alt} />
+                </Popover.Dropdown>
               </Popover>
               <Text lineClamp={1} size="xs">
                 {coverRTE.alt}
               </Text>
-              {/* {!cover && ( */}
               <ActionIcon onClick={clearCoverRTE}>
-                <Cross2Icon className={classes.icon} />
+                <IconX size={16} />
               </ActionIcon>
-              {/* )} */}
             </>
           )}
           <Button
