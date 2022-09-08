@@ -95,6 +95,7 @@ export default function MenuDropdown({
           </UnstyledButton>
         </Menu.Target>
         <Menu.Dropdown>
+          <Menu.Label>Application</Menu.Label>
           <Menu.Item icon={<IconSettings size={16} />} disabled>
             Settings
           </Menu.Item>
@@ -134,6 +135,7 @@ export default function MenuDropdown({
               </Menu.Item>
             )}
           ></GoogleLogout>
+          <Menu.Divider />
           <Menu.Label>Danger zone</Menu.Label>
           <Menu.Item
             onClick={() => setModalOpened(true)}

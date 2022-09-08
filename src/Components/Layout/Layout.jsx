@@ -16,7 +16,7 @@ import {
 } from "@mantine/core";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 import { NotificationsProvider } from "@mantine/notifications";
-import { IconNews, IconFriends, IconMessage } from "@tabler/icons";
+import { IconNews, IconFriends, IconMessageCircle } from "@tabler/icons";
 import User from "../User";
 import NavLink from "../NavLink";
 import PostList from "../PostList";
@@ -104,7 +104,7 @@ export default function Main({ user, addUser }) {
                       onClick={() => setOpened(false)}
                     />
                     <NavLink
-                      icon={<IconMessage size={16} />}
+                      icon={<IconMessageCircle size={16} />}
                       color="lime"
                       label="Messenger"
                       to="/messages"
