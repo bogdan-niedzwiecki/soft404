@@ -92,7 +92,7 @@ export default function Main({ user, addUser }) {
                     <NavLink
                       icon={<IconNews size={16} />}
                       color="blue"
-                      label="Feed"
+                      label="News"
                       to="/feed"
                       onClick={() => setOpened(false)}
                     />

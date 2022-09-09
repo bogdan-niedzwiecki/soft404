@@ -90,7 +90,7 @@ export default function MenuDropdown({
                 src={picture}
                 alt={`${given_name} ${family_name}`}
               />
-              <IconChevronDown size={16} color="grey" />
+              <IconChevronDown size={16} />
             </Group>
           </UnstyledButton>
         </Menu.Target>
@@ -129,7 +129,7 @@ export default function MenuDropdown({
             render={(googleLogout) => (
               <Menu.Item
                 onClick={googleLogout.onClick}
-                icon={<IconLogout size={16} color="grey" />}
+                icon={<IconLogout size={16} />}
               >
                 Sign out
               </Menu.Item>

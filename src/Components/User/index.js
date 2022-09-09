@@ -45,9 +45,9 @@ export default function User({ avatar, name, email, to }) {
           </div>
 
           {theme.dir === 'ltr' ? (
-            <IconChevronRight size={16} color="grey" />
+            <IconChevronRight size={16} />
           ) : (
-            <IconChevronLeft size={16} color="grey" />
+            <IconChevronLeft size={16} />
           )}
         </Group>
       </UnstyledButton>

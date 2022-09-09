@@ -137,7 +137,7 @@ export default function Rte({
           >
             {(props) => (
               <Tooltip
-                label={cover ? "Change cover" : "Cover"}
+                label={coverRTE.src ? "Change cover" : "Cover"}
                 position="bottom"
                 gutter={10}
                 withArrow

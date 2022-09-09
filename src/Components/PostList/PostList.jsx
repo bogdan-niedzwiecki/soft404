@@ -29,10 +29,10 @@ export default function PostList({ posts }) {
                 given_name={post.given_name}
                 family_name={post.family_name}
                 picture={post.picture}
-                title={post.title}
-                thumbnail={post.thumbnail}
-                text={post.text}
                 publish_date={post.publish_date}
+                title={post.title}
+                text={post.text}
+                thumbnail={post.thumbnail}
                 isUserPost={post.isUserPost}
               />
             </li>

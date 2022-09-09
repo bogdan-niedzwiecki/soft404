@@ -8,8 +8,7 @@ import {
   Modal,
   createStyles,
 } from "@mantine/core";
-import PostDeleteButton from "../PostDeleteButton";
-import PostEditButton from "../PostEditButton";
+import PostDropdown from "../PostDropdown";
 
 const useStyles = createStyles((theme) => ({
   post: {
@@ -17,7 +16,7 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === "dark"
         ? theme.colors.dark[6]
         : theme.colors.gray[1],
-    border: "none",
+    position: "unset"
   },
 }));
 
@@ -53,12 +52,12 @@ export default function PostItem({
 
   return (
     <>
-      <Card className={classes.post} withBorder mt="md" mb="md">
+      <Card className={classes.post} mb="md" pb={0}>
         <Card.Section p="md" pb="0">
           <Group>
             <Avatar src={picture} radius="xl" />
             <div style={{ flex: 1 }}>
-              <Text size="sm" weight={500}>
+              <Text size="sm" weight={500} >
                 {given_name} {family_name}
               </Text>
               <Text color="dimmed" size="xs">
@@ -66,21 +65,17 @@ export default function PostItem({
               </Text>
             </div>
             {isUserPost && (
-              <>
-                <PostEditButton
-                  _id={_id}
-                  title={title}
-                  text={text}
-                  cover={thumbnail}
-                />
-                <PostDeleteButton _id={_id} />
-              </>
+              <PostDropdown
+                _id={_id}
+                title={title}
+                text={text}
+                thumbnail={thumbnail}
+              />
             )}
           </Group>
         </Card.Section>
         <Card.Section
           p="md"
-          pb="0"
           sx={() => ({
             cursor: "pointer",
           })}
@@ -92,14 +87,13 @@ export default function PostItem({
             </Text>
           )}
           {text && (
-            <Text lineClamp={5} >
-              <div dangerouslySetInnerHTML={{ __html: text }} mb="md" />
+            <Text lineClamp={5} mb="md">
+              <div dangerouslySetInnerHTML={{ __html: text }} />
             </Text>
           )}
           {thumbnail.src && (
             <Image
               src={thumbnail.src}
-              height={360}
               alt={thumbnail.alt}
               mb="md"
             />
@@ -129,15 +123,12 @@ export default function PostItem({
               </Text>
             </div>
             {isUserPost && (
-              <>
-                <PostEditButton
-                  _id={_id}
-                  title={title}
-                  text={text}
-                  cover={thumbnail}
-                />
-                <PostDeleteButton _id={_id} />
-              </>
+              <PostDropdown
+                _id={_id}
+                title={title}
+                text={text}
+                thumbnail={thumbnail}
+              />
             )}
           </Group>
         }

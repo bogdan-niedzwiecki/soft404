@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import PostList from "./PostList";
 import { setAsideSearch } from "../actions/friendActions";
+import { editPostMiddleware, deletePostMiddleware } from "../actions/postActions";
 
 const mapStateToProps = state => {
 
@@ -43,7 +44,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setAsideSearch: text => dispatch(setAsideSearch(text)),
+    setAsideSearch: (text) => dispatch(setAsideSearch(text)),
+    editPost: (formData) => dispatch(editPostMiddleware(formData)),
+    deletePost: (formData) => dispatch(deletePostMiddleware(formData)),
     // getFriends: () => dispatch(getFriendsMiddleware())
   };
 };
