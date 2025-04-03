@@ -24,3 +24,6 @@ yarn-debug.log*
 yarn-error.log*
 
 /LogInWithMaterial
+
+# Local Netlify folder
+.netlify
