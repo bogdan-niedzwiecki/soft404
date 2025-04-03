@@ -6,12 +6,16 @@ const userSchema = new mongoose.Schema({
   given_name: String,
   family_name: String,
   picture: String,
+  email: String,
   google_user_data: Boolean,
   posts: [
     {
       title: String,
-      thumbnail: String,
       text: String,
+      thumbnail: {
+        src: String,
+        alt: String
+      },
       publish_date: Date
     }
   ],

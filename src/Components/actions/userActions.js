@@ -1,3 +1,6 @@
+import { getFriendsMiddleware } from "./friendActions"
+
+export const ADD_TOKEN_ID = "ADD_TOKEN_ID";
 export const ADD_USER = "ADD_USER";
 export const EDIT_USER = "EDIT_USER";
 export const DELETE_USER = "DELETE_USER";
@@ -8,7 +11,7 @@ export function validateTokenMiddleware(googleResponse) {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        id_token: googleResponse.tokenId
+        token_id: googleResponse.tokenId
       })
     })
       .then(response => {
@@ -16,9 +19,9 @@ export function validateTokenMiddleware(googleResponse) {
         return response;
       })
       .then(response => response.json())
-      .then(r => {
-        sessionStorage.setItem("soft404_access_token", r.authenticationToken);
-        dispatch(addUserMiddleware());
+      .then(resp => {
+        localStorage.setItem("token_id", resp.token_id);
+        dispatch(addTokenId({ token_id: resp.token_id }));
       });
   };
 }
@@ -27,15 +30,20 @@ export function addUserMiddleware() {
   return dispatch => {
     fetch("/.netlify/functions/user", {
       method: "POST",
-      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") },
+      headers: { "X-ZUMO-AUTH": localStorage.getItem("token_id") },
     })
       .then(response => {
-        if (!response.ok) { sessionStorage.removeItem("soft404_access_token"); throw Error(response.statusText); }
+        if (!response.ok) { localStorage.removeItem("token_id"); window.location.replace("/login"); throw Error(response.statusText); }
         return response;
       })
       .then(response => response.json())
-      .then(user => dispatch(addUser(user)));
+      .then(user => dispatch(addUser(user)))
+      .then(() => dispatch(getFriendsMiddleware()));
   };
+}
+
+export function addTokenId(payload) {
+  return { type: ADD_TOKEN_ID, payload };
 }
 
 export function addUser(payload) {
@@ -46,7 +54,7 @@ export function editUserMiddleware(formData) {
   return dispatch => {
     fetch("/.netlify/functions/user", {
       method: "PUT",
-      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") },
+      headers: { "X-ZUMO-AUTH": localStorage.getItem("token_id") },
       body: formData
     })
       .then(response => {
@@ -66,7 +74,7 @@ export function deleteUserMiddleware() {
   return dispatch => {
     fetch("/.netlify/functions/user", {
       method: "DELETE",
-      headers: { "X-ZUMO-AUTH": sessionStorage.getItem("soft404_access_token") }
+      headers: { "X-ZUMO-AUTH": localStorage.getItem("token_id") }
     }).then(() => dispatch(deleteUser()));
   };
 }

@@ -3,7 +3,7 @@ import LoginForm from "./LoginForm";
 import { validateTokenMiddleware } from "../actions/userActions";
 
 const mapStateToProps = state => {
-  return { user: state.user };
+  return { token_id: state.token_id };
 };
 
 const mapDispatchToProps = dispatch => {

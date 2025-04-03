@@ -1,0 +1,33 @@
+.rte {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+
+  .quill {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    .ql-container {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+
+      .ql-editor {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  &--unstyled {
+    border: none;
+
+    .quill {
+      .ql-container {
+        .ql-editor {
+          padding: 0;
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ import {
   EDIT_POST,
   SET_HEADER_SEARCH
 } from "../actions/postActions";
-import { DELETE_USER, ADD_USER, EDIT_USER } from "../actions/userActions";
+import { ADD_TOKEN_ID, DELETE_USER, ADD_USER, EDIT_USER } from "../actions/userActions";
 import {
   FOUND_USER,
   CLEAR_USER,
@@ -17,11 +17,13 @@ const initialState = {
     family_name: "",
     given_name: "",
     picture: "",
+    email: "",
     google_user_data: false,
     posts: [],
     friends: [],
     friends_visible: []
   },
+  token_id: "",
   headerSearch: "",
   foundUser: [],
   asideSearch: "",
@@ -30,6 +32,9 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
 
+    case ADD_TOKEN_ID:
+      return { ...state, ...action.payload };
+
     case ADD_USER:
       return { ...state, user: { ...action.payload, friends: state.user.friends } };
 
@@ -37,7 +42,7 @@ const reducer = (state = initialState, action) => {
       return { ...state, user: { ...action.payload, friends: state.user.friends } };
 
     case DELETE_USER:
-      return { state: initialState };
+      return { ...initialState };
 
     case GET_FRIENDS:
       return { ...state, user: { ...state.user, friends: action.payload } };
